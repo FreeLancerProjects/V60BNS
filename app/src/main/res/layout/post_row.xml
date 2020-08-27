@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/r_im_search"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/user"
+            android:tint="@color/colorAccent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:siBorderColor="@color/colorAccent"
+            app:siBorderWidth="1dp"
+            tools:ignore="RtlCompat"
+            app:civ_circle_background_color="@color/gray3"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/r_im_search"
+            app:layout_constraintTop_toTopOf="parent">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="احمد"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+
+        android:src="@drawable/ic_marker"
+        android:padding="5dp"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+
+
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="احمد"
+        android:textColor="@color/gray11"
+        android:textSize="14sp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        />
+</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10min"
+                android:textColor="@color/gray3"
+                android:textSize="10sp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                />
+
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:src="@drawable/logo"
+    android:scaleType="fitXY"
+    />
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/imagelike"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_star_empty"
+        android:padding="5dp"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+
+
+
+        />
+    <ImageView
+        android:id="@+id/imagecomment"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imagelike"
+        android:src="@drawable/ic_star_empty"
+        android:padding="5dp"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+
+
+
+        />
+    <ImageView
+        android:id="@+id/imageshare"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imagecomment"
+        android:src="@drawable/ic_star_empty"
+        android:padding="5dp"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+
+
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="1500 review"
+        android:textColor="@color/gray11"
+        android:textSize="14sp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="1500 review"
+            android:textColor="@color/gray11"
+            android:textSize="14sp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Coffe"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <TextView
+        android:id="@+id/tvreplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Show All 1500 comment"
+        android:textColor="@color/gray11"
+        android:textSize="14sp"
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expand"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+app:el_expanded="false"
+        app:el_duration="1000"
+        android:clickable="true"
+        app:el_parallax=".5"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recViewcomments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </net.cachapa.expandablelayout.ExpandableLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagemyprofile"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/user"
+            android:tint="@color/colorAccent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:siBorderColor="@color/colorAccent"
+            app:siBorderWidth="1dp"
+            tools:ignore="RtlCompat"
+            app:civ_circle_background_color="@color/gray3"
+            />
+        <EditText
+            android:id="@+id/edtPhone"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:hint="@string/add_comment"
+            android:background="@color/transparent"
+            android:textColorHint="@color/gray6"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:ignore="TextFields"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imagemyprofile"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/black"
+        />
+</LinearLayout>
+</layout>

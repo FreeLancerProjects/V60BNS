@@ -75,5 +75,9 @@
     <string name="store">المتجر</string>
     <string name="add">اضافة</string>
     <string name="comments">تعليقات</string>
+    <string name="orders">orders</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="replay">Replay</string>
+    <string name="add_replay">Add Replay</string>
 
 </resources>

@@ -130,7 +130,19 @@
                 android:background="@color/gray4"
                 app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+            <FrameLayout
+                android:id="@+id/fragment_app_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+                app:layout_constraintTop_toBottomOf="@id/view"
 
+
+                >
+
+            </FrameLayout>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_nav"

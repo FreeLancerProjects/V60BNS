@@ -63,7 +63,9 @@ public class HomeActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         initView();
         setimage();
-
+if(savedInstanceState==null){
+    displayFragmentMain();
+}
 
     }
 
@@ -79,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.home:
+                        displayFragmentMain();
                         break;
                     case R.id.store:
                         break;
@@ -124,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
                 public void onLoadCleared(@Nullable Drawable placeholder) {
 
 
-                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.ic_nav_user);
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
 
 
                 }
@@ -132,7 +135,41 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onLoadFailed(@Nullable Drawable errorDrawable) {
                     super.onLoadFailed(errorDrawable);
-                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.ic_nav_user);
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
+
+                }
+            });
+        }
+        else {
+            binding.bottomNav.setItemIconTintList(null); // this is important
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.bottomNav.getMenu().getItem(4).setIconTintList(null);
+                binding.bottomNav.getMenu().getItem(4).setIconTintMode(null);
+            }
+            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.user)
+                    .apply(RequestOptions.circleCropTransform()).into(new SimpleTarget<Bitmap>() {
+
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    // Log.e("lflgllg,";fllflf");
+
+                    Drawable profileImage = new BitmapDrawable(getResources(), resource);
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(profileImage);
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder) {
+
+
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
+
+
+                }
+
+                @Override
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    super.onLoadFailed(errorDrawable);
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
 
                 }
             });
@@ -204,6 +241,26 @@ public void onResume() {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         setimage();
+    }
+    public void displayFragmentMain() {
+        try {
+            if (fragment_main == null) {
+                fragment_main = Fragment_Main.newInstance();
+            }
+
+
+
+            if (fragment_main.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_main).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_main, "fragment_main").addToBackStack("fragment_main").commit();
+
+            }
+            binding.setTitle(getString(R.string.home));
+        } catch (Exception e) {
+        }
+
     }
 
 }
