@@ -1,29 +1,17 @@
 package com.v60BNS.activities_fragments.activity_home;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,14 +24,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Add;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
-import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Orders;
+import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Comments;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Profile;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Store;
-import com.v60BNS.activities_fragments.activity_login.LoginActivity;
 import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language;
 import com.v60BNS.models.UserModel;
@@ -58,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment_Main fragment_main;
     private Fragment_Store fragment_store;
     private Fragment_Add fragment_add;
-    private Fragment_Orders fragment_orders;
+    private Fragment_Comments fragment_comments;
     private Fragment_Profile fragment_profile;
     private UserModel userModel;
     private String lang;
@@ -98,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.add:
                         break;
-                    case R.id.orders:
+                    case R.id.comments:
                         break;
                     case R.id.profile:
 

@@ -72,8 +72,8 @@
     <string name="resend_in">إعادة ارسال فى </string>
     <string name="banner_image">صورة الغلاف</string>
     <string name="profile_image">الصورة الشخصية </string>
-    <string name="store">store</string>
-    <string name="add">add</string>
-    <string name="orders">orders</string>
+    <string name="store">المتجر</string>
+    <string name="add">اضافة</string>
+    <string name="comments">تعليقات</string>
 
 </resources>
