@@ -7,10 +7,14 @@
         />
     <item android:id="@+id/store"
         android:title="@string/store"
-        android:icon="@drawable/ic_store" />
+        android:icon="@drawable/ic_store"
+        android:iconTint="@color/color1"
+
+        />
     <item android:id="@+id/add"
         android:title="@string/add"
         android:icon="@drawable/ic_add"
+        android:iconTint="@color/color1"
 
         />
     <item android:id="@+id/orders"
@@ -19,6 +23,6 @@
 
         />
     <item android:id="@+id/profile"
-        android:title="@string/profile"
+        android:title=""
         android:icon="@drawable/user" />
 </menu>
