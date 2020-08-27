@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "160318060700",
+    "firebase_url": "https://v60bns.firebaseio.com",
+    "project_id": "v60bns",
+    "storage_bucket": "v60bns.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160318060700:android:105b99dcee8c674fced559",
+        "android_client_info": {
+          "package_name": "com.v60BNS"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160318060700-q0oheiapoetfvbn3jqhm6i80hsnk6864.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeZa7yJVMilND6peETiYSgNvESE2b1fbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160318060700-q0oheiapoetfvbn3jqhm6i80hsnk6864.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
