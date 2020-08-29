@@ -1,34 +1,20 @@
 package com.v60BNS.activities_fragments.activity_home.fragments;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-
-
-import com.v60BNS.BuildConfig;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.databinding.FragmentProfileBinding;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
-
-import java.io.IOException;
-
 import io.paperdb.Paper;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Fragment_Profile extends Fragment  {
 

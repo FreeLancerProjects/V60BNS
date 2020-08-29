@@ -19,16 +19,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.tabs.TabLayout;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
+import com.v60BNS.adapters.Slider_Adapter;
 import com.v60BNS.databinding.FragmentStoreBinding;
+import com.v60BNS.models.SliderModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.paperdb.Paper;
 import okhttp3.ResponseBody;
@@ -41,11 +47,11 @@ public class Fragment_Store extends Fragment {
     private HomeActivity activity;
     private FragmentStoreBinding binding;
     private Preferences preferences;
-    private UserModel userModel;
     private String lang;
-    private LinearLayoutManager manager;
-    private GridLayoutManager manager2;
-
+    private List<SliderModel> sliderModels;
+    private Slider_Adapter sliderAdapter;
+    private UserModel userModel;
+    private int current_page = 0, NUM_PAGES;
 
     public static Fragment_Store newInstance() {
         return new Fragment_Store();
@@ -56,6 +62,13 @@ public class Fragment_Store extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_store, container, false);
         initView();
+        initData();
+
+        change_slide_image();
+        YoYo.with(Techniques.ZoomIn)
+                .duration(900)
+                .repeat(0)
+                .playOn(binding.getRoot());
         return binding.getRoot();
     }
 
@@ -65,18 +78,78 @@ public class Fragment_Store extends Fragment {
 
     }
 
-    private void initView() {
-        activity = (HomeActivity) getActivity();
-        Paper.init(activity);
-        lang = Paper.book().read("lang", "ar");
-        binding.setLang(lang);
-        preferences = Preferences.getInstance();
-        userModel = preferences.getUserData(activity);
+    private void initData() {
+        sliderModels.add(new SliderModel());
+        sliderModels.add(new SliderModel());
+        sliderModels.add(new SliderModel());
+        sliderModels.add(new SliderModel());
+        sliderModels.add(new SliderModel());
+        sliderModels.add(new SliderModel());
+        List<SliderModel.Data> data = new ArrayList<>();
+        data.add(new SliderModel.Data());
+        data.add(new SliderModel.Data());
 
-        manager = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false);
-        manager2 = new GridLayoutManager(activity, 1);
+        data.add(new SliderModel.Data());
+        data.add(new SliderModel.Data());
+        data.add(new SliderModel.Data());
+        data.add(new SliderModel.Data());
+        data.add(new SliderModel.Data());
+        for (int i = 0; i < sliderModels.size(); i++) {
+
+            sliderModels.get(i).setData(data);
+
+        }
+        sliderAdapter = new Slider_Adapter(activity, sliderModels);
+        binding.pager.setAdapter(sliderAdapter);
+        binding.progBarSlider.setVisibility(View.GONE);
+        binding.progBarOffer.setVisibility(View.GONE);
+
+
 
     }
 
+
+    private void initView() {
+        sliderModels = new ArrayList<>();
+        activity = (HomeActivity) getActivity();
+        preferences = Preferences.getInstance();
+        userModel = preferences.getUserData(activity);
+        Paper.init(activity);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+
+        binding.progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBarOffer.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+
+
+    }
+
+    private void change_slide_image() {
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (current_page == NUM_PAGES) {
+                    current_page = 0;
+                }
+                binding.pager.setCurrentItem(current_page++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        YoYo.with(Techniques.ZoomIn)
+                .duration(900)
+                .repeat(0)
+                .playOn(binding.getRoot());
+
+    }
 
 }

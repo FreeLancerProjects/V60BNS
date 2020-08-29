@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -34,6 +35,7 @@ import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+
 import io.paperdb.Paper;
 
 
@@ -63,9 +65,9 @@ public class HomeActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         initView();
         setimage();
-if(savedInstanceState==null){
-    displayFragmentMain();
-}
+        if (savedInstanceState == null) {
+            displayFragmentMain();
+        }
 
     }
 
@@ -84,10 +86,12 @@ if(savedInstanceState==null){
                         displayFragmentMain();
                         break;
                     case R.id.store:
+                        displayFragmentStore();
                         break;
                     case R.id.add:
                         break;
                     case R.id.comments:
+                        displayFragmentComments();
                         break;
                     case R.id.profile:
 
@@ -98,15 +102,51 @@ if(savedInstanceState==null){
             }
         });
 
-//        setUpBottomNavigation();
-
+        //  setUpBottomNavigation();
 
 
     }
+
+
     public void setimage() {
         userModel = preferences.getUserData(this);
 
         if (userModel != null) {
+            binding.bottomNav.setItemIconTintList(null);
+
+            // this is important
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.bottomNav.getMenu().getItem(4).setIconTintList(null);
+                binding.bottomNav.getMenu().getItem(4).setIconTintMode(null);
+            }
+            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.user)
+                    .apply(RequestOptions.circleCropTransform()).into(new SimpleTarget<Bitmap>() {
+
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    // Log.e("lflgllg,";fllflf");
+
+                    Drawable profileImage = new BitmapDrawable(getResources(), resource);
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(profileImage);
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder) {
+
+
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
+
+
+                }
+
+                @Override
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    super.onLoadFailed(errorDrawable);
+                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
+
+                }
+            });
+        } else {
             binding.bottomNav.setItemIconTintList(null); // this is important
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 binding.bottomNav.getMenu().getItem(4).setIconTintList(null);
@@ -140,41 +180,7 @@ if(savedInstanceState==null){
                 }
             });
         }
-        else {
-            binding.bottomNav.setItemIconTintList(null); // this is important
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                binding.bottomNav.getMenu().getItem(4).setIconTintList(null);
-                binding.bottomNav.getMenu().getItem(4).setIconTintMode(null);
-            }
-            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.user)
-                    .apply(RequestOptions.circleCropTransform()).into(new SimpleTarget<Bitmap>() {
-
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    // Log.e("lflgllg,";fllflf");
-
-                    Drawable profileImage = new BitmapDrawable(getResources(), resource);
-                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(profileImage);
-                }
-
-                @Override
-                public void onLoadCleared(@Nullable Drawable placeholder) {
-
-
-                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
-
-
-                }
-
-                @Override
-                public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                    super.onLoadFailed(errorDrawable);
-                    binding.bottomNav.getMenu().findItem(R.id.profile).setIcon(R.drawable.user);
-
-                }
-            });
-        }
-        BottomNavigationMenuView menuView = (BottomNavigationMenuView)   binding.bottomNav.getChildAt(0);
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) binding.bottomNav.getChildAt(0);
 
         final View iconView =
                 menuView.getChildAt(4).findViewById(com.google.android.material.R.id.icon);
@@ -190,7 +196,8 @@ if(savedInstanceState==null){
                         displayMetrics);
         iconView.setLayoutParams(layoutParams);
     }
-//    private void setUpBottomNavigation() {
+
+    //    private void setUpBottomNavigation() {
 //
 //        AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.home), R.drawable.ic_home);
 //        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.store), R.drawable.ic_store);
@@ -225,11 +232,11 @@ if(savedInstanceState==null){
 //        binding.ahBottomNav.setCurrentItem(pos, false);
 //
 //    }
-@Override
-public void onResume() {
-    super.onResume();
-    setimage();
-}
+    @Override
+    public void onResume() {
+        super.onResume();
+        setimage();
+    }
 
     @Override
     public void onStart() {
@@ -242,6 +249,8 @@ public void onResume() {
         super.onActivityResult(requestCode, resultCode, data);
         setimage();
     }
+
+
     public void displayFragmentMain() {
         try {
             if (fragment_main == null) {
@@ -249,7 +258,19 @@ public void onResume() {
             }
 
 
+            if (fragment_store != null && fragment_store.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_store).commit();
+            }
+            if (fragment_add != null && fragment_add.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_add).commit();
+            }
 
+            if (fragment_comments != null && fragment_comments.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_comments).commit();
+            }
+            if (fragment_profile != null && fragment_profile.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_profile).commit();
+            }
             if (fragment_main.isAdded()) {
                 fragmentManager.beginTransaction().show(fragment_main).commit();
 
@@ -257,10 +278,77 @@ public void onResume() {
                 fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_main, "fragment_main").addToBackStack("fragment_main").commit();
 
             }
-            binding.setTitle(getString(R.string.home));
+            //  binding.setTitle(getString(R.string.home));
         } catch (Exception e) {
         }
 
     }
+
+    public void displayFragmentStore() {
+        try {
+            if (fragment_store == null) {
+                fragment_store = Fragment_Store.newInstance();
+            }
+
+
+            if (fragment_add != null && fragment_add.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_add).commit();
+            }
+            if (fragment_main != null && fragment_main.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_main).commit();
+            }
+
+            if (fragment_comments != null && fragment_comments.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_comments).commit();
+            }
+            if (fragment_profile != null && fragment_profile.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_profile).commit();
+            }
+            if (fragment_store.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_store).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_store, "fragment_store").addToBackStack("fragment_store").commit();
+
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void displayFragmentComments() {
+        try {
+            if (fragment_comments == null) {
+                fragment_comments = Fragment_Comments.newInstance();
+            }
+
+
+            if (fragment_add != null && fragment_add.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_add).commit();
+            }
+            if (fragment_main != null && fragment_main.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_main).commit();
+            }
+
+            if (fragment_store != null && fragment_store.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_store).commit();
+            }
+            if (fragment_profile != null && fragment_profile.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_profile).commit();
+            }
+            if (fragment_comments.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_comments).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_comments, "fragment_comments").addToBackStack("fragment_comments").commit();
+
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
+
 
 }

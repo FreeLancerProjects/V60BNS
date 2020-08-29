@@ -34,7 +34,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:contentInsetEnd="0dp"
                 app:contentInsetLeft="0dp"
@@ -43,14 +43,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@{title}"
-                    android:textColor="@color/white"
+                    android:text="@string/app_name"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="18sp" />
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:padding="4dp"
+                    android:src="@drawable/logo2"
 
+                    />
                 <FrameLayout
                     android:id="@+id/flNotification"
                     android:layout_width="40dp"
@@ -62,7 +71,7 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@color/colorPrimaryDark"
+                        android:src="@color/white"
                         app:civ_border_width="0dp"
                         app:civ_circle_background_color="@color/colorPrimaryDark" />
 
@@ -73,9 +82,9 @@
                         android:layout_gravity="center"
                         android:clickable="false"
                         android:longClickable="false"
-                        android:padding="8dp"
+                        android:padding="6dp"
                         android:src="@drawable/ic_notification"
-                        android:tint="@color/white" />
+                        android:tint="@color/colorPrimary" />
 
                     <TextView
                         android:layout_width="17dp"
@@ -103,7 +112,6 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@color/colorPrimaryDark"
                         app:civ_border_width="0dp"
                         app:civ_circle_background_color="@color/colorPrimaryDark" />
 
@@ -113,9 +121,9 @@
                         android:layout_gravity="center"
                         android:clickable="false"
                         android:longClickable="false"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_search"
-                        android:tint="@color/white" />
+                        android:padding="6dp"
+                        android:src="@drawable/ic_shopping_cart"
+                        android:tint="@color/colorPrimary" />
 
 
                 </FrameLayout>

@@ -39,13 +39,21 @@
                 <FrameLayout
                     android:id="@+id/flSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recViewStatus"
+                    <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+                        android:id="@+id/pager"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp" />
+                        android:layout_height="match_parent"
+                        android:layoutAnimation="@anim/layoutanim"
+                        app:icvp_center_page_scale_offset="30dp"
+                        app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+                        app:icvp_max_page_scale="0.8"
+                        app:icvp_medium_scaled="true"
+                        app:icvp_min_page_scale="0.5"
+                        app:icvp_min_page_scale_offset="5dp"
+                        app:icvp_scroll_duration="500" />
 
 
                     <ProgressBar
@@ -56,23 +64,38 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/flMostSeller"
+                    android:id="@+id/flCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+
+
+                    <ProgressBar
+                        android:id="@+id/progBarCategory"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/flProducts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:minHeight="200dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-
                     >
-
-
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recViewFavoriteOffers"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewFavoriteOffers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
 
 
                     <ProgressBar
@@ -82,8 +105,6 @@
                         android:layout_gravity="center" />
 
                 </FrameLayout>
-
-
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
