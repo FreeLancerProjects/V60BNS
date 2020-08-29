@@ -9,11 +9,13 @@ import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.v60BNS.databinding.PostRowBinding;
 import com.v60BNS.models.MarketCatogryModel;
 
@@ -29,13 +31,15 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
+    private Fragment fragment;
 
-    public Post_Adapter(List<MarketCatogryModel.Data> orderlist, Context context) {
+    public Post_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -55,18 +59,15 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
 
-        Comments_Adapter comments_adapter=new Comments_Adapter(orderlist,context);
-        msgRightHolder.binding.recViewcomments.setLayoutManager(new LinearLayoutManager(context));
-        msgRightHolder.binding.recViewcomments.setAdapter(comments_adapter);
+        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
+        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
         msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(msgRightHolder.binding.expand.isExpanded()){
-                    msgRightHolder.binding.expand.collapse(true);
-                }
-                else {
-                    msgRightHolder.binding.expand.expand(true);
-
+                if (fragment instanceof Fragment_Main) {
+                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+                    fragment_main.showcomments();
                 }
             }
         });

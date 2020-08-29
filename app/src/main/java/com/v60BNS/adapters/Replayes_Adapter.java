@@ -1,7 +1,9 @@
 package com.v60BNS.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -25,13 +27,18 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
+    private Comments_Adapter comments_adapter;
+    private int itemcount;
+    public int hight;
 
-    public Replayes_Adapter(List<MarketCatogryModel.Data> orderlist, Context context) {
+    public Replayes_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Comments_Adapter comments_adapter, int itemcount) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        this.comments_adapter = comments_adapter;
+        this.itemcount = itemcount;
     }
 
     @NonNull
@@ -50,7 +57,20 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
+        msgRightHolder.binding.ll.post(new Runnable() {
+            @Override
+            public void run() {
+                hight = msgRightHolder.binding.ll.getBottom();
+                Log.e("lll",hight+"");
+            }
+        });
 
+        msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comments_adapter.setcursor(itemcount);
+            }
+        });
 
     }
 

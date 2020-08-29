@@ -1,28 +1,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/home"
-        android:title="@string/home"
-        
+    <item
+        android:id="@+id/home"
         android:icon="@drawable/ic_home"
-        />
-    <item android:id="@+id/store"
-        android:title="@string/store"
+
+        android:title="" />
+    <item
+        android:id="@+id/store"
         android:icon="@drawable/ic_store"
         android:iconTint="@color/color1"
+        android:title=""
 
         />
-    <item android:id="@+id/add"
-        android:title="@string/add"
+    <item
+        android:id="@+id/add"
         android:icon="@drawable/ic_add"
         android:iconTint="@color/color1"
-
-        />
-    <item android:id="@+id/comments"
-        android:title="@string/comments"
-        android:icon="@drawable/ic_experience"
-
-        />
-    <item android:id="@+id/profile"
         android:title=""
-        android:icon="@drawable/user" />
+
+        />
+    <item
+        android:id="@+id/comments"
+        android:icon="@drawable/ic_experience"
+        android:title=""
+
+        />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/user"
+        android:title="" />
 </menu>

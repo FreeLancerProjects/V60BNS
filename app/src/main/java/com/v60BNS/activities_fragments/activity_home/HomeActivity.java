@@ -25,6 +25,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Add;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
@@ -78,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         Paper.init(this);
         lang = Paper.book().read("lang", "ar");
         binding.setLang(lang);
+
         binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -350,5 +352,33 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        back();
+    }
+
+    private void back() {
+        if (fragment_main != null && fragment_main.isAdded() && fragment_main.isVisible()) {
+
+            if (userModel != null) {
+                if (fragment_main.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+                    fragment_main.behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+                else {
+                finish();}
+            }
+            else {
+                if (fragment_main.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+
+                    fragment_main.behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+                else {
+              //  navigateToSignInActivity();}
+            }
+        }} else {
+            displayFragmentMain();
+        }
+    }
 
 }
