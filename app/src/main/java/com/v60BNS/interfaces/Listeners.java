@@ -22,17 +22,6 @@ public interface Listeners {
         void showCountryDialog();
     }
 
-    interface ProfileAction{
-        void onReviews();
-        void onFeedback();
-        void onCoupons();
-        void onAddCoupon();
-        void onSetting();
-        void onPayment();
-        void onTelegram();
-        void onNotification();
-        void logout();
-    }
 
     interface SettingAction{
         void onEditProfile();

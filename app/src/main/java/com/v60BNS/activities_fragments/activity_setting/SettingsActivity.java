@@ -50,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
         Paper.init(this);
         lang = Paper.book().read("lang", "ar");
         binding.setLang(lang);
+        binding.setActions(this);
         binding.close.setOnClickListener(v -> finish());
         binding.tvVersion.setText(BuildConfig.VERSION_NAME);
 
@@ -67,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     @Override
     public void onLanguageSetting() {
         Intent intent = new Intent(this, LanguageActivity.class);
-        startActivityForResult(intent, 200);
+        startActivity(intent);
     }
 
     @Override
