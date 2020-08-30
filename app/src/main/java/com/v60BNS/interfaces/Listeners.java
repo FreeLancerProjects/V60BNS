@@ -35,14 +35,10 @@ public interface Listeners {
     }
 
     interface SettingAction{
-        void onTone();
-        void onComplaint();
         void onEditProfile();
         void onLanguageSetting();
         void onTerms();
         void onPrivacy();
         void onRate();
-        void onTour();
-        void onDelegate();
     }
 }

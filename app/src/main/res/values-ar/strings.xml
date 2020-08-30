@@ -75,9 +75,17 @@
     <string name="store">المتجر</string>
     <string name="add">اضافة</string>
     <string name="comments">تعليقات</string>
-    <string name="orders">orders</string>
-    <string name="add_comment">Add Comment</string>
-    <string name="replay">Replay</string>
-    <string name="add_replay">Add Replay</string>
+    <string name="orders">الطلبات</string>
+    <string name="add_comment">أضافة تعليق</string>
+    <string name="replay">رد</string>
+    <string name="add_replay">أضافة تعليق</string>
+    <string name="my_posts">منشوراتى</string>
+    <string name="followers">المتابعين</string>
+    <string name="following">أتابعه</string>
+    <string name="settings">الأعدادات</string>
+    <string name="general_settings">الأعدادات العامة</string>
+    <string name="terms_of_service">الشروط والأحكام</string>
+    <string name="help">المساعدة</string>
+    <string name="version_no">رقم الأصدار</string>
 
 </resources>

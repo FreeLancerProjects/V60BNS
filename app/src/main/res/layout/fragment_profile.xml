@@ -17,7 +17,9 @@
 
             />
     </data>
-
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -73,7 +75,6 @@
                         android:src="@drawable/user"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="-500dp"
 
                         />
                     <TextView
@@ -87,14 +88,145 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:id="@+id/imgSetting"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="end"
                     android:src="@drawable/ic_setting"
                     android:tint="@color/colorPrimary"
-                    android:layout_marginTop="-20dp"
+                    android:layout_marginTop="-25dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/orders"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="14sp"
+                           />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/my_posts"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="125"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/followers"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="16sp"
+                            android:layout_margin="5dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/following"
+                            android:layout_gravity="center"
+                            android:textColor="@color/color1"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="@color/gray16" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:minHeight="200dp"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recViewFavoriteOffers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+
+
+                    <ProgressBar
+                        android:id="@+id/progBarOffer"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        />
+
+                </FrameLayout>
 
 
             </LinearLayout>
@@ -102,4 +234,6 @@
 
 
     </FrameLayout>
+    <include layout="@layout/comments_content" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
