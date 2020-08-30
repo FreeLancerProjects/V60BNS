@@ -66,6 +66,7 @@ public class MarketCatogryModel implements Serializable {
             return title;
         }
 
+
         public String getDesc() {
             return desc;
         }

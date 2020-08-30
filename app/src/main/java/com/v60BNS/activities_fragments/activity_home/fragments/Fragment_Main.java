@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
+import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
 import com.v60BNS.adapters.Categorys_Adapter;
 import com.v60BNS.databinding.FragmentMainBinding;
@@ -40,6 +43,10 @@ public class Fragment_Main extends Fragment {
     private Post_Adapter post_adapter;
     private List<MarketCatogryModel.Data> dataList;
     private Categorys_Adapter categorys_adapter;
+    public BottomSheetBehavior behavior;
+    private RecyclerView recViewcomments;
+    private ImageView imclose;
+
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
     }
@@ -53,7 +60,6 @@ public class Fragment_Main extends Fragment {
     }
 
 
-
     private void initView() {
 
         dataList = new ArrayList<>();
@@ -61,21 +67,43 @@ public class Fragment_Main extends Fragment {
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         Paper.init(activity);
-         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-
-        post_adapter = new Post_Adapter(dataList, activity);
+        recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
+        imclose = binding.getRoot().findViewById(R.id.imclose);
+        post_adapter = new Post_Adapter(dataList, activity, this);
         categorys_adapter = new Categorys_Adapter(dataList, activity);
 
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewFavoriteOffers.setAdapter(post_adapter);
-        binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL,false));
+        binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewStatus.setAdapter(categorys_adapter);
-
+        Comments_Adapter comments_adapter = new Comments_Adapter(dataList, activity);
+        recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
+        recViewcomments.setAdapter(comments_adapter);
         Adddata();
+        if(lang.equals("ar")){
+            imclose.setRotation(180);
+        }
+        setUpBottomSheet();
+
+    }
+
+    private void setUpBottomSheet() {
+
+        behavior = BottomSheetBehavior.from(binding.getRoot().findViewById(R.id.root));
+
     }
 
     private void Adddata() {
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
         dataList.add(new MarketCatogryModel.Data());
         dataList.add(new MarketCatogryModel.Data());
         dataList.add(new MarketCatogryModel.Data());
@@ -89,5 +117,10 @@ public class Fragment_Main extends Fragment {
 
     }
 
+
+    public void showcomments() {
+        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+    }
 
 }

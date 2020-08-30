@@ -46,12 +46,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".activities_fragments.activity_login.LoginActivity"
+            android:name=".activities_fragments.activity_splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
-        <activity android:name=".activities_fragments.activity_splash.SplashActivity">
 
-        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

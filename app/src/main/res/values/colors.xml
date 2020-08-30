@@ -8,6 +8,7 @@
     <color name="color2">#301212</color>
     <color name="color3">#A48E8D</color>
     <color name="color4">#2e3233</color>
+    <color name="color5">#bca8a6</color>
     <color name="color_primary_trans">#661db198</color>
 
 
@@ -24,6 +25,11 @@
     <color name="gray9">#757575</color>
     <color name="gray10">#f2f2f2</color>
     <color name="gray11">#5f6366</color>
+    <color name="gray12">#474646</color>
+    <color name="gray13">#dcdcdc</color>
+    <color name="gray14">#939292</color>
+    <color name="gray15">#b1b0b0</color>
+    <color name="gray16">#f5f5f5</color>
 
     <color name="transparent">#00000000</color>
     <color name="color_red">#ef0607</color>
@@ -39,7 +45,6 @@
         <item>@color/colorPrimaryDark</item>
 
     </array>
-
 
 
 </resources>
