@@ -91,6 +91,7 @@ public class HomeActivity extends AppCompatActivity {
                         displayFragmentStore();
                         break;
                     case R.id.add:
+                        displayFragmentAddPost();
                         break;
                     case R.id.comments:
                         displayFragmentComments();
