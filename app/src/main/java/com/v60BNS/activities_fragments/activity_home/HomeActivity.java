@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
                         displayFragmentComments();
                         break;
                     case R.id.profile:
-
+                        displayFragmentProfile();
                         break;
                 }
 
@@ -350,5 +350,69 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    public void displayFragmentProfile() {
+        try {
+            if (fragment_profile == null) {
+                fragment_profile = Fragment_Profile.newInstance();
+            }
 
+
+            if (fragment_add != null && fragment_add.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_add).commit();
+            }
+            if (fragment_main != null && fragment_main.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_main).commit();
+            }
+
+            if (fragment_store != null && fragment_store.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_store).commit();
+            }
+            if (fragment_comments != null && fragment_comments.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_comments).commit();
+            }
+            if (fragment_profile.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_profile).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_profile, "fragment_profile").addToBackStack("fragment_profile").commit();
+
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void displayFragmentAddPost() {
+        try {
+            if (fragment_add== null) {
+                fragment_add = Fragment_Add.newInstance();
+            }
+
+
+            if (fragment_profile != null && fragment_profile.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_profile).commit();
+            }
+            if (fragment_main != null && fragment_main.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_main).commit();
+            }
+
+            if (fragment_store != null && fragment_store.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_store).commit();
+            }
+            if (fragment_comments != null && fragment_comments.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_comments).commit();
+            }
+            if (fragment_add.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_add).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_add, "fragment_add").addToBackStack("fragment_add").commit();
+
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
 }

@@ -36,33 +36,55 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@+id/flMostSeller"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:minHeight="200dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-
+                    android:layout_height="wrap_content"
                     >
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:civ_circle_background_color="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/fl">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:civ_border_color="@color/white"
+                            app:civ_border_width="1dp"
+                            android:src="@drawable/user"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="-500dp"
 
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recViewFavoriteOffers"
-                            android:layout_width="match_parent"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:text="Mohamed Elashry"
+                            android:textColor="@color/color1"
+                            android:textSize="22sp"
+                            android:layout_marginTop="50dp"/>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:id="@+id/fl"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:background="@drawable/gift"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+
+                    </FrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <ProgressBar
-                        android:id="@+id/progBarOffer"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center" />
-
-                </FrameLayout>
 
 
 
