@@ -3,6 +3,10 @@ package com.v60BNS.adapters;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +17,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 import com.v60BNS.R;
+import com.v60BNS.models.Model_images;
 import com.v60BNS.models.images_model;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -23,11 +30,11 @@ public class Add_Post_Adapter extends ArrayAdapter<images_model> {
 
     Context context;
     ViewHolder viewHolder;
-    ArrayList<images_model> al_menu = new ArrayList<>();
+    ArrayList<Model_images> al_menu = new ArrayList<>();
 
 
-    public Add_Post_Adapter(Context context, ArrayList<images_model> al_menu) {
-        super(context, R.layout.image_row, al_menu);
+    public Add_Post_Adapter(Context context, ArrayList<Model_images> al_menu) {
+        super(context, R.layout.image_row);
         this.al_menu = al_menu;
         this.context = context;
 
@@ -82,8 +89,9 @@ public class Add_Post_Adapter extends ArrayAdapter<images_model> {
             viewHolder.tv_foldersize.setText(al_menu.get(position).getAl_imagepath().size()+"");
 
 
+        Bitmap myBitmap = BitmapFactory.decodeFile(al_menu.get(position).getAl_imagepath().get(0));
 
-        Glide.with(context).load("file://" + al_menu.get(position).getAl_imagepath().get(0))
+        Glide.with(context).load(getUriFromBitmap(myBitmap)).placeholder(R.drawable.post)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(viewHolder.iv_image);
@@ -91,7 +99,28 @@ public class Add_Post_Adapter extends ArrayAdapter<images_model> {
 
         return convertView;
 
+
+
+
     }
+    private Uri getUriFromBitmap(Bitmap bitmap) {
+        String path = "";
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "title", null);
+            return Uri.parse(path);
+
+        } catch (SecurityException e) {
+            //  Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            //Toast.makeText(this, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+
+        }
+        return null;
+    }
+
 
     private static class ViewHolder {
         TextView tv_foldern, tv_foldersize;

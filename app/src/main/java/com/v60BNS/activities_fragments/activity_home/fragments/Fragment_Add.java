@@ -31,7 +31,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.Add_Post_Adapter;
+import com.v60BNS.adapters.Gallary_Adapter;
 import com.v60BNS.databinding.FragmentAddBinding;
+import com.v60BNS.models.Model_images;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.models.images_model;
 import com.v60BNS.preferences.Preferences;
@@ -56,10 +58,9 @@ public class Fragment_Add extends Fragment {
     private String lang;
     private LinearLayoutManager manager;
     private GridLayoutManager manager2;
-    public static ArrayList<images_model> al_images = new ArrayList<>();
+    public static ArrayList<Model_images> al_images = new ArrayList<>();
     boolean boolean_folder;
     Add_Post_Adapter obj_adapter;
-    GridView gv_folder;
     private static final int REQUEST_PERMISSIONS = 100;
 
 
@@ -81,15 +82,14 @@ public class Fragment_Add extends Fragment {
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-        binding.gvFolder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*Intent intent = new Intent(activity, PhotosActivity.class);
-                intent.putExtra("value",i);
-                startActivity(intent);*/
-            }
-        });
-
+//        binding.gvFolder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                /*Intent intent = new Intent(activity, PhotosActivity.class);
+//                intent.putExtra("value",i);
+//                startActivity(intent);*/
+//            }
+//        });
 
         if ((ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(activity,
@@ -110,7 +110,7 @@ public class Fragment_Add extends Fragment {
 
     }
 
-    public ArrayList<images_model> fn_imagespath() {
+    public ArrayList<Model_images> fn_imagespath() {
         al_images.clear();
 
         int int_position = 0;
@@ -154,7 +154,7 @@ public class Fragment_Add extends Fragment {
             } else {
                 ArrayList<String> al_path = new ArrayList<>();
                 al_path.add(absolutePathOfImage);
-                images_model obj_model = new images_model();
+                Model_images obj_model = new Model_images();
                 obj_model.setStr_folder(cursor.getString(column_index_folder_name));
                 obj_model.setAl_imagepath(al_path);
 
@@ -167,14 +167,14 @@ public class Fragment_Add extends Fragment {
         }
 
 
-        for (int i = 0; i < al_images.size(); i++) {
-            Log.e("FOLDER", al_images.get(i).getStr_folder());
-            for (int j = 0; j < al_images.get(i).getAl_imagepath().size(); j++) {
-                Log.e("FILE", al_images.get(i).getAl_imagepath().get(j));
-            }
-        }
+//        for (int i = 0; i < al_images.size(); i++) {
+//            Log.e("FOLDER", al_images.get(i).getStr_folder());
+//            for (int j = 0; j < al_images.get(i).getAl_imagepath().size(); j++) {
+//                Log.e("FILE", al_images.get(i).getAl_imagepath().get(j));
+//            }
+//        }
         obj_adapter = new Add_Post_Adapter(activity,al_images);
-        gv_folder.setAdapter(obj_adapter);
+        binding.gvFolder.setAdapter(obj_adapter);
         return al_images;
     }
 

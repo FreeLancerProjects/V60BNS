@@ -66,7 +66,7 @@
                 <FrameLayout
                     android:id="@+id/flCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recViewStatus"
@@ -79,7 +79,9 @@
                         android:id="@+id/progBarCategory"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        />
                 </FrameLayout>
 
                 <FrameLayout

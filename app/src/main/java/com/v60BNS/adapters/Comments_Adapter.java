@@ -76,8 +76,8 @@ public class Comments_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             msgRightHolder.binding.edtcomment.setCursorVisible(true);
             msgRightHolder.binding.edtcomment.setText("الرد");
             msgRightHolder.binding.edtcomment.setSelection(4);
-            Log.e(";lfll",comments_adapter.hight+"");
-            msgRightHolder.itemView.scrollTo(0, msgRightHolder.binding.recreplayes.getBottom() + comments_adapter.hight + 350);
+            Log.e(";lfll", comments_adapter.hight + "");
+            msgRightHolder.itemView.scrollTo(0, msgRightHolder.binding.recreplayes.getBottom() + comments_adapter.hight + 168);
             msgRightHolder.binding.edtcomment.requestFocus();
             InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             if (inputMethodManager != null) {

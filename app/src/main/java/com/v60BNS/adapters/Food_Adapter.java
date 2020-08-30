@@ -1,18 +1,17 @@
 package com.v60BNS.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.v60BNS.R;
-import com.v60BNS.databinding.CommentRowBinding;
-import com.v60BNS.databinding.ReplayRowBinding;
+import com.v60BNS.databinding.DepartmentRowBinding;
+import com.v60BNS.databinding.FoodRowBinding;
 import com.v60BNS.models.MarketCatogryModel;
 
 import java.util.List;
@@ -20,25 +19,22 @@ import java.util.Locale;
 
 import io.paperdb.Paper;
 
-public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Food_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<MarketCatogryModel.Data> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
-    private Comments_Adapter comments_adapter;
-    private int itemcount;
-    public static int  hight;
+    private Fragment fragment;
 
-    public Replayes_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Comments_Adapter comments_adapter, int itemcount) {
+    public Food_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-        this.comments_adapter = comments_adapter;
-        this.itemcount = itemcount;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -46,7 +42,7 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        ReplayRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.replay_row, parent, false);
+        FoodRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.food_row, parent, false);
         return new EventsHolder(binding);
 
 
@@ -57,20 +53,7 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
-        msgRightHolder.binding.ll.post(new Runnable() {
-            @Override
-            public void run() {
-                hight = msgRightHolder.binding.ll.getBottom();
-                Log.e("lll",hight+"");
-            }
-        });
 
-        msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                comments_adapter.setcursor(itemcount);
-            }
-        });
 
     }
 
@@ -81,9 +64,9 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     public class EventsHolder extends RecyclerView.ViewHolder {
-        public ReplayRowBinding binding;
+        public FoodRowBinding binding;
 
-        public EventsHolder(@NonNull ReplayRowBinding binding) {
+        public EventsHolder(@NonNull FoodRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 

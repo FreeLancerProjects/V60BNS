@@ -24,8 +24,12 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.tabs.TabLayout;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
+import com.v60BNS.adapters.Categorys_Adapter;
+import com.v60BNS.adapters.Department_Adapter;
+import com.v60BNS.adapters.Food_Adapter;
 import com.v60BNS.adapters.Slider_Adapter;
 import com.v60BNS.databinding.FragmentStoreBinding;
+import com.v60BNS.models.MarketCatogryModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
@@ -51,6 +55,9 @@ public class Fragment_Store extends Fragment {
     private List<SliderModel> sliderModels;
     private Slider_Adapter sliderAdapter;
     private UserModel userModel;
+    private List<MarketCatogryModel.Data> dataList;
+    private Department_Adapter categorys_adapter;
+    private Food_Adapter food_adapter;
     private int current_page = 0, NUM_PAGES;
 
     public static Fragment_Store newInstance() {
@@ -79,6 +86,7 @@ public class Fragment_Store extends Fragment {
     }
 
     private void initData() {
+        dataList = new ArrayList<>();
         sliderModels.add(new SliderModel());
         sliderModels.add(new SliderModel());
         sliderModels.add(new SliderModel());
@@ -104,8 +112,35 @@ public class Fragment_Store extends Fragment {
         binding.progBarSlider.setVisibility(View.GONE);
         binding.progBarOffer.setVisibility(View.GONE);
 
+        categorys_adapter = new Department_Adapter(dataList, activity, this);
 
+        food_adapter = new Food_Adapter(dataList, activity, this);
+        binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        binding.recViewStatus.setAdapter(categorys_adapter);
+        binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewFavoriteOffers.setAdapter(food_adapter);
+        Adddata();
+    }
 
+    private void Adddata() {
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        categorys_adapter.notifyDataSetChanged();
+        food_adapter.notifyDataSetChanged();
     }
 
 

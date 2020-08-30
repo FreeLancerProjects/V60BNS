@@ -59,9 +59,9 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
 
-        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
-        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
-        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
+//        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
+//        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+//        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
         msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
