@@ -87,4 +87,12 @@
     <string name="terms_of_service">Terms Of Service</string>
     <string name="help">Help</string>
     <string name="version_no">Version Number</string>
+    <string name="the_ingredients">The Ingredients</string>
+    <string name="specifications">Specifications</string>
+    <string name="weight">Weight</string>
+    <string name="colorss">Color</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="quantity">Quantity</string>
+    <string name="cart">Cart</string>
+    <string name="total">Total</string>
 </resources>

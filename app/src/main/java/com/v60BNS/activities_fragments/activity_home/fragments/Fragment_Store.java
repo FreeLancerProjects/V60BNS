@@ -23,6 +23,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.tabs.TabLayout;
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_coffee_detials.CoffeeDetialsActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.Categorys_Adapter;
 import com.v60BNS.adapters.Department_Adapter;
@@ -188,4 +189,8 @@ public class Fragment_Store extends Fragment {
     }
 
 
+    public void showdetials() {
+        Intent intent = new Intent(activity, CoffeeDetialsActivity.class);
+        startActivity(intent);
+    }
 }

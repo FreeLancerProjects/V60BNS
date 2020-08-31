@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Store;
 import com.v60BNS.databinding.CoffeeRowBinding;
+import com.v60BNS.databinding.IngredientsRowBinding;
 import com.v60BNS.models.MarketCatogryModel;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.Locale;
 
 import io.paperdb.Paper;
 
-public class Food_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Ingredients_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<MarketCatogryModel.Data> orderlist;
     private Context context;
@@ -29,7 +30,7 @@ public class Food_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int i = -1;
     private Fragment fragment;
 
-    public Food_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Fragment fragment) {
+    public Ingredients_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -43,7 +44,7 @@ public class Food_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        CoffeeRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.coffee_row, parent, false);
+        IngredientsRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.ingredients_row, parent, false);
         return new EventsHolder(binding);
 
 
@@ -71,9 +72,9 @@ msgRightHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
 
     public class EventsHolder extends RecyclerView.ViewHolder {
-        public CoffeeRowBinding binding;
+        public IngredientsRowBinding binding;
 
-        public EventsHolder(@NonNull CoffeeRowBinding binding) {
+        public EventsHolder(@NonNull IngredientsRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
 

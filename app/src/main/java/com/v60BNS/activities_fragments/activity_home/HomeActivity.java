@@ -27,6 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_cart.CartActivity;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Add;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Comments;
@@ -104,7 +105,13 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+binding.flSearch.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent intent=new Intent(HomeActivity.this, CartActivity.class);
+        startActivity(intent);
+    }
+});
         //  setUpBottomNavigation();
 
 
