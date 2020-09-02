@@ -4,75 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data></data>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/flImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/flImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/user"
+                    app:civ_border_color="@color/gray4"
+                    app:civ_border_width="1dp" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/flImage"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat">
+
+                <TextView
+                    android:id="@+id/tvreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:text="ahmed"
+                    android:textColor="@color/gray12"
+                    android:textSize="14sp" />
+
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_maxStarSize="20dp"
+                    app:srb_numberOfStars="5"
+                    app:srb_starSize="15dp"
+                    app:srb_stepSize=".5" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/user"
-                app:civ_border_color="@color/gray4"
-                app:civ_border_width="1dp" />
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/flImage"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlCompat">
-
-            <TextView
-                android:id="@+id/tvreview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-
-                android:text="ahmed"
-                android:textColor="@color/gray12"
-                android:textSize="14sp" />
-
-            <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srb_maxStarSize="20dp"
-                app:srb_numberOfStars="5"
-                app:srb_starSize="15dp"
-                app:srb_stepSize=".5" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray15"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        />
-</LinearLayout>
+            android:background="@color/gray3" />
+    </LinearLayout>
 </layout>
