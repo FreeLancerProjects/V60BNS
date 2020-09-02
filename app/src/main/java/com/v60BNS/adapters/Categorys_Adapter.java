@@ -74,7 +74,6 @@ public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void story(int position) {
-
         ArrayList<MyStory> myStories = new ArrayList<>();
         MyStory myStory = new MyStory(
                 "https://media.pri.org/s3fs-public/styles/story_main/public/images/2019/09/092419-germany-climate.jpg?itok=P3FbPOp-",
