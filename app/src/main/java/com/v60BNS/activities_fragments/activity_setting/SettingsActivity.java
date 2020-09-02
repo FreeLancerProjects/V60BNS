@@ -20,6 +20,7 @@ import com.v60BNS.activities_fragments.activity_language.LanguageActivity;
 import com.v60BNS.databinding.ActivitySettingsBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language;
+import com.v60BNS.models.DefaultSettings;
 import com.v60BNS.preferences.Preferences;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     private ActivitySettingsBinding binding;
     private String lang;
     private Preferences preferences;
+    private DefaultSettings defaultSettings;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -46,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
 
     private void initView() {
         preferences = Preferences.getInstance();
+        defaultSettings = preferences.getAppSetting(this);
 
         Paper.init(this);
         lang = Paper.book().read("lang", "ar");
@@ -55,6 +58,16 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
         binding.tvVersion.setText(BuildConfig.VERSION_NAME);
 
 
+        if (defaultSettings!=null){
+            if (defaultSettings.getRingToneName()!=null&&!defaultSettings.getRingToneName().isEmpty()){
+                binding.tvRingtoneName.setText(defaultSettings.getRingToneName());
+            }else {
+                binding.tvRingtoneName.setText(getString(R.string.default1));
+            }
+        }else {
+            binding.tvRingtoneName.setText(getString(R.string.default1));
+
+        }
     }
 
 
@@ -118,13 +131,41 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     }
 
     @Override
+    public void onTone() {
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+        startActivityForResult(intent, 100);
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
 
+            if (uri != null) {
+                Ringtone ringtone = RingtoneManager.getRingtone(this,uri);
+                String name = ringtone.getTitle(this);
+                binding.tvRingtoneName.setText(name);
 
-    }
+                if (defaultSettings==null){
+                    defaultSettings = new DefaultSettings();
+                }
+
+                defaultSettings.setRingToneUri(uri.toString());
+                defaultSettings.setRingToneName(name);
+                preferences.createUpdateAppSetting(this,defaultSettings);
+
+
+            }
+        } else if (requestCode == 200 && resultCode == RESULT_OK ) {
+
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 }

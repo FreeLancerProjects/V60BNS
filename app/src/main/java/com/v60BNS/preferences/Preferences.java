@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
+import com.v60BNS.models.DefaultSettings;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.tags.Tags;
 import com.google.gson.Gson;
@@ -23,27 +24,22 @@ public class Preferences {
     }
 
 
-
-
- /*   public void createUpdateAppSetting(Context context, DefaultSettings settings) {
-        SharedPreferences preferences = context.getSharedPreferences("settingsRef", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String data = gson.toJson(settings);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("settings", data);
-        editor.apply();
-    }*/
-/*
+       public void createUpdateAppSetting(Context context, DefaultSettings settings) {
+           SharedPreferences preferences = context.getSharedPreferences("settingsRef", Context.MODE_PRIVATE);
+           Gson gson = new Gson();
+           String data = gson.toJson(settings);
+           SharedPreferences.Editor editor = preferences.edit();
+           editor.putString("settings", data);
+           editor.apply();
+       }
     public DefaultSettings getAppSetting(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("settingsRef", Context.MODE_PRIVATE);
         Gson gson = new Gson();
-        return gson.fromJson(preferences.getString("settings",""),DefaultSettings.class);
-    }*/
+        return gson.fromJson(preferences.getString("settings", ""), DefaultSettings.class);
+    }
 
 
-
-
-   public void create_update_userdata(Context context, UserModel userModel) {
+    public void create_update_userdata(Context context, UserModel userModel) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String user_data = gson.toJson(userModel);
@@ -54,13 +50,14 @@ public class Preferences {
 
     }
 
-  public UserModel getUserData(Context context) {
+    public UserModel getUserData(Context context) {
         SharedPreferences preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String user_data = preferences.getString("user_data", "");
         UserModel userModel = gson.fromJson(user_data, UserModel.class);
         return userModel;
     }
+
     public void create_update_session(Context context, String session) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
@@ -70,10 +67,6 @@ public class Preferences {
 
 
     }
-
-
-
-
 
 
     public String getSession(Context context) {
@@ -90,7 +83,6 @@ public class Preferences {
         edit.apply();
         create_update_session(context, Tags.session_logout);
     }
-
 
 
 }

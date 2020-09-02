@@ -95,5 +95,6 @@
     <string name="quantity">Quantity</string>
     <string name="cart">Cart</string>
     <string name="total">Total</string>
-
+    <string name="notification_tone">نغمة التنبية</string>
+    <string name="default1">افتراضي</string>
 </resources>
