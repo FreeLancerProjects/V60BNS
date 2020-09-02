@@ -86,7 +86,6 @@ public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         myStories.add(myStory);
 
 
-
         new StoryView.Builder(((FragmentActivity) context).getSupportFragmentManager())
                 .setStoriesList(myStories)
                 .setTitleLogoUrl("https://mfiles.alphacoders.com/681/681242.jpg")

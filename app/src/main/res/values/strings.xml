@@ -101,4 +101,5 @@
     <string name="add_thing">Write something about this picture</string>
     <string name="notification_tone">Notification Tone</string>
     <string name="default1">Default</string>
+    <string name="places">Places</string>
 </resources>

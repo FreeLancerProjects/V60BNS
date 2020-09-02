@@ -139,13 +139,16 @@
                             android:id="@+id/progBarOffer"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:visibility="gone"
                             android:layout_gravity="center" />
 
                     </FrameLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        >
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imagemyprofile"

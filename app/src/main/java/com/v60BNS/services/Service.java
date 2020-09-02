@@ -1,6 +1,7 @@
 package com.v60BNS.services;
 
 
+import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.ReviewModels;
 
 import retrofit2.Call;
@@ -11,8 +12,16 @@ public interface Service {
 
 
     @GET("place/details/json")
-    Call<ReviewModels> getPlaceReview(@Query(value = "placeid") String placeid,
+    Call<NearbyStoreDataModel> getPlaceReview(@Query(value = "placeid") String placeid,
                                        @Query(value = "key") String key
+    );
+
+    @GET("place/nearbysearch/json")
+    Call<NearbyStoreDataModel> getNearbyStores(@Query(value = "location") String location,
+                                               @Query(value = "radius") int radius,
+                                               @Query(value = "type") String type,
+                                               @Query(value = "language") String language,
+                                               @Query(value = "key") String key
     );
 
 }

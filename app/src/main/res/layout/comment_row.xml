@@ -90,7 +90,7 @@
                     app:el_duration="1000"
 
 
-                    app:el_expanded="true"
+                    app:el_expanded="false"
                     app:el_parallax=".5">
 
                     <LinearLayout
