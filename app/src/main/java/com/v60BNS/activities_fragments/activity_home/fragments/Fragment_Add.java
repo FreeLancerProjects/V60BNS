@@ -1,53 +1,44 @@
 package com.v60BNS.activities_fragments.activity_home.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.PorterDuff;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
-import com.v60BNS.adapters.Add_Post_Adapter;
-import com.v60BNS.adapters.Gallary_Adapter;
 import com.v60BNS.databinding.FragmentAddBinding;
-import com.v60BNS.models.Model_images;
 import com.v60BNS.models.UserModel;
-import com.v60BNS.models.images_model;
 import com.v60BNS.preferences.Preferences;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.OutputStream;
 import java.util.Locale;
 
 import io.paperdb.Paper;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+
+import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Add extends Fragment {
 
@@ -56,12 +47,9 @@ public class Fragment_Add extends Fragment {
     private Preferences preferences;
     private UserModel userModel;
     private String lang;
-    private LinearLayoutManager manager;
-    private GridLayoutManager manager2;
-    public static ArrayList<Model_images> al_images = new ArrayList<>();
-    boolean boolean_folder;
-    Add_Post_Adapter obj_adapter;
-    private static final int REQUEST_PERMISSIONS = 100;
+    private static final int SELECT_PICTURE = 1;
+
+    private String selectedImagePath;
 
 
     public static Fragment_Add newInstance() {
@@ -82,117 +70,80 @@ public class Fragment_Add extends Fragment {
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-//        binding.gvFolder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                /*Intent intent = new Intent(activity, PhotosActivity.class);
-//                intent.putExtra("value",i);
-//                startActivity(intent);*/
-//            }
-//        });
-
-        if ((ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) && (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.READ_EXTERNAL_STORAGE))) {
-
-            } else {
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_PERMISSIONS);
+        binding.btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                startActivityForResult(intent, 1);
             }
-        }else {
-            Log.e("Else","Else");
-            fn_imagespath();
-        }
-
-    }
-
-    public ArrayList<Model_images> fn_imagespath() {
-        al_images.clear();
-
-        int int_position = 0;
-        Uri uri;
-        Cursor cursor;
-        int column_index_data, column_index_folder_name;
-
-        String absolutePathOfImage = null;
-        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-
-        String[] projection = {MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
-
-        final String orderBy = MediaStore.Images.Media.DATE_TAKEN;
-        cursor = activity.getContentResolver().query(uri, projection, null, null, orderBy + " DESC");
-
-        column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        column_index_folder_name = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-        while (cursor.moveToNext()) {
-            absolutePathOfImage = cursor.getString(column_index_data);
-        //    Log.e("Column", absolutePathOfImage);
-//            Log.e("Folder", cursor.getString(column_index_folder_name));
-
-            for (int i = 0; i < al_images.size(); i++) {
-                if (al_images.get(i).getStr_folder().equals(cursor.getString(column_index_folder_name))) {
-                    boolean_folder = true;
-                    int_position = i;
-                    break;
-                } else {
-                    boolean_folder = false;
-                }
-            }
-
-
-            if (boolean_folder) {
-
-                ArrayList<String> al_path = new ArrayList<>();
-                al_path.addAll(al_images.get(int_position).getAl_imagepath());
-                al_path.add(absolutePathOfImage);
-                al_images.get(int_position).setAl_imagepath(al_path);
-
-            } else {
-                ArrayList<String> al_path = new ArrayList<>();
-                al_path.add(absolutePathOfImage);
-                Model_images obj_model = new Model_images();
-                obj_model.setStr_folder(cursor.getString(column_index_folder_name));
-                obj_model.setAl_imagepath(al_path);
-
-                al_images.add(obj_model);
-
+        });
+        binding.btnGallary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 2);
 
             }
+        });
 
 
-        }
-
-
-//        for (int i = 0; i < al_images.size(); i++) {
-//            Log.e("FOLDER", al_images.get(i).getStr_folder());
-//            for (int j = 0; j < al_images.get(i).getAl_imagepath().size(); j++) {
-//                Log.e("FILE", al_images.get(i).getAl_imagepath().get(j));
-//            }
-//        }
-        obj_adapter = new Add_Post_Adapter(activity,al_images);
-        binding.gvFolder.setAdapter(obj_adapter);
-        return al_images;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case REQUEST_PERMISSIONS: {
-                for (int i = 0; i < grantResults.length; i++) {
-                    if (grantResults.length > 0 && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        fn_imagespath();
-                    } else {
-                        Toast.makeText(activity, "The app was not allowed to read or write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp : f.listFiles()) {
+                    if (temp.getName().equals("temp.jpg")) {
+                        f = temp;
+                        break;
                     }
                 }
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
+                            bitmapOptions);
+                    binding.imgBanner.setImageBitmap(bitmap);
+                    String path = android.os.Environment
+                            .getExternalStorageDirectory()
+                            + File.separator
+                            + "Phoenix" + File.separator + "default";
+                    f.delete();
+                    OutputStream outFile = null;
+                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    try {
+                        outFile = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == 2) {
+                Uri selectedImage = data.getData();
+                String[] filePath = { MediaStore.Images.Media.DATA };
+             //   Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+//                c.moveToFirst();
+//                int columnIndex = c.getColumnIndex(filePath[0]);
+//                String picturePath = c.getString(columnIndex);
+//                c.close();
+               // Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+               // binding.imgBanner.setImageBitmap(thumbnail);
             }
         }
+
     }
 
 }

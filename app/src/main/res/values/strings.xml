@@ -95,6 +95,10 @@
     <string name="quantity">Quantity</string>
     <string name="cart">Cart</string>
     <string name="total">Total</string>
+    <string name="add_post">Add Post</string>
+    <string name="post">post</string>
+    <string name="add_place">Add Place</string>
+    <string name="add_thing">Write something about this picture</string>
     <string name="notification_tone">Notification Tone</string>
     <string name="default1">Default</string>
 </resources>

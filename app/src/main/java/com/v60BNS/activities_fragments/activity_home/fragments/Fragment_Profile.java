@@ -79,9 +79,9 @@ public class Fragment_Profile extends Fragment  {
 
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewFavoriteOffers.setAdapter(post_adapter);
-        Comments_Adapter comments_adapter = new Comments_Adapter(dataList, activity);
-        recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
-        recViewcomments.setAdapter(comments_adapter);
+//        Comments_Adapter comments_adapter = new Comments_Adapter(dataList, activity);
+//        recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
+//        recViewcomments.setAdapter(comments_adapter);
         Adddata();
         binding.imgSetting.setOnClickListener(new View.OnClickListener() {
             @Override

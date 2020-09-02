@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+
+        <variable
+            name="model"
+            type="com.v60BNS.models.ReviewModels.Reviews" />
+    </data>
 
 
     <LinearLayout
@@ -17,12 +22,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/r_im_search"
+                image="@{model.profile_photo_url}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/user"
                 android:tint="@color/colorAccent"
-
                 app:civ_circle_background_color="@color/gray3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +55,7 @@
                         android:layout_marginTop="5dp"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-                        android:text="احمد"
+                        android:text="@{model.author_name}"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -61,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="مبروووك "
+                    android:text="@{model.text}"
                     android:textColor="@color/gray3"
                     android:textSize="10sp" />
 
@@ -72,6 +77,7 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/replay"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
 

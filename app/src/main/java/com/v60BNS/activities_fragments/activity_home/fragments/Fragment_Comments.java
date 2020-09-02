@@ -9,16 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
+import com.v60BNS.adapters.StarComments_Adapter;
 import com.v60BNS.databinding.FragmentCommentsBinding;
+import com.v60BNS.models.MarketCatogryModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_Comments extends Fragment {
 
     private HomeActivity activity;
     private FragmentCommentsBinding binding;
-
+    private List<MarketCatogryModel.Data> dataList;
+    private StarComments_Adapter starComments_adapter;
 
 
     public static Fragment_Comments newInstance() {
@@ -36,15 +43,41 @@ public class Fragment_Comments extends Fragment {
     }
 
     private void initView() {
+        dataList = new ArrayList<>();
+        activity = (HomeActivity) getActivity();
+        starComments_adapter = new StarComments_Adapter(dataList, activity);
+        binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewFavoriteOffers.setAdapter(starComments_adapter);
+        Adddata();
     }
+
+    private void Adddata() {
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new MarketCatogryModel.Data());
+        starComments_adapter.notifyDataSetChanged();
+
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
     }
-
-
 
 
 }

@@ -51,8 +51,9 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void initView() {
-        preferences = Preferences.getInstance();
         dataList = new ArrayList<>();
+
+        preferences = Preferences.getInstance();
 
         Paper.init(this);
         lang = Paper.book().read("lang", "ar");
@@ -60,14 +61,13 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         binding.setBackListener(this);
         food_adapter=new CartAdapter(dataList,this);
 
-        initData();
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(food_adapter);
+        initData();
 
     }
 
     private void initData() {
-        dataList = new ArrayList<>();
 
 
         Adddata();

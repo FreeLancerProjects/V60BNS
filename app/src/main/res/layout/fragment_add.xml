@@ -25,53 +25,174 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/gray0"
-            android:fillViewport="true"
-           >
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <com.github.siyamed.shapeimageview.RoundedImageView
-                    android:id="@+id/image"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="fitXY"
-                    app:riv_corner_radius="10dp" />
 
-                <FrameLayout
-                    android:id="@+id/flMostSeller"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_marginTop="10dp"
-                    android:minHeight="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/r_im_search"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/user"
+                        android:tint="@color/colorAccent"
+                        app:civ_circle_background_color="@color/gray10"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:siBorderColor="@color/colorAccent"
+                        app:siBorderWidth="1dp"
+                        tools:ignore="RtlCompat" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/lin1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/r_im_search"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="محمد العشري "
+                            android:textColor="@color/gray12"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|end"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/post"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="-30dp"
+
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+
+                            >
 
 
-                    >
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+
+                                android:layout_gravity="center"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="5dp"
+
+                                android:padding="5dp"
+                                android:src="@drawable/ic_map"
+                                android:tint="@color/colorPrimary"
+
+                                tools:ignore="RtlCompat" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/add_place"
+                                android:textColor="@color/color5"
+                                android:textSize="14sp" />
 
 
-                        <GridView
+                        </LinearLayout>
+
+
+                        <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/gv_folder"
-                            android:numColumns="2"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:hint="@string/add_thing"
+                            android:textColor="@color/color5"
+                            android:background="@color/gray0"
+                            android:layout_marginBottom="20dp"
+                            android:textSize="14sp" />
 
-                         >
 
-                        </GridView>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="250dp"
+                        android:src="@drawable/post"
+                        android:id="@+id/imgBanner"
+                        app:layout_constraintTop_toBottomOf="@id/lin1"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:padding="5dp"
+                        >
 
 
-                    <ProgressBar
-                        android:id="@+id/progBarOffer"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:visibility="gone"
-                        android:layout_gravity="center" />
+                        <Button
+                            android:id="@+id/btnGallary"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/small_rounded_white2"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="17sp"
+                            android:text="@string/gallery"
+                            />
 
-                </FrameLayout>
 
+                        <Button
+                            android:id="@+id/btnCamera"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/small_rounded_primary"
+                            android:textColor="@color/white"
+                            android:textSize="17sp"
+                            android:text="@string/camera"
+                            />
+
+
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </LinearLayout>
