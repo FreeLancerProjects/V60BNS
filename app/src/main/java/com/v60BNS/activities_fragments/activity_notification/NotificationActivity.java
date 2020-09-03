@@ -48,9 +48,8 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
     private boolean isFromFirebase = false;
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

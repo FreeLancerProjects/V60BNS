@@ -20,6 +20,7 @@ import com.v60BNS.preferences.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,11 +37,10 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private Ingredients_Adapter food_adapter;
     private int current_page = 0, NUM_PAGES;
 
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
         dataList = new ArrayList<>();
 
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setBackListener(this);
         change_slide_image();

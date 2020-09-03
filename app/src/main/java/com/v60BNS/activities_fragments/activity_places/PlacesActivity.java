@@ -44,6 +44,7 @@ import com.v60BNS.remote.Api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -65,9 +66,9 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
 
@@ -86,7 +87,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
         preferences = Preferences.getInstance();
 
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setBackListener(this);
         food_adapter = new Places_Adapter(dataList, this);

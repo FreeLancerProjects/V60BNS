@@ -12,6 +12,8 @@ import com.v60BNS.R;
 import com.v60BNS.databinding.ActivityLanguageBinding;
 import com.v60BNS.language.Language;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 
 public class LanguageActivity extends AppCompatActivity {
@@ -21,9 +23,8 @@ public class LanguageActivity extends AppCompatActivity {
     private boolean canSelect = false;
     private String selectedLang="";
     @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
     @Override
@@ -35,7 +36,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     private void initView() {
         Paper.init(this);
-        lang = Paper.book().read("lang","ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         selectedLang = lang;
 
         binding.setLang(lang);

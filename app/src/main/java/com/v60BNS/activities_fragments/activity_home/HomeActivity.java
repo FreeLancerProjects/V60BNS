@@ -39,6 +39,8 @@ import com.v60BNS.language.Language;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 
 
@@ -56,9 +58,9 @@ public class HomeActivity extends AppCompatActivity {
     private String token;
 
 
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
 
@@ -79,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
 
         binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

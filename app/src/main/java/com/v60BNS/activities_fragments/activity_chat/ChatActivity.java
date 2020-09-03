@@ -28,7 +28,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Paper.book().read("lang", "ar")));
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
     @Override

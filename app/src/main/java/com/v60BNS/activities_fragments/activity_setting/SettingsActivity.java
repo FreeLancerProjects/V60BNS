@@ -26,6 +26,7 @@ import com.v60BNS.models.DefaultSettings;
 import com.v60BNS.preferences.Preferences;
 
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 
@@ -36,9 +37,8 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     private DefaultSettings defaultSettings;
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
         defaultSettings = preferences.getAppSetting(this);
 
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setActions(this);
         binding.close.setOnClickListener(v -> finish());

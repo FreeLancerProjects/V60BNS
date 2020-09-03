@@ -23,6 +23,7 @@ import com.v60BNS.preferences.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,10 +37,9 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
 
     private List<MarketCatogryModel.Data> dataList;
     private CartAdapter food_adapter;
-
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
 
@@ -56,7 +56,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         preferences = Preferences.getInstance();
 
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setBackListener(this);
         food_adapter = new CartAdapter(dataList, this);

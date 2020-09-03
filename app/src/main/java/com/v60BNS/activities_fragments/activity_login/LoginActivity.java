@@ -30,6 +30,7 @@ import com.v60BNS.share.Common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 
@@ -43,9 +44,8 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
     private String phone_code = "+966";
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
         binding.setLoginModel(loginModel);
         binding.setListener(this);
         Paper.init(this);
-        lang = Paper.book().read("lang","ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.lanuch);
         binding.cons.startAnimation(animation);
