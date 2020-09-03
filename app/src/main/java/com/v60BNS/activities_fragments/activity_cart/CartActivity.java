@@ -59,7 +59,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
         lang = Paper.book().read("lang", "ar");
         binding.setLang(lang);
         binding.setBackListener(this);
-        food_adapter=new CartAdapter(dataList,this);
+        food_adapter = new CartAdapter(dataList, this);
 
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(food_adapter);
@@ -94,7 +94,6 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -108,6 +107,6 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
 
     public void remove(int position) {
         dataList.remove(position);
-        food_adapter.notifyDataSetChanged();
+        food_adapter.notifyItemRemoved(position);
     }
 }
