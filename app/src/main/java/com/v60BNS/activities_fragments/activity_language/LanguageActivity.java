@@ -71,6 +71,7 @@ public class LanguageActivity extends AppCompatActivity {
         }
         if (type == 0) {
             canSelect = true;
+            updateBtnUi();
         }
         binding.consAr.setOnClickListener(v -> {
 
