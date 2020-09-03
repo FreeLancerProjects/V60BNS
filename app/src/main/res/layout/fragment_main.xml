@@ -30,10 +30,7 @@
                 android:id="@+id/nested"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/gray0"
-                android:fillViewport="true"
-                android:fitsSystemWindows="true"
-                android:scrollbars="none">
+                android:fillViewport="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,7 +40,8 @@
                     <FrameLayout
                         android:id="@+id/flSlider"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recViewStatus"

@@ -155,14 +155,28 @@
                         android:paddingEnd="5dp"
                         android:text="@string/the_ingredients"
                         android:textColor="@color/color5"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="تلىتىتلبلاىلتلاىتلاىتىلالتىلبلالىىلىلالىلالىلاىىلا
+تتلتلتلتتلتلتلتتلتلتلتلتلتتلتلتلتلتلتتلتلتلتلتلتلتتلتلتلتلتلتتلتلتلتلتلتتلتلتلتتل
+لتتلتلتلتلتتلتلتلتلتلتلتلتلتت
+بنتلتلتتتلاتتلاتلاتلاتلاتتلاتلاتلات
+تتلارتلاتتلاتلاتلاتلاتلاتتلاتلاتلاتلاتلاتلاتلاتتلاتلاتلاتلاتلاتتلاتلاتلاتتلالاتتلاتلاتلاتلاتتلاتلاتلاتلاتتلاتلاتلاتلاتتلاتلاتلاتلاتلاتلاتتلاتلاتلاتلاتلاتلاتلاتتلا"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:visibility="gone"
                     tools:ignore="RtlCompat">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -189,7 +203,7 @@
                         android:paddingEnd="5dp"
                         android:text="@string/specifications"
                         android:textColor="@color/color5"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -206,7 +220,7 @@
                         android:paddingEnd="5dp"
                         android:text="@string/weight"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -216,7 +230,7 @@
                         android:paddingEnd="5dp"
                         android:text=" : 20 g"
                         android:textColor="@color/color5"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -234,7 +248,7 @@
                         android:paddingEnd="5dp"
                         android:text="@string/colorss"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -245,7 +259,7 @@
 
                         android:text=" : Light"
                         android:textColor="@color/color5"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -280,7 +294,7 @@
                         android:paddingEnd="5dp"
                         android:text="@string/quantity"
                         android:textColor="@color/color5"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -306,6 +320,7 @@
                             android:tint="@color/colorPrimary" />
 
                         <TextView
+                            android:id="@+id/tvAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"

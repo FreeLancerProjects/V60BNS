@@ -195,7 +195,7 @@
                                 android:maxLines="2"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
-                                android:text="@string/add_to_cart"
+                                android:text="@string/pay"
                                 android:textColor="@color/white"
                                 android:textSize="15sp"
                                 tools:ignore="RtlCompat" />
@@ -254,6 +254,7 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:visibility="gone"
                 android:src="@drawable/ic_shopping_cart"
                 android:tint="@color/colorPrimary" />
 

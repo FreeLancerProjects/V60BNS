@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_cart.CartActivity;
 import com.v60BNS.models.MarketCatogryModel;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.Locale;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
     private List<MarketCatogryModel.Data> orderlist;
     private Context context;
+    private int i = -1;
 
 
     public CartAdapter(List<MarketCatogryModel.Data> orderlist, Context context) {
@@ -40,30 +42,36 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
 
 
     @Override
-    public void onBindViewHolder(@NonNull final Cart_Holder holder, final int i) {
+    public void onBindViewHolder(@NonNull final Cart_Holder holder, final int position) {
 
 
         holder.imgIncrease.setOnClickListener(v -> {
-            int count = Integer.parseInt(holder.tvAmount.getText().toString()) + 1;
-            holder.tvAmount.setText(String.valueOf(count));
+                    int count = Integer.parseInt(holder.tvAmount.getText().toString()) + 1;
+                    holder.tvAmount.setText(String.valueOf(count));
 
-            notifyItemChanged(holder.getAdapterPosition());
-        }
+                    //   notifyItemChanged(holder.getAdapterPosition());
+                }
 
         );
         holder.imgDecrease.setOnClickListener(v -> {
 
-            int count = Integer.parseInt(holder.tvAmount.getText().toString());
-            if (count > 1) {
-                count = count - 1;
-                holder.tvAmount.setText(String.valueOf(count));
+                    int count = Integer.parseInt(holder.tvAmount.getText().toString());
+                    if (count > 1) {
+                        count = count - 1;
+                        holder.tvAmount.setText(String.valueOf(count));
 
-                notifyItemChanged(holder.getAdapterPosition());            }
-
-        }
+                        //     notifyItemChanged(holder.getAdapterPosition());            }
+                    }
+                }
 
         );
-
+        holder.imDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CartActivity activity=(CartActivity)context;
+                activity.remove(holder.getLayoutPosition());
+            }
+        });
 
     }
 
@@ -75,7 +83,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
     public class Cart_Holder extends RecyclerView.ViewHolder {
         private TextView tvTitle, tvCost, tvAmount;
         private RoundedImageView image;
-        private ImageView imgIncrease, imgDecrease;
+        private ImageView imgIncrease, imgDecrease, imDelete;
         public ConstraintLayout consBackground, consForeground;
         public LinearLayout llLeft, llRight;
 
@@ -87,9 +95,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
             imgIncrease = itemView.findViewById(R.id.imgIncrease);
             imgDecrease = itemView.findViewById(R.id.imgDecrease);
             tvAmount = itemView.findViewById(R.id.tvAmount);
-
+            imDelete = itemView.findViewById(R.id.icon);
             consForeground = itemView.findViewById(R.id.consForeground);
-
 
 
         }

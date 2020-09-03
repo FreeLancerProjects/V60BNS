@@ -87,7 +87,7 @@
     <string name="terms_of_service">الشروط والأحكام</string>
     <string name="help">المساعدة</string>
     <string name="version_no">رقم الأصدار</string>
-    <string name="the_ingredients">The Ingredients</string>
+    <string name="the_ingredients">المكونات</string>
     <string name="specifications">الوصف</string>
     <string name="weight">الوزن</string>
     <string name="colorss">اللون</string>
@@ -102,4 +102,6 @@
     <string name="notification_tone">Notification Tone</string>
     <string name="default1">Default</string>
     <string name="places">Places</string>
+    <string name="pay">Pay</string>
+    <string name="type_message">Type message</string>
 </resources>

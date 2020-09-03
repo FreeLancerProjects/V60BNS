@@ -33,6 +33,7 @@ import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Comments;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Profile;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Store;
+import com.v60BNS.activities_fragments.activity_notification.NotificationActivity;
 import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language;
 import com.v60BNS.models.UserModel;
@@ -112,6 +113,13 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
         startActivity(intent);
     }
 });
+        binding.flNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(HomeActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
         //  setUpBottomNavigation();
 
 

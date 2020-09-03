@@ -105,4 +105,9 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     public void back() {
         finish();
     }
+
+    public void remove(int position) {
+        dataList.remove(position);
+        food_adapter.notifyDataSetChanged();
+    }
 }

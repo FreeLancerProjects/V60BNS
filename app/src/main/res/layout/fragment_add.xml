@@ -120,6 +120,7 @@
                                 tools:ignore="RtlCompat" />
 
                             <TextView
+                                android:id="@+id/tvplaces"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"

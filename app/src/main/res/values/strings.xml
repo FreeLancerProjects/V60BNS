@@ -102,4 +102,6 @@
     <string name="notification_tone">Notification Tone</string>
     <string name="default1">Default</string>
     <string name="places">Places</string>
+    <string name="pay">Pay</string>
+    <string name="type_message">Type message</string>
 </resources>

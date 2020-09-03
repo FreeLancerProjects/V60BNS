@@ -10,12 +10,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.v60BNS.R;
-import com.v60BNS.activity_places.PlacesActivity;
-import com.v60BNS.databinding.CommentRowBinding;
+import com.v60BNS.activities_fragments.activity_places.PlacesActivity;
 import com.v60BNS.databinding.StoreRowBinding;
 import com.v60BNS.models.NearbyModel;
-import com.v60BNS.models.NearbyStoreDataModel;
-import com.v60BNS.models.ReviewModels;
 
 import java.util.List;
 import java.util.Locale;

@@ -1,5 +1,6 @@
 package com.v60BNS.activities_fragments.activity_home.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_chat.ChatActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.StarComments_Adapter;
 import com.v60BNS.databinding.FragmentCommentsBinding;
@@ -45,7 +47,7 @@ public class Fragment_Comments extends Fragment {
     private void initView() {
         dataList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
-        starComments_adapter = new StarComments_Adapter(dataList, activity);
+        starComments_adapter = new StarComments_Adapter(dataList, activity,this);
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewFavoriteOffers.setAdapter(starComments_adapter);
         Adddata();
@@ -80,4 +82,8 @@ public class Fragment_Comments extends Fragment {
     }
 
 
+    public void showchat() {
+        Intent intent = new Intent(activity, ChatActivity.class);
+        startActivity(intent);
+    }
 }

@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 import com.v60BNS.BuildConfig;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_language.LanguageActivity;
+import com.v60BNS.activities_fragments.activity_sign_up.SignUpActivity;
 import com.v60BNS.databinding.ActivitySettingsBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language;
@@ -75,7 +76,8 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
 
     @Override
     public void onEditProfile() {
-
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
 
     @Override

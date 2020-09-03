@@ -24,7 +24,9 @@ import androidx.fragment.app.Fragment;
 
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
+import com.v60BNS.activities_fragments.activity_places.PlacesActivity;
 import com.v60BNS.databinding.FragmentAddBinding;
+import com.v60BNS.models.NearbyModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
 
@@ -63,6 +65,12 @@ public class Fragment_Add extends Fragment {
         initView();
         return binding.getRoot();
     }
+    public void showcomments() {
+        Intent intent = new Intent(activity, PlacesActivity.class);
+        startActivityForResult(intent, 3);
+
+    }
+
 
     private void initView() {
         activity = (HomeActivity) getActivity();
@@ -70,15 +78,15 @@ public class Fragment_Add extends Fragment {
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-    /*    binding.btnCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                startActivityForResult(intent, 1);
-            }
-        });*/
+//       binding.btnCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                startActivityForResult(intent, 1);
+//            }
+//        });
         binding.btnGallary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +95,12 @@ public class Fragment_Add extends Fragment {
 
             }
         });
-
+binding.tvplaces.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        showcomments();
+    }
+});
 
     }
 
@@ -131,7 +144,8 @@ public class Fragment_Add extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == 2) {
+            }
+            else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
                 String[] filePath = { MediaStore.Images.Media.DATA };
              //   Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
@@ -141,6 +155,9 @@ public class Fragment_Add extends Fragment {
 //                c.close();
                // Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
                // binding.imgBanner.setImageBitmap(thumbnail);
+            }
+            else  if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
+
             }
         }
 

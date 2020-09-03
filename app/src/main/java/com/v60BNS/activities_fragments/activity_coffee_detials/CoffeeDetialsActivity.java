@@ -72,7 +72,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
         binding.imageIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.tvquatity.setText((Integer.parseInt(binding.tvquatity.getText().toString()) + 1) + "");
+                binding.tvAmount.setText((Integer.parseInt(binding.tvAmount.getText().toString()) + 1) + "");
 
             }
         });

@@ -1,17 +1,13 @@
 package com.v60BNS.activities_fragments.activity_home.fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
-import com.v60BNS.activity_places.PlacesActivity;
+import com.v60BNS.activities_fragments.activity_places.PlacesActivity;
 import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
 import com.v60BNS.adapters.Categorys_Adapter;
@@ -36,7 +32,6 @@ import com.v60BNS.models.ReviewModels;
 import com.v60BNS.preferences.Preferences;
 import com.v60BNS.remote.Api;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
