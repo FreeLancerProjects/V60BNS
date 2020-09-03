@@ -2,26 +2,14 @@ package com.v60BNS.activities_fragments.activity_coffee_detials;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ResolveInfo;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.v60BNS.R;
-import com.v60BNS.adapters.Department_Adapter;
-import com.v60BNS.adapters.Food_Adapter;
 import com.v60BNS.adapters.Ingredients_Adapter;
-import com.v60BNS.adapters.Slider_Adapter;
 import com.v60BNS.adapters.SlidingImage_Adapter;
 import com.v60BNS.databinding.ActivityCoffeeDetialsBinding;
 import com.v60BNS.interfaces.Listeners;
@@ -69,7 +57,6 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
         lang = Paper.book().read("lang", "ar");
         binding.setLang(lang);
         binding.setBackListener(this);
-        initData();
         change_slide_image();
         food_adapter = new Ingredients_Adapter(dataList, this, null);
         binding.recview.setLayoutManager(new LinearLayoutManager(this));
@@ -89,6 +76,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
 
             }
         });
+        initData();
 
     }
 

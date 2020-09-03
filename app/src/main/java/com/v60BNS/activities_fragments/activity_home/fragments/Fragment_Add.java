@@ -70,7 +70,7 @@ public class Fragment_Add extends Fragment {
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-        binding.btnCamera.setOnClickListener(new View.OnClickListener() {
+    /*    binding.btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -78,7 +78,7 @@ public class Fragment_Add extends Fragment {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                 startActivityForResult(intent, 1);
             }
-        });
+        });*/
         binding.btnGallary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
