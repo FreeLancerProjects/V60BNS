@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.TransitionSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
         binding.setListener(this);
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        Log.e("llll",lang);
         binding.setLang(lang);
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.lanuch);
         binding.cons.startAnimation(animation);

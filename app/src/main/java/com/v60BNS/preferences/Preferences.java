@@ -83,6 +83,18 @@ public class Preferences {
         edit.apply();
         create_update_session(context, Tags.session_logout);
     }
+    public void saveLoginFragmentState(Context context,int state)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("fragment_state",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("state",state);
+        editor.apply();
+    }
+    public int getFragmentState(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("fragment_state",Context.MODE_PRIVATE);
+        return preferences.getInt("state",0);
+    }
 
 
 }

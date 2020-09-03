@@ -85,6 +85,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     @Override
     public void onLanguageSetting() {
         Intent intent = new Intent(this, LanguageActivity.class);
+        intent.putExtra("type",1);
         startActivity(intent);
     }
 
