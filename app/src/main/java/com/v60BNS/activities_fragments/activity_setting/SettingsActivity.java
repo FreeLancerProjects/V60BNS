@@ -77,7 +77,8 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     @Override
     public void onEditProfile() {
         Intent intent = new Intent(this, SignUpActivity.class);
-        startActivity(intent);
+        intent.putExtra("data",preferences.getUserData(this));
+        startActivityForResult(intent,2);
     }
 
     @Override

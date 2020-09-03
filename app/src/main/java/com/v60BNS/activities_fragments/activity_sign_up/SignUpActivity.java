@@ -71,17 +71,20 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         binding.setListener(this);
 
 
-
     }
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            String phone_code = intent.getStringExtra("phone_code");
-            String phone = intent.getStringExtra("phone");
+            if (intent.getStringExtra("phone_code") != null) {
+                String phone_code = intent.getStringExtra("phone_code");
+                String phone = intent.getStringExtra("phone");
 
-            signUpModel.setPhone_code(phone_code);
-            signUpModel.setPhone(phone);
+                signUpModel.setPhone_code(phone_code);
+                signUpModel.setPhone(phone);
+            } else if (intent.getSerializableExtra("data") != null) {
+                binding.btsignup.setText(getResources().getString(R.string.edit_profile));
+            }
         }
     }
 
@@ -130,7 +133,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             ActivityCompat.requestPermissions(this, new String[]{camera_permission, write_permission}, CAMERA_REQ);
         }
     }
-
 
 
     private void SelectImage(int req) {
