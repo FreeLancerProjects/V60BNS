@@ -9,6 +9,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +19,14 @@ import com.v60BNS.BuildConfig;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_about_app.AboutAppActivity;
 import com.v60BNS.activities_fragments.activity_language.LanguageActivity;
+import com.v60BNS.activities_fragments.activity_login.LoginActivity;
 import com.v60BNS.activities_fragments.activity_sign_up.SignUpActivity;
 import com.v60BNS.databinding.ActivitySettingsBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language;
 import com.v60BNS.models.DefaultSettings;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.share.Common;
 
 import java.util.List;
 import java.util.Locale;
@@ -153,6 +156,20 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
         Intent intent = new Intent(SettingsActivity.this, AboutAppActivity.class);
         intent.putExtra("type", 2);
         startActivity(intent);
+    }
+
+    @Override
+    public void logout() {
+        if(preferences.getUserData(this)!=null){
+            Intent intent=new Intent(SettingsActivity.this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+        }
+        else {
+            Intent intent=new Intent(SettingsActivity.this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+        }
     }
 
 

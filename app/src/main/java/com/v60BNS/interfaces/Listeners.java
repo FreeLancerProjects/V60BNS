@@ -31,6 +31,7 @@ public interface Listeners {
         void onRate();
         void onTone();
         void about();
+        void logout();
 
     }
 }
