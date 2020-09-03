@@ -9,12 +9,10 @@ import com.v60BNS.language.Language;
 
 
 public class App extends MultiDexApplication {
-
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(Language.updateResources(newBase, Language.getLanguage(newBase)));
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language.updateResources(base,Language.getLanguage(base)));
     }
-
 
     @Override
     public void onCreate() {
