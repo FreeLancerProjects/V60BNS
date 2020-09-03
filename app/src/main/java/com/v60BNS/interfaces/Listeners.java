@@ -30,6 +30,7 @@ public interface Listeners {
         void onPrivacy();
         void onRate();
         void onTone();
+        void about();
 
     }
 }

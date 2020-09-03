@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.v60BNS.BuildConfig;
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_about_app.AboutAppActivity;
 import com.v60BNS.activities_fragments.activity_language.LanguageActivity;
 import com.v60BNS.activities_fragments.activity_sign_up.SignUpActivity;
 import com.v60BNS.databinding.ActivitySettingsBinding;
@@ -89,12 +90,16 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
 
     @Override
     public void onTerms() {
-
+        Intent intent=new Intent(SettingsActivity.this, AboutAppActivity.class);
+        intent.putExtra("type",1);
+        startActivity(intent);
     }
 
     @Override
     public void onPrivacy() {
-
+        Intent intent=new Intent(SettingsActivity.this, AboutAppActivity.class);
+        intent.putExtra("type",3);
+        startActivity(intent);
     }
 
     @Override
@@ -140,6 +145,13 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
         startActivityForResult(intent, 100);
+    }
+
+    @Override
+    public void about() {
+        Intent intent = new Intent(SettingsActivity.this, AboutAppActivity.class);
+        intent.putExtra("type", 2);
+        startActivity(intent);
     }
 
 
