@@ -298,6 +298,7 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
                 fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_main, "fragment_main").addToBackStack("fragment_main").commit();
 
             }
+
             //  binding.setTitle(getString(R.string.home));
         } catch (Exception e) {
         }
@@ -460,7 +461,8 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
                     finish();
               //  navigateToSignInActivity();}
             }
-        }} else {
+        }}
+        else {
             displayFragmentMain();
         }
     }
