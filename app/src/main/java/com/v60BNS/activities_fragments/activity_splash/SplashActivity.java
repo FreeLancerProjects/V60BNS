@@ -162,6 +162,7 @@ public class SplashActivity extends AppCompatActivity {
             lang = "ar";
 
         });
+
         cardEn.setOnClickListener(v -> {
             cardAr.setCardElevation(0f);
             cardEn.setCardElevation(5f);
