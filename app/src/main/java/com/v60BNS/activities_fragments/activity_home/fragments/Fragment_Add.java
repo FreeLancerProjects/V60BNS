@@ -103,7 +103,7 @@ public class Fragment_Add extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, READ_REQ);
 
             }
         });
@@ -156,7 +156,8 @@ public class Fragment_Add extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == CAMERA_REQ && data != null) {
+            }
+            else if (requestCode == CAMERA_REQ && data != null) {
 
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);

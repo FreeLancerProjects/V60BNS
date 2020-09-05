@@ -457,6 +457,7 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
                     fragment_main.behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
                 else {
+                    finish();
               //  navigateToSignInActivity();}
             }
         }} else {

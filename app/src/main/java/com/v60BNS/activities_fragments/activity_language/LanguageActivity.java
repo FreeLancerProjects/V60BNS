@@ -120,7 +120,7 @@ public class LanguageActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        Intent intent =new Intent(LanguageActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(LanguageActivity.this, HomeActivity.class);
                         finishAffinity();
                         startActivity(intent);
                     }
