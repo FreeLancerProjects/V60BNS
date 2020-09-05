@@ -2,29 +2,20 @@ package com.v60BNS.activities_fragments.activity_about_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 
 import com.v60BNS.R;
 import com.v60BNS.databinding.ActivityAppDataBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import io.paperdb.Paper;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AboutAppActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityAppDataBinding binding;
@@ -34,7 +25,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

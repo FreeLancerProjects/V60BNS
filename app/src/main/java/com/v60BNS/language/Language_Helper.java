@@ -9,7 +9,9 @@ import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
-public class Language {
+public class Language_Helper {
+
+
     public static void setNewLocale(Context c, String language) {
         persistLanguage(c, language);
         updateResources(c, language);
@@ -40,7 +42,7 @@ public class Language {
     public static String getLanguage(Context c) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
-        return sharedPreferences.getString("lang",Locale.getDefault().getLanguage());
+        return sharedPreferences.getString("lang", Locale.getDefault().getLanguage());
     }
     private static void persistLanguage(Context c, String language) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
@@ -48,4 +50,5 @@ public class Language {
         editor.putString("lang",language);
         editor.apply();
     }
+
 }

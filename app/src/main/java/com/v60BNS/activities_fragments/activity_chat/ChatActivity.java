@@ -13,7 +13,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.v60BNS.R;
 import com.v60BNS.databinding.ActivityChatBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 
 
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
     @Override

@@ -1,40 +1,26 @@
 package com.v60BNS.activities_fragments.activity_notification;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.databinding.ActivityNotificationBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityNotificationBinding binding;
@@ -49,8 +35,8 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
-    }
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

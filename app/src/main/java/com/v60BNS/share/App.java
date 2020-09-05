@@ -5,13 +5,13 @@ import android.content.Context;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 
 
 public class App extends MultiDexApplication {
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base,Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
     @Override

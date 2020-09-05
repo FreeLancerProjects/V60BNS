@@ -24,7 +24,7 @@ import com.v60BNS.adapters.CountriesAdapter;
 import com.v60BNS.databinding.ActivityLoginBinding;
 import com.v60BNS.databinding.DialogCountriesBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.CountryModel;
 import com.v60BNS.models.LoginModel;
 import com.v60BNS.share.Common;
@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
     @Override

@@ -25,7 +25,7 @@ import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.databinding.ActivitySignUpBinding;
 import com.v60BNS.databinding.DialogYearBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.SignUpModel;
 import com.v60BNS.preferences.Preferences;
 import com.v60BNS.share.Common;
@@ -36,8 +36,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import io.paperdb.Paper;
 
 public class SignUpActivity extends AppCompatActivity implements Listeners.SignUpListener {
     private ActivitySignUpBinding binding;
@@ -51,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
     @Override

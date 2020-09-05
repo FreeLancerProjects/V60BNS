@@ -35,7 +35,7 @@ import com.v60BNS.R;
 import com.v60BNS.adapters.Places_Adapter;
 import com.v60BNS.databinding.ActivityPlacesBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.NearbyModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.preferences.Preferences;
@@ -68,8 +68,8 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
-    }
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
+}
 
 
     @Override

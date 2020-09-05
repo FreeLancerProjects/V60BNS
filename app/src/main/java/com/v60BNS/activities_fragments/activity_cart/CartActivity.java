@@ -2,8 +2,6 @@ package com.v60BNS.activities_fragments.activity_cart;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,21 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.v60BNS.R;
 import com.v60BNS.adapters.CartAdapter;
-import com.v60BNS.adapters.Ingredients_Adapter;
-import com.v60BNS.adapters.SlidingImage_Adapter;
 import com.v60BNS.databinding.ActivityCartBinding;
-import com.v60BNS.databinding.ActivityCoffeeDetialsBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.MarketCatogryModel;
-import com.v60BNS.models.SliderModel;
 import com.v60BNS.preferences.Preferences;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import io.paperdb.Paper;
 
@@ -38,7 +30,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     private CartAdapter food_adapter;
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
 

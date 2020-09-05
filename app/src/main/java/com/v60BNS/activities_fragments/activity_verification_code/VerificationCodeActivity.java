@@ -12,11 +12,9 @@ import android.os.CountDownTimer;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_sign_up.SignUpActivity;
 import com.v60BNS.databinding.ActivityVerificationCodeBinding;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 
 import java.util.Locale;
-
-import io.paperdb.Paper;
 
 public class VerificationCodeActivity extends AppCompatActivity {
     private ActivityVerificationCodeBinding binding;
@@ -27,8 +25,8 @@ public class VerificationCodeActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
-    }
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

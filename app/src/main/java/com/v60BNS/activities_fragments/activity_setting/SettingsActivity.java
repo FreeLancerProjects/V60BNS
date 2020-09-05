@@ -9,7 +9,6 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +22,9 @@ import com.v60BNS.activities_fragments.activity_login.LoginActivity;
 import com.v60BNS.activities_fragments.activity_sign_up.SignUpActivity;
 import com.v60BNS.databinding.ActivitySettingsBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.DefaultSettings;
 import com.v60BNS.preferences.Preferences;
-import com.v60BNS.share.Common;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,8 +39,8 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
-    }
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

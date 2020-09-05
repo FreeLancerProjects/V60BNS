@@ -12,7 +12,7 @@ import com.v60BNS.adapters.Ingredients_Adapter;
 import com.v60BNS.adapters.SlidingImage_Adapter;
 import com.v60BNS.databinding.ActivityCoffeeDetialsBinding;
 import com.v60BNS.interfaces.Listeners;
-import com.v60BNS.language.Language;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.MarketCatogryModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.preferences.Preferences;
@@ -36,7 +36,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(Language.updateResources(base, Language.getLanguage(base)));
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
     @Override
