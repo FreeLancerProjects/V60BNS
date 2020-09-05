@@ -34,7 +34,6 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     private ActivityCartBinding binding;
     private String lang;
     private Preferences preferences;
-
     private List<MarketCatogryModel.Data> dataList;
     private CartAdapter food_adapter;
     @Override

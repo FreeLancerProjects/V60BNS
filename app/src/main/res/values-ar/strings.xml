@@ -99,9 +99,9 @@
     <string name="post">نشر</string>
     <string name="add_place">أضف المكان</string>
     <string name="add_thing">اكتب شيء عن هذه الصورة</string>
-    <string name="notification_tone">Notification Tone</string>
-    <string name="default1">Default</string>
-    <string name="places">Places</string>
-    <string name="pay">Pay</string>
-    <string name="type_message">Type message</string>
+    <string name="notification_tone">نغمة التنبيه</string>
+    <string name="default1">عادى</string>
+    <string name="places">الأماكن</string>
+    <string name="pay">أدفع</string>
+    <string name="type_message">جارى الكتابه</string>
 </resources>

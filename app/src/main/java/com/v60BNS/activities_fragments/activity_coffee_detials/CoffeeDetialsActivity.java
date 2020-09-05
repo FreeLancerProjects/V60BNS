@@ -1,6 +1,5 @@
 package com.v60BNS.activities_fragments.activity_coffee_detials;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,13 +16,11 @@ import com.v60BNS.language.Language;
 import com.v60BNS.models.MarketCatogryModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.preferences.Preferences;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import io.paperdb.Paper;
 
 
