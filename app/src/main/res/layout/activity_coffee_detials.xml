@@ -163,11 +163,10 @@
                     android:layout_gravity="center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="تلىتىتلبلاىلتلاىتلاىتىلالتىلبلالىىلىلالىلالىلاىىلا
-تتلتلتلتتلتلتلتتلتلتلتلتلتتلتلتلتلتلتتلتلتلتلتلتلتتلتلتلتلتلتتلتلتلتلتلتتلتلتلتتل
-لتتلتلتلتلتتلتلتلتلتلتلتلتلتت
-بنتلتلتتتلاتتلاتلاتلاتلاتتلاتلاتلات
-تتلارتلاتتلاتلاتلاتلاتلاتتلاتلاتلاتلاتلاتلاتلاتتلاتلاتلاتلاتلاتتلاتلاتلاتتلالاتتلاتلاتلاتلاتتلاتلاتلاتلاتتلاتلاتلاتلاتتلاتلاتلاتلاتلاتلاتتلاتلاتلاتلاتلاتلاتلاتتلا"
+                    android:text="قهوة ببندق
+لبن
+سكر زيدة
+         "
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -228,7 +227,7 @@
                         android:layout_gravity="center"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-                        android:text=" : 20 g"
+                        android:text="@string/g"
                         android:textColor="@color/color5"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -257,7 +256,7 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
 
-                        android:text=" : Light"
+                        android:text="@string/light"
                         android:textColor="@color/color5"
                         android:textSize="14sp" />
                 </LinearLayout>

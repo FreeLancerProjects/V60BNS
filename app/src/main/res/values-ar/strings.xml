@@ -104,4 +104,6 @@
     <string name="places">الأماكن</string>
     <string name="pay">أدفع</string>
     <string name="type_message">جارى الكتابه</string>
+    <string name="light">: فاتح</string>
+    <string name="g">: 20 جم</string>
 </resources>

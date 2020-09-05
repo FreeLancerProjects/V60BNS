@@ -104,4 +104,6 @@
     <string name="places">Places</string>
     <string name="pay">Pay</string>
     <string name="type_message">Type message</string>
+    <string name="light">: Light</string>
+    <string name="g">: 20 g</string>
 </resources>
