@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
@@ -27,9 +29,12 @@ import com.v60BNS.databinding.DialogYearBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.SignUpModel;
+import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.remote.Api;
 import com.v60BNS.share.Common;
 import com.squareup.picasso.Picasso;
+import com.v60BNS.tags.Tags;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,15 +42,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SignUpActivity extends AppCompatActivity implements Listeners.SignUpListener {
     private ActivitySignUpBinding binding;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
     private final int READ_REQ = 1, CAMERA_REQ = 2;
-    private Uri uri = null;
+    private Uri uri = null, uribanner = null;
     private SignUpModel signUpModel;
     private Preferences preferences;
+    private int type;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -86,7 +98,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     }
 
     @Override
-    public void openSheet() {
+    public void openSheet(int type) {
+        this.type = type;
         binding.expandLayout.setExpanded(true, true);
     }
 
@@ -192,28 +205,46 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == READ_REQ && resultCode == Activity.RESULT_OK && data != null) {
-
-            uri = data.getData();
-            File file = new File(Common.getImagePath(this, uri));
-            Picasso.get().load(file).fit().into(binding.imgLogo);
-
+            if (type == 2) {
+                uri = data.getData();
+                File file = new File(Common.getImagePath(this, uri));
+                Picasso.get().load(file).fit().into(binding.imgLogo);
+            } else {
+                uribanner = data.getData();
+                File file = new File(Common.getImagePath(this, uribanner));
+                Picasso.get().load(file).fit().into(binding.imgBanner);
+            }
 
         } else if (requestCode == CAMERA_REQ && resultCode == Activity.RESULT_OK && data != null) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            uri = getUriFromBitmap(bitmap);
-            if (uri != null) {
-                String path = Common.getImagePath(this, uri);
+            if (type == 2) {
+                uri = getUriFromBitmap(bitmap);
+                if (uri != null) {
+                    String path = Common.getImagePath(this, uri);
 
-                if (path != null) {
-                    Picasso.get().load(new File(path)).fit().into(binding.imgLogo);
+                    if (path != null) {
+                        Picasso.get().load(new File(path)).fit().into(binding.imgLogo);
 
-                } else {
-                    Picasso.get().load(uri).fit().into(binding.imgLogo);
+                    } else {
+                        Picasso.get().load(uri).fit().into(binding.imgLogo);
 
+                    }
+                }
+            } else {
+                uribanner = getUriFromBitmap(bitmap);
+                if (uribanner != null) {
+                    String path = Common.getImagePath(this, uribanner);
+
+                    if (path != null) {
+                        Picasso.get().load(new File(path)).fit().into(binding.imgBanner);
+
+                    } else {
+                        Picasso.get().load(uribanner).fit().into(binding.imgBanner);
+
+                    }
                 }
             }
-
 
         }
 
@@ -275,116 +306,37 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     }
 
     private void signUpWithoutImage() {
-        /*ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
-        Api.getService(Tags.base_url)
-                .signUpWithoutImage(signUpModel.getName(),signUpModel.getPhone_code(),signUpModel.getPhone(),signUpModel.getEmail(),signUpModel.getPassword(),Tags.type)
-                .enqueue(new Callback<UserModel>() {
-                    @Override
-                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                        dialog.dismiss();
-                        if (response.isSuccessful()&&response.body()!=null)
-                        {
-                            preferences.create_update_userdata(SignUpActivity.this,response.body());
-                            navigateToHomeActivity();
-                        }else
-                        {
-                            Log.e("nnnnnnnnnnnn",response.code()+"");
-                            Log.e("555555",response.message());
-                            if (response.code()==500)
-                            {
-                                Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==422)
-                            {
-                                Log.e("2222222",response.errorBody()+"");
-
-                                Toast.makeText(SignUpActivity.this, response.errorBody()+"", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==409)
-                            {
-
-                                Log.e("99999999",response.message()+"");
-
-                                Toast.makeText(SignUpActivity.this, response.errorBody()+"", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==406)
-                            {
-
-                                Log.e("6666666",response.message()+"");
-
-                                Toast.makeText(SignUpActivity.this, response.errorBody()+"", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(SignUpActivity.this,getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            }
-
-                            try {
-                                Log.e("error",response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserModel> call, Throwable t) {
-                        try {
-                            dialog.dismiss();
-                            if (t.getMessage() != null) {
-                                Log.e("msg_category_error", t.getMessage() + "__");
-
-                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                    Toast.makeText(SignUpActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }catch (Exception e)
-                        {
-                            Log.e("Error",e.getMessage()+"__");
-                        }
-                    }
-                });*/
-    }
-
-    private void signUpWithImage() {
-
-       /* ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
         RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code());
         RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
-        RequestBody password_part = Common.getRequestBodyText(signUpModel.getPassword());
 
-        RequestBody type_part = Common.getRequestBodyText(Tags.type);
+        RequestBody type_part = Common.getRequestBodyText("client");
+        RequestBody soft_part = Common.getRequestBodyText("android");
 
-        MultipartBody.Part image = Common.getMultiPart(this,uri,"image");
+        MultipartBody.Part image = Common.getMultiPart(this, uribanner, "banner");
 
 
         Api.getService(Tags.base_url)
-                .signUpWithImage(name_part,phone_code_part,phone_part,email_part,password_part,type_part,image)
+                .signUpWithImagewithoutlogo(name_part, email_part, phone_code_part, phone_part, type_part, soft_part, image)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful()&&response.body()!=null)
-                        {
-                            preferences.create_update_userdata(SignUpActivity.this,response.body());
+                        if (response.isSuccessful() && response.body() != null) {
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
                             navigateToHomeActivity();
-                        }else
-                        {
-                            if (response.code()==500)
-                            {
+                        } else {
+                            if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                            }else if (response.code()==422)
-                            {
+                            } else if (response.code() == 422) {
                                 Toast.makeText(SignUpActivity.this, R.string.user_found, Toast.LENGTH_SHORT).show();
 
-                            }else
-                            {
-                                Toast.makeText(SignUpActivity.this,getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -402,12 +354,72 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                                     Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 }
                             }
-                        }catch (Exception e)
-                        {
-                            Log.e("Error",e.getMessage()+"__");
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
                         }
                     }
-                });*/
+                });
+
+    }
+
+    private void signUpWithImage() {
+
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
+        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code());
+        RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
+        RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
+
+        RequestBody type_part = Common.getRequestBodyText("client");
+        RequestBody soft_part = Common.getRequestBodyText("android");
+
+        MultipartBody.Part image = Common.getMultiPart(this, uri, "banner");
+
+
+        MultipartBody.Part imagelogo = Common.getMultiPart(this, uri, "logo");
+
+
+        Api.getService(Tags.base_url)
+                .signUpWithImagewithout(name_part, email_part, phone_code_part, phone_part, type_part, soft_part, image, imagelogo)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
+                            navigateToHomeActivity();
+                        } else {
+                            if (response.code() == 500) {
+                                Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 422) {
+                                Toast.makeText(SignUpActivity.this, R.string.user_found, Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            if (t.getMessage() != null) {
+                                Log.e("msg_category_error", t.getMessage() + "__");
+
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(SignUpActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
+                        }
+                    }
+                });
 
     }
 

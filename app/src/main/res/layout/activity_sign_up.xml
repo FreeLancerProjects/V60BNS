@@ -78,14 +78,13 @@
                                 android:textSize="13sp" />
 
                             <androidx.cardview.widget.CardView
-
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:layout_marginStart="5dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
                                 android:layout_marginBottom="5dp"
-                                android:onClick="@{()->listener.openSheet()}"
+                                android:onClick="@{()->listener.openSheet(1)}"
                                 app:cardBackgroundColor="@color/white"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="3dp">
@@ -132,7 +131,7 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginEnd="5dp"
                                 android:layout_marginBottom="5dp"
-                                android:onClick="@{()->listener.openSheet()}"
+                                android:onClick="@{()->listener.openSheet(2)}"
                                 app:cardBackgroundColor="@color/white"
                                 app:cardCornerRadius="8dp"
                                 app:cardElevation="3dp">

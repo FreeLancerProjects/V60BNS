@@ -5,7 +5,7 @@ public interface Listeners {
 
     interface SignUpListener{
 
-        void openSheet();
+        void openSheet(int type);
         void closeSheet();
         void checkDataValid();
         void checkReadPermission();

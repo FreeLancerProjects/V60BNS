@@ -5,199 +5,89 @@ import java.util.List;
 
 public class UserModel implements Serializable {
 
-    private User data;
+    private int id;
+    private String user_type;
+    private String name;
+    private String email;
+    private String phone_code;
+    private String phone;
+    private String logo;
+    private String banner;
+    private String chat_available;
+    private double balance;
+    private double rating;
+    private String email_verified_at;
+    private String is_block;
+    private String is_accepted;
+    private String is_login;
+    private long logout_time;
+    private String token;
 
-    public User getData() {
-        return data;
+    public int getId() {
+        return id;
     }
 
-    public void setData(User data) {
-        this.data = data;
+    public String getUser_type() {
+        return user_type;
     }
 
-    public static class User implements Serializable {
-        private int id;
-        private String name;
-        private String email;
-        private String city;
-        private String phone_code;
-        private String phone;
-        private String image;
-        private String logo;
-        private String token;
-        private String latitude;
-        private String longitude;
-        private String address;
-        private String user_type;
-        private String details;
-        private List<Stage> stage_fk;
-        private List<Stage_CLASS> class_fk;
-        private List<SkillModel> skills_fk;
-        private String fireBaseToken;
+    public String getName() {
+        return name;
+    }
 
-        public User() {
-        }
+    public String getEmail() {
+        return email;
+    }
 
-        public User(int id, String name, String phone_code, String phone, String logo, String token) {
-            this.id = id;
-            this.name = name;
-            this.phone_code = phone_code;
-            this.phone = phone;
-            this.logo = logo;
-            this.token = token;
-        }
+    public String getPhone_code() {
+        return phone_code;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public String getPhone() {
+        return phone;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public String getLogo() {
+        return logo;
+    }
 
-        public String getEmail() {
-            return email;
-        }
+    public String getBanner() {
+        return banner;
+    }
 
-        public String getCity() {
-            return city;
-        }
+    public String getChat_available() {
+        return chat_available;
+    }
 
-        public String getPhone_code() {
-            return phone_code;
-        }
+    public double getBalance() {
+        return balance;
+    }
 
-        public String getPhone() {
-            return phone;
-        }
+    public double getRating() {
+        return rating;
+    }
 
-        public String getImage() {
-            return image;
-        }
+    public String getEmail_verified_at() {
+        return email_verified_at;
+    }
 
-        public String getLogo() {
-            return logo;
-        }
+    public String getIs_block() {
+        return is_block;
+    }
 
-        public String getToken() {
-            return token;
-        }
+    public String getIs_accepted() {
+        return is_accepted;
+    }
 
-        public String getLatitude() {
-            return latitude;
-        }
+    public String getIs_login() {
+        return is_login;
+    }
 
-        public String getLongitude() {
-            return longitude;
-        }
+    public long getLogout_time() {
+        return logout_time;
+    }
 
-        public String getAddress() {
-            return address;
-        }
-
-        public String getType() {
-            return user_type;
-        }
-
-        public String getFireBaseToken() {
-            return fireBaseToken;
-        }
-
-        public void setFireBaseToken(String fireBaseToken) {
-            this.fireBaseToken = fireBaseToken;
-        }
-
-        public List<SkillModel> getSkills_fk() {
-            return skills_fk;
-        }
-
-        public String getDetails() {
-            return details;
-        }
-
-        public List<Stage> getStage_fk() {
-            return stage_fk;
-        }
-
-
-        public List<Stage_CLASS> getClass_fk() {
-            return class_fk;
-        }
-
-        public static class Stage implements Serializable {
-            private int id;
-            private int stage_id;
-            private StageClassName stage_class_name;
-
-            public int getId() {
-                return id;
-            }
-
-            public int getStage_id() {
-                return stage_id;
-            }
-
-            public StageClassName getStage_class_name() {
-                return stage_class_name;
-            }
-
-            public class StageClassName implements Serializable {
-                private int id;
-                private String title;
-
-                public int getId() {
-                    return id;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-            }
-        }
-
-        public static class Stage_CLASS implements Serializable {
-            private int id;
-            private int class_id;
-            private StageClassName stage_class_name;
-
-            public int getId() {
-                return id;
-            }
-
-            public int getClass_id() {
-                return class_id;
-            }
-
-            public StageClassName getStage_class_name() {
-                return stage_class_name;
-            }
-
-            public class StageClassName implements Serializable {
-                private int id;
-                private String title;
-
-                public int getId() {
-                    return id;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-            }
-        }
-
-
-        public static class SkillModel implements Serializable{
-            private int id;
-            private String skill_type;
-
-            public int getId() {
-                return id;
-            }
-
-            public String getSkill_type() {
-                return skill_type;
-            }
-        }
+    public String getToken() {
+        return token;
     }
 }

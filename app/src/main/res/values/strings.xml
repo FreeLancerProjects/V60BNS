@@ -106,4 +106,7 @@
     <string name="type_message">Type message</string>
     <string name="light">: Light</string>
     <string name="g">: 20 g</string>
+    <string name="something">Check internet connection</string>
+    <string name="user_found">User Found</string>
+
 </resources>

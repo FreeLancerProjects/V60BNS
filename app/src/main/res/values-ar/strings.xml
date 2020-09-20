@@ -106,4 +106,6 @@
     <string name="type_message">جارى الكتابه</string>
     <string name="light">: فاتح</string>
     <string name="g">: 20 جم</string>
+    <string name="something">تحقق من الاتصال بالانترنت</string>
+    <string name="user_found">User Found</string>
 </resources>
