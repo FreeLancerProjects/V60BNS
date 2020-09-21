@@ -108,4 +108,6 @@
     <string name="g">: 20 جم</string>
     <string name="something">تحقق من الاتصال بالانترنت</string>
     <string name="user_found">User Found</string>
+    <string name="show_all_comment">مشاهدة كل التعليقات</string>
+    <string name="ch_image">Choose Image</string>
 </resources>

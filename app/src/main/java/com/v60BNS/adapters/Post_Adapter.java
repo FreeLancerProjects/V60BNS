@@ -1,23 +1,21 @@
 package com.v60BNS.adapters;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.v60BNS.databinding.PostRowBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.PostModel;
+import com.v60BNS.models.StoryModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,14 +24,14 @@ import io.paperdb.Paper;
 
 public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<MarketCatogryModel.Data> orderlist;
+    private List<PostModel.Data> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
     private Fragment fragment;
 
-    public Post_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Fragment fragment) {
+    public Post_Adapter(List<PostModel.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -58,7 +56,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
-
+        msgRightHolder.binding.setModel(orderlist.get(position));
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
 //        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
 //        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
@@ -67,7 +65,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View view) {
                 if (fragment instanceof Fragment_Main) {
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.showcomments();
+                    fragment_main.getPlaceDetails(orderlist.get(position).getPlace_id());
                 }
             }
         });

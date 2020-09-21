@@ -28,6 +28,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -193,7 +194,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .login(phone_code, phone)
+                .login(phone_code.replace("+","00"), phone)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -203,7 +204,11 @@ public class VerificationCodeActivity extends AppCompatActivity {
                             preferences.create_update_userdata(VerificationCodeActivity.this, response.body());
                             navigateToHomeActivity();
                         } else {
-                            Log.e("mmmmmmmmmm", phone_code + phone);
+                            try {
+                                Log.e("mmmmmmmmmm", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
 
                             if (response.code() == 500) {

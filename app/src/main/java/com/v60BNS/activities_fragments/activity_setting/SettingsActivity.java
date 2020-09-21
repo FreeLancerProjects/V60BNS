@@ -177,9 +177,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
         if (preferences.getUserData(this) != null) {
             Logout();
         } else {
-            Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-            finish();
-            startActivity(intent);
+            navigateToSignInActivity();
         }
     }
 

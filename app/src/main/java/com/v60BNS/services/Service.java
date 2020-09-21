@@ -2,7 +2,10 @@ package com.v60BNS.services;
 
 
 import com.v60BNS.models.NearbyStoreDataModel;
+import com.v60BNS.models.PlaceGeocodeData;
+import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ReviewModels;
+import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
 
 import okhttp3.MultipartBody;
@@ -33,6 +36,10 @@ public interface Service {
                                                @Query(value = "language") String language,
                                                @Query(value = "key") String key
     );
+    @GET("geocode/json")
+    Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
+                                      @Query(value = "language") String language,
+                                      @Query(value = "key") String key);
     @FormUrlEncoded
     @POST("api/login")
     Call<UserModel> login(@Field("phone_code") String phone_code,
@@ -68,6 +75,41 @@ public interface Service {
     @POST("api/logout")
     Call<ResponseBody> logout(@Header("Authorization") String user_token,
                               @Field("user_id") String user_id
+
+
+
+    );
+    @Multipart
+    @POST("api/apiStories")
+    Call<ResponseBody> addstory(@Header("Authorization") String user_token,
+                                @Part MultipartBody.Part logo
+
+
+
+    );
+    @GET("api/apiStories")
+    Call<StoryModel> getStories(@Query("pagination") String pagination,
+                                @Query("type") String type
+    );
+    @GET("api/apiPosts")
+    Call<PostModel> getposts(@Query("pagination") String pagination,
+                             @Query("user_id") String user_id
+    );
+    @GET("api/myPosts")
+    Call<PostModel> getmyposts(@Query("pagination") String pagination,
+                             @Query("user_id") String user_id
+    );
+    @Multipart
+    @POST("api/apiPosts")
+    Call<ResponseBody> addpost(@Header("Authorization") String user_token,
+                               @Part("ar_desc") RequestBody ar_desc,
+                               @Part("place_id") RequestBody place_id,
+                               @Part("address") RequestBody address,
+                               @Part("latitude") RequestBody latitude,
+                               @Part("longitude") RequestBody longitude,
+
+                               @Part MultipartBody.Part logo
+
 
 
     );

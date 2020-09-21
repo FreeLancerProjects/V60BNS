@@ -83,6 +83,7 @@
                     </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvpost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|end"
@@ -134,6 +135,7 @@
 
 
                         <EditText
+                            android:id="@+id/edtcontent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

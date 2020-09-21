@@ -5,22 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.v60BNS.R;
-import com.v60BNS.databinding.CommentRowBinding;
 import com.v60BNS.databinding.GallaryRowBinding;
-import com.v60BNS.models.MarketCatogryModel;
 import com.v60BNS.models.Model_images;
 
 import java.io.ByteArrayOutputStream;

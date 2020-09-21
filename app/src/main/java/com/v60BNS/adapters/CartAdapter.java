@@ -2,7 +2,6 @@ package com.v60BNS.adapters;
 
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +14,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.squareup.picasso.Picasso;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_cart.CartActivity;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 
 import java.util.List;
-import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
-    private List<MarketCatogryModel.Data> orderlist;
+    private List<StoryModel.Data> orderlist;
     private Context context;
     private int i = -1;
 
 
-    public CartAdapter(List<MarketCatogryModel.Data> orderlist, Context context) {
+    public CartAdapter(List<StoryModel.Data> orderlist, Context context) {
         this.orderlist = orderlist;
         this.context = context;
     }

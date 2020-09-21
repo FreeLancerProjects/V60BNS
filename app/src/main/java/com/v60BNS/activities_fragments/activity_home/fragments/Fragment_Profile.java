@@ -3,10 +3,12 @@ package com.v60BNS.activities_fragments.activity_home.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,28 +21,33 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.activities_fragments.activity_setting.SettingsActivity;
-import com.v60BNS.adapters.Categorys_Adapter;
-import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
 import com.v60BNS.databinding.FragmentProfileBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.PostModel;
+import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.remote.Api;
+import com.v60BNS.tags.Tags;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class Fragment_Profile extends Fragment  {
+public class Fragment_Profile extends Fragment {
 
     private HomeActivity activity;
     private FragmentProfileBinding binding;
     private Preferences preferences;
     private String lang;
     private UserModel userModel;
-    private List<MarketCatogryModel.Data> dataList;
+    private List<PostModel.Data> postlist;
     public BottomSheetBehavior behavior;
     private RecyclerView recViewcomments;
     private ImageView imclose;
@@ -62,11 +69,12 @@ public class Fragment_Profile extends Fragment  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        getPosts();
     }
 
     private void initView() {
 
-        dataList = new ArrayList<>();
+        postlist = new ArrayList<>();
 
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
@@ -75,22 +83,21 @@ public class Fragment_Profile extends Fragment  {
 
         recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
         imclose = binding.getRoot().findViewById(R.id.imclose);
-        post_adapter = new Post_Adapter(dataList, activity, this);
+        post_adapter = new Post_Adapter(postlist, activity, this);
 
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewFavoriteOffers.setAdapter(post_adapter);
 //        Comments_Adapter comments_adapter = new Comments_Adapter(dataList, activity);
 //        recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
 //        recViewcomments.setAdapter(comments_adapter);
-        Adddata();
         binding.imgSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(activity, SettingsActivity.class);
+                Intent intent = new Intent(activity, SettingsActivity.class);
                 startActivity(intent);
             }
         });
-        if(lang.equals("ar")){
+        if (lang.equals("ar")) {
             imclose.setRotation(180);
         }
         setUpBottomSheet();
@@ -103,31 +110,78 @@ public class Fragment_Profile extends Fragment  {
 
     }
 
-    private void Adddata() {
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        post_adapter.notifyDataSetChanged();
+    public void getPosts() {
+
+        try {
+            int uid;
+            if (userModel != null) {
+                uid = userModel.getId();
+            } else {
+                uid = 0;
+            }
+
+            Api.getService(Tags.base_url).
+                    getmyposts("off", uid + "").
+                    enqueue(new Callback<PostModel>() {
+                        @Override
+                        public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                            binding.progBarOffer.setVisibility(View.GONE);
+
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+
+                                postlist.clear();
+                                postlist.addAll(response.body().getData());
+                                if (postlist.size() > 0) {
+                                    post_adapter.notifyDataSetChanged();
+                                } else {
+
+                                }
+
+                            } else {
+                                try {
+
+                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<PostModel> call, Throwable t) {
+                            binding.progBarOffer.setVisibility(View.GONE);
+                            try {
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+
+
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+
 
     }
 
-
-    public void showcomments() {
-        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-    }
 
 }

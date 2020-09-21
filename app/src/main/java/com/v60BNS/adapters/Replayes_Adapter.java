@@ -11,9 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.v60BNS.R;
-import com.v60BNS.databinding.CommentRowBinding;
 import com.v60BNS.databinding.ReplayRowBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,7 +21,7 @@ import io.paperdb.Paper;
 
 public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<MarketCatogryModel.Data> orderlist;
+    private List<StoryModel.Data> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
@@ -31,7 +30,7 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private int itemcount;
     public static int  hight;
 
-    public Replayes_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Comments_Adapter comments_adapter, int itemcount) {
+    public Replayes_Adapter(List<StoryModel.Data> orderlist, Context context, Comments_Adapter comments_adapter, int itemcount) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);

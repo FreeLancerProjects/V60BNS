@@ -4,33 +4,28 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.material.tabs.TabLayout;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_coffee_detials.CoffeeDetialsActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
-import com.v60BNS.adapters.Categorys_Adapter;
 import com.v60BNS.adapters.Department_Adapter;
 import com.v60BNS.adapters.Food_Adapter;
 import com.v60BNS.adapters.Slider_Adapter;
 import com.v60BNS.databinding.FragmentStoreBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
@@ -42,10 +37,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.paperdb.Paper;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Fragment_Store extends Fragment {
 
@@ -56,7 +47,7 @@ public class Fragment_Store extends Fragment {
     private List<SliderModel> sliderModels;
     private Slider_Adapter sliderAdapter;
     private UserModel userModel;
-    private List<MarketCatogryModel.Data> dataList;
+    private List<StoryModel.Data> dataList;
     private Department_Adapter categorys_adapter;
     private Food_Adapter food_adapter;
     private int current_page = 0, NUM_PAGES;
@@ -124,22 +115,22 @@ public class Fragment_Store extends Fragment {
     }
 
     private void Adddata() {
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
         categorys_adapter.notifyDataSetChanged();
         food_adapter.notifyDataSetChanged();
     }

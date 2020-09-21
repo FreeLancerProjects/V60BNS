@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Store;
 import com.v60BNS.databinding.CoffeeRowBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,14 +22,14 @@ import io.paperdb.Paper;
 
 public class Food_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<MarketCatogryModel.Data> orderlist;
+    private List<StoryModel.Data> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
     private Fragment fragment;
 
-    public Food_Adapter(List<MarketCatogryModel.Data> orderlist, Context context, Fragment fragment) {
+    public Food_Adapter(List<StoryModel.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);

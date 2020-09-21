@@ -3,7 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+
+        <variable
+            name="model"
+            type="com.v60BNS.models.PostModel.Data" />
+    </data>
 
 
     <LinearLayout
@@ -17,12 +22,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/r_im_search"
+                image2="@{model.user.logo}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/user"
                 android:tint="@color/colorAccent"
-
                 app:civ_circle_background_color="@color/gray10"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +58,7 @@
                         android:layout_marginTop="5dp"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-                        android:text="احمد"
+                        android:text="@{model.user.name}"
                         android:textColor="@color/gray12"
                         android:textSize="14sp" />
 
@@ -76,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:text="السعودية الرياض مكه "
+                        android:text="@{model.address}"
                         android:textColor="@color/color5"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -86,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="10min"
+                    android:text=""
                     android:textColor="@color/gray13"
                     android:textSize="10sp" />
 
@@ -95,6 +100,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.github.siyamed.shapeimageview.RoundedImageView
+            image2="@{model.image}"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY"
@@ -131,7 +137,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imagelike"
                 app:layout_constraintTop_toTopOf="parent"
-
+android:visibility="gone"
 
                 />
 
@@ -151,11 +157,11 @@
                 />
 
             <TextView
+                android:id="@+id/tvreviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
 
-                android:text="1500"
                 android:textColor="@color/gray12"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -169,6 +175,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="review"
+                android:visibility="gone"
                 android:textColor="@color/gray5"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -179,7 +186,9 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recliked"
@@ -234,7 +243,7 @@
             android:layout_marginTop="5dp"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Show All 1500 comment"
+            android:text="@string/show_all_comment"
             android:textColor="@color/gray15"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

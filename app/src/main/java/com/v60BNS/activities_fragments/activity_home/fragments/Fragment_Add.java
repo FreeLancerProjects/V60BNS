@@ -2,6 +2,7 @@ package com.v60BNS.activities_fragments.activity_home.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -32,9 +33,12 @@ import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.activities_fragments.activity_places.PlacesActivity;
 import com.v60BNS.databinding.FragmentAddBinding;
 import com.v60BNS.models.NearbyModel;
+import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.remote.Api;
 import com.v60BNS.share.Common;
+import com.v60BNS.tags.Tags;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,6 +49,12 @@ import java.io.OutputStream;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -62,6 +72,8 @@ public class Fragment_Add extends Fragment {
     private final int READ_REQ = 1, CAMERA_REQ = 2;
     private Uri uri = null;
     private String selectedImagePath;
+    private NearbyModel nearbyModel;
+    private String address;
 
 
     public static Fragment_Add newInstance() {
@@ -113,51 +125,172 @@ public class Fragment_Add extends Fragment {
                 showcomments();
             }
         });
+        binding.tvpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkdata();
+            }
+        });
 
+    }
+
+    private void checkdata() {
+        String content = binding.edtcontent.getText().toString();
+        if (nearbyModel != null && uri != null && !content.isEmpty()) {
+            newpost(content);
+        } else {
+            if (content.isEmpty()) {
+                binding.edtcontent.setError(activity.getResources().getString(R.string.field_req));
+            }
+            if (nearbyModel == null) {
+                binding.tvplaces.setError(activity.getResources().getString(R.string.field_req));
+            }
+            if (uri == null) {
+                Toast.makeText(activity, getResources().getString(R.string.ch_image), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void getGeoData(final double lat, double lng) {
+        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        String location = lat + "," + lng;
+        Api.getService("https://maps.googleapis.com/maps/api/")
+                .getGeoData(location, lang, getString(R.string.map_api_key))
+                .enqueue(new Callback<PlaceGeocodeData>() {
+                    @Override
+                    public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            if (response.body().getResults().size() > 0) {
+                                address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
+
+                            }
+                        } else {
+
+                            try {
+                                Log.e("error_code", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            //   binding.progBar.setVisibility(View.GONE);
+
+                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+    }
+
+    private void newpost(String content) {
+        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+
+        MultipartBody.Part image = Common.getMultiPart(activity, uri, "image");
+        RequestBody titlepart = Common.getRequestBodyText(content);
+        RequestBody placepart = Common.getRequestBodyText(nearbyModel.getPlace_id());
+        RequestBody addresspart = Common.getRequestBodyText(address);
+        RequestBody latpart = Common.getRequestBodyText(nearbyModel.getGeometry().getLocation().getLat() + "");
+        RequestBody lngpart = Common.getRequestBodyText(nearbyModel.getGeometry().getLocation().getLng() + "");
+
+        Api.getService(Tags.base_url)
+                .addpost("Bearer " + userModel.getToken(), titlepart, placepart, addresspart, latpart, lngpart, image)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+                            activity.displayFragmentProfile();
+                        } else {
+                            if (response.code() == 500) {
+                                Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            if (t.getMessage() != null) {
+                                Log.e("msg_category_error", t.getMessage() + "__");
+
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
+                        }
+                    }
+                });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                File f = new File(Environment.getExternalStorageDirectory().toString());
-                for (File temp : f.listFiles()) {
-                    if (temp.getName().equals("temp.jpg")) {
-                        f = temp;
-                        break;
-                    }
-                }
-                try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
-                            bitmapOptions);
-                    binding.imgBanner.setImageBitmap(bitmap);
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            else if (requestCode == CAMERA_REQ && data != null) {
+            if (requestCode == READ_REQ) {
+                uri = data.getData();
+                File file = new File(Common.getImagePath(activity, uri));
+                Picasso.get().load(file).fit().into(binding.imgBanner);
+//                File f = new File(Environment.getExternalStorageDirectory().toString());
+//                for (File temp : f.listFiles()) {
+//                    if (temp.getName().equals("temp.jpg")) {
+//                        f = temp;
+//                        break;
+//                    }
+//                }
+//                try {
+//                    Bitmap bitmap;
+//                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+//                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
+//                            bitmapOptions);
+//                    binding.imgBanner.setImageBitmap(bitmap);
+//                    String path = android.os.Environment
+//                            .getExternalStorageDirectory()
+//                            + File.separator
+//                            + "Phoenix" + File.separator + "default";
+//                    String pathuri = Common.getImagePath(activity, Uri.parse(path));
+//                    Picasso.get().load(new File(pathuri)).fit().into(binding.imgBanner);
+//                    Log.e("dlkdkdkkdk", path);
+//                    f.delete();
+//                    OutputStream outFile = null;
+//                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+//                    try {
+//                        outFile = new FileOutputStream(file);
+//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+//                        outFile.flush();
+//                        outFile.close();
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            } else if (requestCode == CAMERA_REQ && data != null) {
 
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 uri = getUriFromBitmap(bitmap);
@@ -175,7 +308,8 @@ public class Fragment_Add extends Fragment {
 
 
             } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
-
+                nearbyModel = (NearbyModel) data.getSerializableExtra("data");
+                getGeoData(nearbyModel.getGeometry().getLocation().getLat(), nearbyModel.getGeometry().getLocation().getLng());
             }
         }
 

@@ -6,19 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.v60BNS.databinding.StatusRowBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.tags.Tags;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,16 +29,17 @@ import omari.hamza.storyview.StoryView;
 import omari.hamza.storyview.callback.StoryClickListeners;
 import omari.hamza.storyview.model.MyStory;
 
-public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Story_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<MarketCatogryModel.Data> orderlist;
+    private List<StoryModel.Data> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
-    Preferences preferences;
-    UserModel userModel;
+    private Preferences preferences;
+    private UserModel userModel;
+    private Fragment fragment;
 
-    public Categorys_Adapter(List<MarketCatogryModel.Data> orderlist, Context context) {
+    public Story_Adapter(List<StoryModel.Data> orderlist, Context context, Fragment fragment) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -45,6 +47,7 @@ public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(context);
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -64,10 +67,27 @@ public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         EventHolder msgLeftHolder = (EventHolder) holder;
 //            orderlist.get(position).getImage()
+
+        if (position > 0) {
+            msgLeftHolder.binding.setModel(orderlist.get(position));
+        }
+        msgLeftHolder.binding.setPos(position);
+        if (position == 0) {
+            msgLeftHolder.binding.image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_plus));
+        }
         ((EventHolder) holder).binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                story(position);
+                if (position > 0) {
+                    if (orderlist.get(msgLeftHolder.getLayoutPosition()).getPhone_code() == null) {
+                        story(position);
+                    }
+                } else {
+                    if (fragment instanceof Fragment_Main) {
+                        Fragment_Main fragment_main = (Fragment_Main) fragment;
+                        fragment_main.addstory();
+                    }
+                }
             }
         });
 
@@ -76,7 +96,7 @@ public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void story(int position) {
         ArrayList<MyStory> myStories = new ArrayList<>();
         MyStory myStory = new MyStory(
-                "https://media.pri.org/s3fs-public/styles/story_main/public/images/2019/09/092419-germany-climate.jpg?itok=P3FbPOp-",
+                Tags.IMAGE_URL + orderlist.get(position).getImage(),
                 null);
 
 
@@ -88,10 +108,9 @@ public class Categorys_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         new StoryView.Builder(((FragmentActivity) context).getSupportFragmentManager())
                 .setStoriesList(myStories)
-                .setTitleLogoUrl("https://mfiles.alphacoders.com/681/681242.jpg")
-                .setTitleText("أحمد")
+                .setTitleLogoUrl(Tags.IMAGE_URL + orderlist.get(position).getImage())
+                .setTitleText(orderlist.get(position).getUser().getName())
                 .setStoryDuration(5000)
-                .setSubtitleText("السعوديه")
                 .setRtl(true)
                 .setStoryClickListeners(new StoryClickListeners() {
                     @Override

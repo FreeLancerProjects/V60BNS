@@ -12,7 +12,7 @@ import com.v60BNS.adapters.CartAdapter;
 import com.v60BNS.databinding.ActivityCartBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 import com.v60BNS.preferences.Preferences;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     private ActivityCartBinding binding;
     private String lang;
     private Preferences preferences;
-    private List<MarketCatogryModel.Data> dataList;
+    private List<StoryModel.Data> dataList;
     private CartAdapter food_adapter;
     @Override
     protected void attachBaseContext(Context base) {
@@ -65,22 +65,22 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void Adddata() {
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
         food_adapter.notifyDataSetChanged();
     }
 

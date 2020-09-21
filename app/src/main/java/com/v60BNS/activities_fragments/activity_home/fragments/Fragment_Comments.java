@@ -17,7 +17,7 @@ import com.v60BNS.activities_fragments.activity_chat.ChatActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.StarComments_Adapter;
 import com.v60BNS.databinding.FragmentCommentsBinding;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Fragment_Comments extends Fragment {
 
     private HomeActivity activity;
     private FragmentCommentsBinding binding;
-    private List<MarketCatogryModel.Data> dataList;
+    private List<StoryModel.Data> dataList;
     private StarComments_Adapter starComments_adapter;
 
 
@@ -54,22 +54,22 @@ public class Fragment_Comments extends Fragment {
     }
 
     private void Adddata() {
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
         starComments_adapter.notifyDataSetChanged();
 
     }

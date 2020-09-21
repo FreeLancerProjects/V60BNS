@@ -13,7 +13,7 @@ import com.v60BNS.adapters.SlidingImage_Adapter;
 import com.v60BNS.databinding.ActivityCoffeeDetialsBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
-import com.v60BNS.models.MarketCatogryModel;
+import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.preferences.Preferences;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private Preferences preferences;
     private List<SliderModel.Data> sliderModels;
     private SlidingImage_Adapter sliderAdapter;
-    private List<MarketCatogryModel.Data> dataList;
+    private List<StoryModel.Data> dataList;
     private Ingredients_Adapter food_adapter;
     private int current_page = 0, NUM_PAGES;
 
@@ -96,22 +96,22 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     }
 
     private void Adddata() {
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
-        dataList.add(new MarketCatogryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
+        dataList.add(new StoryModel.Data());
         food_adapter.notifyDataSetChanged();
     }
 

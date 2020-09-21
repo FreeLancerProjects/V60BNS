@@ -215,7 +215,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                 Picasso.get().load(file).fit().into(binding.imgBanner);
             }
 
-        } else if (requestCode == CAMERA_REQ && resultCode == Activity.RESULT_OK && data != null) {
+        }
+        else if (requestCode == CAMERA_REQ && resultCode == Activity.RESULT_OK && data != null) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             if (type == 2) {
@@ -298,11 +299,15 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
     private void signUp() {
         if (uri == null) {
-            signUpWithoutImage();
+            if(uribanner!=null){
+            signUpWithoutImage();}
+            else {
+                Toast.makeText(SignUpActivity.this,getResources().getString(R.string.banner_image),Toast.LENGTH_LONG).show();
+            }
         } else {
             signUpWithImage();
         }
-        navigateToHomeActivity();
+        //navigateToHomeActivity();
     }
 
     private void signUpWithoutImage() {
@@ -310,7 +315,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         dialog.setCancelable(false);
         dialog.show();
         RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
-        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code());
+        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code().replace("+","00"));
         RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
 
@@ -368,7 +373,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         dialog.setCancelable(false);
         dialog.show();
         RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
-        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code());
+        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code().replace("+","00"));
         RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
 

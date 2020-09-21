@@ -108,5 +108,7 @@
     <string name="g">: 20 g</string>
     <string name="something">Check internet connection</string>
     <string name="user_found">User Found</string>
+    <string name="show_all_comment">Show All comment</string>
+    <string name="ch_image">Choose Image</string>
 
 </resources>

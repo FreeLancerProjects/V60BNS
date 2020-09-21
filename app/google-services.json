@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "160318060700-d0vkh5rf4in7o242npv21mn2hffe3bei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.v60BNS",
+            "certificate_hash": "e6a73e70c3fc31d4b07d77141e133d0dd6e6939e"
+          }
+        },
+        {
           "client_id": "160318060700-q0oheiapoetfvbn3jqhm6i80hsnk6864.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,14 @@
             {
               "client_id": "160318060700-q0oheiapoetfvbn3jqhm6i80hsnk6864.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "160318060700-kmoio6q3298so7srvrd1hfd23b5bqsrb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.motawron.CafeApp",
+                "app_store_id": "85758778547847854"
+              }
             }
           ]
         }

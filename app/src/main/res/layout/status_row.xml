@@ -3,12 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+
+        <variable
+            name="model"
+            type="com.v60BNS.models.StoryModel.Data" />
+
+        <variable
+            name="pos"
+            type="int" />
+
+        <import type="android.view.View" />
+    </data>
 
     <FrameLayout
         android:id="@+id/flImage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,11 +28,21 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
+            image2='@{pos>0?(model.image!=null?model.image:model.logo):"0"}'
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/user"
             app:civ_border_color="@color/gray4"
             app:civ_border_width="1dp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="top"
+            android:background="@drawable/circle_not_bg"
+            android:padding="5dp"
+            android:src="@drawable/ic_pluss"
+            android:tint="@color/colorPrimary"
+            android:visibility='@{pos==0?View.VISIBLE:View.GONE ,default=gone}' />
 
     </FrameLayout>
 

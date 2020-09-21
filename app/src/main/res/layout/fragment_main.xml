@@ -50,7 +50,7 @@
 
 
                         <ProgressBar
-                            android:id="@+id/progBarSlider"
+                            android:id="@+id/progBarStory"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center"
@@ -68,14 +68,14 @@
 
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recViewFavoriteOffers"
+                            android:id="@+id/recViewpost"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp" />
 
 
                         <ProgressBar
-                            android:id="@+id/progBarOffer"
+                            android:id="@+id/progpost"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_gravity="center"

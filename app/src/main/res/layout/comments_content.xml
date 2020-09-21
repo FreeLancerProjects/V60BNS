@@ -62,11 +62,10 @@
                         android:longClickable="false"
                         android:padding="8dp"
                         android:src="@drawable/ic_star_empty"
-
-                        />
+                        android:visibility="gone" />
 
                     <TextView
-
+                        android:id="@+id/tvcount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -75,7 +74,6 @@
                         android:clickable="false"
                         android:gravity="center"
                         android:longClickable="false"
-                        android:text="1999"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -100,7 +98,7 @@
                     android:longClickable="false"
                     android:padding="8dp"
                     android:src="@drawable/ic_star_empty"
-
+                    android:visibility="gone"
 
                     />
             </androidx.appcompat.widget.Toolbar>
@@ -139,16 +137,15 @@
                             android:id="@+id/progBarOffer"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:visibility="gone"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
 
                     </FrameLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imagemyprofile"
