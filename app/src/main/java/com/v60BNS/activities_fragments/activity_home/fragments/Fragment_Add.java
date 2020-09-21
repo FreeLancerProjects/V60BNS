@@ -307,7 +307,7 @@ public class Fragment_Add extends Fragment {
                 }
 
 
-            } else if (requestCode == 3 && resultCode == Activity.RESULT_OK) {
+            } else if (requestCode == 3 ) {
                 nearbyModel = (NearbyModel) data.getSerializableExtra("data");
                 getGeoData(nearbyModel.getGeometry().getLocation().getLat(), nearbyModel.getGeometry().getLocation().getLng());
             }
