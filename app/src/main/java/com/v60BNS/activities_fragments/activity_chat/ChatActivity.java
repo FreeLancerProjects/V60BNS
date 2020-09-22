@@ -95,9 +95,10 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                         .enqueue(new Callback<RoomModelID>() {
                             @Override
                             public void onResponse(Call<RoomModelID> call, Response<RoomModelID> response) {
+                                Log.e("dlldldl", response.code() + "");
                                 if (response.isSuccessful()) {
 
-                                    //   updateprofile(response.body());
+                                    getChatMessages(response.body());           //   updateprofile(response.body());
                                 } else {
 
 
@@ -136,9 +137,10 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                             }
                         });
             } catch (Exception e) {
-
+                Log.e("ldldldl", e.toString());
             }
             //return 1;
+
 
         } else {
 
@@ -158,14 +160,16 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         binding.setName(expertData.getName());
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
+        chatUserModel = new ChatUserModel(expertData.getName(), expertData.getLogo(), expertData.getId(), 0);
         getchatroom();
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        binding.recView.setLayoutManager(manager);
+        manager=new LinearLayoutManager(this);
         chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), chatUserModel.getImage(), this);
         binding.recView.setItemViewCacheSize(25);
         binding.recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recView.setDrawingCacheEnabled(true);
         binding.progBar.setVisibility(View.GONE);
+        binding.recView.setLayoutManager(manager);
         // binding.llMsgContainer.setVisibility(View.GONE);
         binding.recView.setAdapter(chat_adapter);
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -226,11 +230,12 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
 
     private void getChatMessages(RoomModelID roomModelID) {
+        Log.e("dlldld", roomModelID.getRoom_id() + "");
         try {
 
 
             Api.getService(Tags.base_url)
-                    .getRoomMessages(userModel.getId(), chatUserModel.getRoom_id(), 1)
+                    .getRoomMessages("Bearer "+userModel.getToken(), roomModelID.getRoom_id(), 1)
                     .enqueue(new Callback<MessageDataModel>() {
                         @Override
                         public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
@@ -294,7 +299,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         try {
 
             Api.getService(Tags.base_url)
-                    .getRoomMessages(userModel.getId(), chatUserModel.getRoom_id(), next_page)
+                    .getRoomMessages("Bearer "+userModel.getToken(), chatUserModel.getRoom_id(), next_page)
                     .enqueue(new Callback<MessageDataModel>() {
                         @Override
                         public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {

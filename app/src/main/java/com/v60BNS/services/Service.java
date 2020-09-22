@@ -132,24 +132,29 @@ public interface Service {
             @Header("Authorization") String Authorization,
             @Field("post_id") String post_id)
             ;
+
     @GET("api/currentUser")
     Call<UserModel> getprofile(
             @Header("Authorization") String Authorization,
             @Field("phone") String phone);
+
     @GET("api/experts")
     Call<ExpertModel> getExperts(@Query("pagination") String pagination
     );
 
+    @FormUrlEncoded
     @POST("api/chatRoom/get")
     Call<RoomModelID> getchatroom(
             @Header("Authorization") String Authorization,
             @Field("from_user_id") String from_user_id,
             @Field("to_user_id") String to_user_id
-            );
+    );
+
     @FormUrlEncoded
     @POST("api/single-chat-room")
-    Call<MessageDataModel> getRoomMessages(@Field("user_id") int user_id,
-                                           @Field("room_id") int room_id,
-                                           @Field("page") int page
+    Call<MessageDataModel> getRoomMessages(
+            @Header("Authorization") String Authorization,
+            @Field("room_id") int room_id,
+            @Field("page") int page
     );
 }
