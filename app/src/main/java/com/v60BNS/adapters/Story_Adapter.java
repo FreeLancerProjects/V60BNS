@@ -67,14 +67,19 @@ public class Story_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         EventHolder msgLeftHolder = (EventHolder) holder;
 //            orderlist.get(position).getImage()
-
+if(userModel!=null){
         if (position > 0) {
             msgLeftHolder.binding.setModel(orderlist.get(position));
         }
         msgLeftHolder.binding.setPos(position);
         if (position == 0) {
             msgLeftHolder.binding.image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_plus));
-        }
+        }}
+else {
+    msgLeftHolder.binding.setModel(orderlist.get(position));
+    msgLeftHolder.binding.setPos(10);
+
+}
         ((EventHolder) holder).binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -137,6 +137,7 @@ public class Fragment_Add extends Fragment {
 
     private void checkdata() {
         String content = binding.edtcontent.getText().toString();
+        if(userModel!=null){
         if (nearbyModel != null && uri != null && !content.isEmpty()) {
             newpost(content);
         } else {
@@ -149,6 +150,9 @@ public class Fragment_Add extends Fragment {
             if (uri == null) {
                 Toast.makeText(activity, getResources().getString(R.string.ch_image), Toast.LENGTH_LONG).show();
             }
+        }}
+        else {
+            Common.CreateDialogAlert(activity,activity.getResources().getString(R.string.please_sign_in_or_sign_up));
         }
     }
 

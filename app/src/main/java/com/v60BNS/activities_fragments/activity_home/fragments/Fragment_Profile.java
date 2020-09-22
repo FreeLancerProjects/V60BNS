@@ -93,6 +93,7 @@ public class Fragment_Profile extends Fragment {
         reviewsList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
+        userModel=preferences.getUserData(activity);
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 

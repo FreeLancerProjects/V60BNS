@@ -236,7 +236,8 @@ if(userModel!=null){
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
 
                                 storylist.clear();
-                                storylist.add(new StoryModel.Data());
+                                if(userModel!=null){
+                                storylist.add(new StoryModel.Data());}
                                 storylist.addAll(response.body().getData());
                                 if (storylist.size() > 0) {
                                     story_adapter.notifyDataSetChanged();

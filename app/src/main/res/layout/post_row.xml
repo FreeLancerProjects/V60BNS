@@ -113,8 +113,8 @@
 
             <CheckBox
                 android:id="@+id/imagelike"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="5dp"
                 android:button="@drawable/checkbox_bg"
                 android:checked='@{model.love_check==true?true:false,default=false}'
@@ -133,10 +133,10 @@
                 android:layout_marginEnd="5dp"
                 android:padding="5dp"
                 android:src="@drawable/ic_comment"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imagelike"
                 app:layout_constraintTop_toTopOf="parent"
-android:visibility="gone"
 
                 />
 
@@ -174,9 +174,9 @@ android:visibility="gone"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="review"
-                android:visibility="gone"
                 android:textColor="@color/gray5"
                 android:textSize="14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -186,8 +186,7 @@ android:visibility="gone"
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recliked"

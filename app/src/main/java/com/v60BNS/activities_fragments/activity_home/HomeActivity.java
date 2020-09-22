@@ -38,6 +38,7 @@ import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.share.Common;
 
 import java.util.Locale;
 
@@ -101,24 +102,28 @@ public class HomeActivity extends AppCompatActivity {
                         displayFragmentComments();
                         break;
                     case R.id.profile:
-                        displayFragmentProfile();
+                        if (userModel != null) {
+                            displayFragmentProfile();
+                        } else {
+                            Common.CreateDialogAlert(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                        }
                         break;
                 }
 
                 return true;
             }
         });
-binding.flSearch.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent=new Intent(HomeActivity.this, CartActivity.class);
-        startActivity(intent);
-    }
-});
+        binding.flSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
         binding.flNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(HomeActivity.this, NotificationActivity.class);
+                Intent intent = new Intent(HomeActivity.this, NotificationActivity.class);
                 startActivity(intent);
             }
         });
@@ -406,7 +411,7 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
 
     public void displayFragmentAddPost() {
         try {
-            if (fragment_add== null) {
+            if (fragment_add == null) {
                 fragment_add = Fragment_Add.newInstance();
             }
 
@@ -436,6 +441,7 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
         }
 
     }
+
     @Override
     public void onBackPressed() {
         back();
@@ -448,21 +454,19 @@ binding.flSearch.setOnClickListener(new View.OnClickListener() {
                 if (fragment_main.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
 
                     fragment_main.behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                } else {
+                    finish();
                 }
-                else {
-                finish();}
-            }
-            else {
+            } else {
                 if (fragment_main.behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
 
                     fragment_main.behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-                else {
+                } else {
                     finish();
-              //  navigateToSignInActivity();}
+                    //  navigateToSignInActivity();}
+                }
             }
-        }}
-        else {
+        } else {
             displayFragmentMain();
         }
     }
