@@ -70,12 +70,12 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     private String address;
-    private double lat,lng;
+    private double lat, lng;
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
-}
+    }
 
 
     @Override
@@ -104,8 +104,6 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     }
 
 
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -130,7 +128,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                                 dataList.addAll(response.body().getResults());
                                 food_adapter.notifyDataSetChanged();
                             }
-                            getGeoData(location.getLatitude(),location.getLongitude());
+                            getGeoData(location.getLatitude(), location.getLongitude());
                         } else {
 
 
@@ -168,9 +166,9 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     public void choose(NearbyModel nearbyModel) {
         Intent intent = getIntent();
         intent.putExtra("data", nearbyModel);
-        intent.putExtra("lat",lat);
-        intent.putExtra("lng",lng);
-        intent.putExtra("address",address);
+        intent.putExtra("lat", lat);
+        intent.putExtra("lng", lng);
+        intent.putExtra("address", address);
         setResult(Activity.RESULT_OK, intent);
 
         finish();
@@ -310,9 +308,10 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
         }
     }
+
     private void getGeoData(final double lat, double lng) {
-        this.lat=lat;
-       this.lng=lng;
+        this.lat = lat;
+        this.lng = lng;
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -327,7 +326,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
                             if (response.body().getResults().size() > 0) {
                                 address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
-Log.e("kkfkkfkfk",address);
+                                Log.e("kkfkkfkfk", address);
                             }
                         } else {
 
