@@ -163,7 +163,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         chatUserModel = new ChatUserModel(expertData.getName(), expertData.getLogo(), expertData.getId(), 0);
         getchatroom();
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        manager=new LinearLayoutManager(this);
+        manager = new LinearLayoutManager(this);
         chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), chatUserModel.getImage(), this);
         binding.recView.setItemViewCacheSize(25);
         binding.recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
@@ -237,7 +237,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
 
             Api.getService(Tags.base_url)
-                    .getRoomMessages("Bearer "+userModel.getToken(), roomModelID.getRoom_id(), 1)
+                    .getRoomMessages("Bearer " + userModel.getToken(), roomModelID.getRoom_id(), 1)
                     .enqueue(new Callback<MessageDataModel>() {
                         @Override
                         public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
@@ -301,7 +301,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         try {
 
             Api.getService(Tags.base_url)
-                    .getRoomMessages("Bearer "+userModel.getToken(), chatUserModel.getRoom_id(), next_page)
+                    .getRoomMessages("Bearer " + userModel.getToken(), chatUserModel.getRoom_id(), next_page)
                     .enqueue(new Callback<MessageDataModel>() {
                         @Override
                         public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
