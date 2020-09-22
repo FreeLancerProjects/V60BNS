@@ -3,6 +3,7 @@ package com.v60BNS.activities_fragments.activity_places;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,8 +40,10 @@ import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.NearbyModel;
 import com.v60BNS.models.NearbyStoreDataModel;
+import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.preferences.Preferences;
 import com.v60BNS.remote.Api;
+import com.v60BNS.share.Common;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,6 +69,8 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+    private String address;
+    private double lat,lng;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -119,10 +125,12 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                         //    Log.e("jjjjjj",response.code()+"");
 
                         if (response.isSuccessful() && response.body() != null) {
+
                             if (response.body().getResults().size() > 0) {
                                 dataList.addAll(response.body().getResults());
                                 food_adapter.notifyDataSetChanged();
                             }
+                            getGeoData(location.getLatitude(),location.getLongitude());
                         } else {
 
 
@@ -160,7 +168,11 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     public void choose(NearbyModel nearbyModel) {
         Intent intent = getIntent();
         intent.putExtra("data", nearbyModel);
+        intent.putExtra("lat",lat);
+        intent.putExtra("lng",lng);
+        intent.putExtra("address",address);
         setResult(Activity.RESULT_OK, intent);
+
         finish();
     }
 
@@ -295,6 +307,52 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
         if (location != null) {
             getNearbyPlaces(location);
+
         }
     }
+    private void getGeoData(final double lat, double lng) {
+        this.lat=lat;
+       this.lng=lng;
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        String location = lat + "," + lng;
+        Api.getService("https://maps.googleapis.com/maps/api/")
+                .getGeoData(location, lang, getString(R.string.map_api_key))
+                .enqueue(new Callback<PlaceGeocodeData>() {
+                    @Override
+                    public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            if (response.body().getResults().size() > 0) {
+                                address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
+
+                            }
+                        } else {
+
+                            try {
+                                Log.e("error_code", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            //   binding.progBar.setVisibility(View.GONE);
+
+                            Toast.makeText(PlacesActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+    }
+
 }

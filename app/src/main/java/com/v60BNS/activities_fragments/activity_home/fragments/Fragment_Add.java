@@ -74,6 +74,7 @@ public class Fragment_Add extends Fragment {
     private String selectedImagePath;
     private NearbyModel nearbyModel;
     private String address;
+    private double lng,lat;
 
 
     public static Fragment_Add newInstance() {
@@ -151,48 +152,6 @@ public class Fragment_Add extends Fragment {
         }
     }
 
-    private void getGeoData(final double lat, double lng) {
-        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
-        String location = lat + "," + lng;
-        Api.getService("https://maps.googleapis.com/maps/api/")
-                .getGeoData(location, lang, getString(R.string.map_api_key))
-                .enqueue(new Callback<PlaceGeocodeData>() {
-                    @Override
-                    public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
-                        dialog.dismiss();
-                        if (response.isSuccessful() && response.body() != null) {
-
-                            if (response.body().getResults().size() > 0) {
-                                address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
-
-                            }
-                        } else {
-
-                            try {
-                                Log.e("error_code", response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
-                        try {
-                            dialog.dismiss();
-                            //   binding.progBar.setVisibility(View.GONE);
-
-                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-
-                        }
-                    }
-                });
-    }
 
     private void newpost(String content) {
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
@@ -204,8 +163,8 @@ public class Fragment_Add extends Fragment {
         RequestBody titlepart = Common.getRequestBodyText(content);
         RequestBody placepart = Common.getRequestBodyText(nearbyModel.getPlace_id());
         RequestBody addresspart = Common.getRequestBodyText(address);
-        RequestBody latpart = Common.getRequestBodyText(nearbyModel.getGeometry().getLocation().getLat() + "");
-        RequestBody lngpart = Common.getRequestBodyText(nearbyModel.getGeometry().getLocation().getLng() + "");
+        RequestBody latpart = Common.getRequestBodyText(lat+"");
+        RequestBody lngpart = Common.getRequestBodyText(lng+"");
 
         Api.getService(Tags.base_url)
                 .addpost("Bearer " + userModel.getToken(), titlepart, placepart, addresspart, latpart, lngpart, image)
@@ -309,7 +268,10 @@ public class Fragment_Add extends Fragment {
 
             } else if (requestCode == 3 ) {
                 nearbyModel = (NearbyModel) data.getSerializableExtra("data");
-                getGeoData(nearbyModel.getGeometry().getLocation().getLat(), nearbyModel.getGeometry().getLocation().getLng());
+                address=data.getStringExtra("address");
+                lng=data.getDoubleExtra("lng",0);
+                lat=data.getDoubleExtra("lat",0);
+            //    getGeoData(nearbyModel.getGeometry().getLocation().getLat(), nearbyModel.getGeometry().getLocation().getLng());
             }
         }
 
