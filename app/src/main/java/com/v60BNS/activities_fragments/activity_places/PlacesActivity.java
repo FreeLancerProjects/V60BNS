@@ -327,7 +327,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
                             if (response.body().getResults().size() > 0) {
                                 address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
-
+Log.e("kkfkkfkfk",address);
                             }
                         } else {
 
