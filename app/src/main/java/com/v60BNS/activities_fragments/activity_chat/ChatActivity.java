@@ -231,6 +231,8 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
     private void getChatMessages(RoomModelID roomModelID) {
         Log.e("dlldld", roomModelID.getRoom_id() + "");
+        binding.progBar.setVisibility(View.VISIBLE);
+
         try {
 
 
