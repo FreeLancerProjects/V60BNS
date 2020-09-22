@@ -60,7 +60,17 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.v60bns.com"
+                    android:pathPrefix="/ref/"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities_fragments.activity_verification_code.VerificationCodeActivity"

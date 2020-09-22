@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,13 +75,15 @@ public class Fragment_Main extends Fragment {
     private RecyclerView recViewcomments;
     private TextView tvcount;
     private List<ReviewModels.Reviews> reviewsList;
-    private ImageView imclose;
+    private ImageView imclose,imshare;
+    private CheckBox ch_like;
     private Comments_Adapter comments_adapter;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final int READ_REQ = 2;
     private Uri uri;
     private UserModel userModel;
+    private int pos;
 
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
@@ -110,8 +113,12 @@ public class Fragment_Main extends Fragment {
         binding.progBarStory.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
         recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
+        ch_like = binding.getRoot().findViewById(R.id.chelike);
         imclose = binding.getRoot().findViewById(R.id.imclose);
+        imshare = binding.getRoot().findViewById(R.id.imageshare);
+
         tvcount = binding.getRoot().findViewById(R.id.tvcount);
+
         post_adapter = new Post_Adapter(postlist, activity, this);
         story_adapter = new Story_Adapter(storylist, activity, this);
 
@@ -126,7 +133,22 @@ public class Fragment_Main extends Fragment {
             imclose.setRotation(180);
         }
         setUpBottomSheet();
-
+        imshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                share(pos);
+            }
+        });
+ch_like.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+if(userModel!=null){
+    like_dislike(pos);
+}else {
+    recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
+}
+    }
+});
     }
 
     private void setUpBottomSheet() {
@@ -150,10 +172,16 @@ public class Fragment_Main extends Fragment {
 
     }
 
-    public void getPlaceDetails(String placeid) {
+    public void getPlaceDetails(String placeid,int pos) {
+        ch_like.setChecked(false);
+
+        if(postlist.get(pos).isLove_check()){
+            ch_like.setChecked(true);
+        }
         reviewsList.clear();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
+        this.pos=pos;
        // dialog.show();
 
 
@@ -265,15 +293,15 @@ public class Fragment_Main extends Fragment {
     public void getPosts() {
 binding.progpost.setVisibility(View.VISIBLE);
         try {
-            int uid;
+            String uid;
             if (userModel != null) {
-                uid = userModel.getId();
+                uid = userModel.getId()+"";
             } else {
-                uid = 0;
+                uid = "all";
             }
 
             Api.getService(Tags.base_url).
-                    getposts("off", uid + "").
+                    getposts("off", uid ).
                     enqueue(new Callback<PostModel>() {
                         @Override
                         public void onResponse(Call<PostModel> call, Response<PostModel> response) {
@@ -427,6 +455,72 @@ binding.progpost.setVisibility(View.VISIBLE);
                     }
                 });
 
+    }
+    public int like_dislike( int pos) {
+        if (userModel != null) {
+            try {
+                Api.getService(Tags.base_url)
+                        .likepost("Bearer "+userModel.getToken(), postlist.get(pos).getId()+"")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+
+                                    getPosts();
+                                } else {
+
+
+                                    if (response.code() == 500) {
+                                        Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                    } else {
+                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                        try {
+
+                                            Log.e("error", response.code() + "_" + response.errorBody().string());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                try {
+
+                                    if (t.getMessage() != null) {
+                                        Log.e("error", t.getMessage());
+                                        if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                            Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                } catch (Exception e) {
+                                }
+                            }
+                        });
+            } catch (Exception e) {
+
+            }
+            return 1;
+
+        } else {
+
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+            return 0;
+
+        }
+    }
+    public void share( int pos) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, postlist.get(pos).getLink_for_share());
+        startActivity(intent);
     }
 
 }

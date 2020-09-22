@@ -22,6 +22,8 @@ public class UserModel implements Serializable {
     private String is_login;
     private long logout_time;
     private String token;
+    private int orders_count;
+    private int posts_count;
 
     public int getId() {
         return id;
@@ -89,5 +91,13 @@ public class UserModel implements Serializable {
 
     public String getToken() {
         return token;
+    }
+
+    public int getOrders_count() {
+        return orders_count;
+    }
+
+    public int getPosts_count() {
+        return posts_count;
     }
 }

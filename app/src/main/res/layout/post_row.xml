@@ -111,14 +111,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/imagelike"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:padding="5dp"
-                android:src="@drawable/ic_like"
+                android:button="@drawable/checkbox_bg"
+                android:checked='@{model.love_check==true?true:false,default=false}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

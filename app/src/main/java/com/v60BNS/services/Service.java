@@ -26,7 +26,7 @@ public interface Service {
 
     @GET("place/details/json")
     Call<NearbyStoreDataModel> getPlaceReview(@Query(value = "placeid") String placeid,
-                                       @Query(value = "key") String key
+                                              @Query(value = "key") String key
     );
 
     @GET("place/nearbysearch/json")
@@ -36,69 +36,77 @@ public interface Service {
                                                @Query(value = "language") String language,
                                                @Query(value = "key") String key
     );
+
     @GET("geocode/json")
     Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
                                       @Query(value = "language") String language,
                                       @Query(value = "key") String key);
+
     @FormUrlEncoded
     @POST("api/login")
     Call<UserModel> login(@Field("phone_code") String phone_code,
                           @Field("phone") String phone
 
     );
+
     @Multipart
     @POST("api/register")
     Call<UserModel> signUpWithImagewithoutlogo(@Part("name") RequestBody name,
-                                    @Part("email") RequestBody email,
-                                    @Part("phone_code") RequestBody phone_code,
-                                    @Part("phone") RequestBody phone,
-                                    @Part("user_type") RequestBody user_type,
-                                    @Part("software_type") RequestBody software_type,
-                                    @Part MultipartBody.Part banner
-
-
-    );
-    @Multipart
-    @POST("api/register")
-    Call<UserModel> signUpWithImagewithout(@Part("name") RequestBody name,
                                                @Part("email") RequestBody email,
                                                @Part("phone_code") RequestBody phone_code,
                                                @Part("phone") RequestBody phone,
                                                @Part("user_type") RequestBody user_type,
                                                @Part("software_type") RequestBody software_type,
-                                               @Part MultipartBody.Part banner,
-                                               @Part MultipartBody.Part logo
+                                               @Part MultipartBody.Part banner
 
 
     );
+
+    @Multipart
+    @POST("api/register")
+    Call<UserModel> signUpWithImagewithout(@Part("name") RequestBody name,
+                                           @Part("email") RequestBody email,
+                                           @Part("phone_code") RequestBody phone_code,
+                                           @Part("phone") RequestBody phone,
+                                           @Part("user_type") RequestBody user_type,
+                                           @Part("software_type") RequestBody software_type,
+                                           @Part MultipartBody.Part banner,
+                                           @Part MultipartBody.Part logo
+
+
+    );
+
     @FormUrlEncoded
     @POST("api/logout")
     Call<ResponseBody> logout(@Header("Authorization") String user_token,
                               @Field("user_id") String user_id
 
 
-
     );
+
     @Multipart
     @POST("api/apiStories")
     Call<ResponseBody> addstory(@Header("Authorization") String user_token,
                                 @Part MultipartBody.Part logo
 
 
-
     );
+
     @GET("api/apiStories")
     Call<StoryModel> getStories(@Query("pagination") String pagination,
                                 @Query("type") String type
     );
+
     @GET("api/apiPosts")
     Call<PostModel> getposts(@Query("pagination") String pagination,
                              @Query("user_id") String user_id
     );
+
     @GET("api/myPosts")
     Call<PostModel> getmyposts(@Query("pagination") String pagination,
-                             @Query("user_id") String user_id
+                               @Query("user_id") String user_id
     );
+
     @Multipart
     @POST("api/apiPosts")
     Call<ResponseBody> addpost(@Header("Authorization") String user_token,
@@ -111,6 +119,19 @@ public interface Service {
                                @Part MultipartBody.Part logo
 
 
-
     );
+
+    @FormUrlEncoded
+    @POST("api/apiPosts/love")
+    Call<ResponseBody> likepost(
+            @Header("Authorization") String Authorization,
+            @Field("post_id") String post_id)
+            ;
+    @GET("api/currentUser")
+    Call<UserModel> getprofile(
+            @Header("Authorization") String Authorization,
+            @Field("phone") String phone);
+
+
+
 }
