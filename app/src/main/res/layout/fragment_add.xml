@@ -10,7 +10,9 @@
         <variable
             name="title"
             type="String" />
-
+<variable
+    name="model"
+    type="com.v60BNS.models.UserModel" />
         <variable
             name="lang"
             type="String"
@@ -45,7 +47,7 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_marginStart="8dp"
-                        android:src="@drawable/user"
+                        image2="@{model.logo}"
                         android:tint="@color/colorAccent"
                         app:civ_circle_background_color="@color/gray10"
                         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +78,7 @@
                             android:layout_marginTop="5dp"
                             android:paddingStart="5dp"
                             android:paddingEnd="5dp"
-                            android:text="محمد العشري "
+                            android:text="@{model.name}"
                             android:textColor="@color/gray12"
                             android:textSize="14sp" />
 

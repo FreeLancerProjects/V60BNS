@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+        <variable
+            name="model"
+            type="com.v60BNS.models.ExpertModel.Data" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/user"
+                    image2="@{model.logo}"
                     app:civ_border_color="@color/gray4"
                     app:civ_border_width="1dp" />
 
@@ -53,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
 
-                    android:text="ahmed"
+                    android:text="@{model.name}"
                     android:textColor="@color/gray12"
                     android:textSize="14sp" />
 
@@ -63,7 +68,9 @@
                     app:srb_maxStarSize="20dp"
                     app:srb_numberOfStars="5"
                     app:srb_starSize="15dp"
-                    app:srb_stepSize=".5" />
+                    app:srb_stepSize=".5"
+                    rate="@{model.rating}"
+                    />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

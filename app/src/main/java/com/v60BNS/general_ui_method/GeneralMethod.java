@@ -3,12 +3,14 @@ package com.v60BNS.general_ui_method;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.v60BNS.R;
 import com.v60BNS.preferences.Preferences;
 import com.v60BNS.tags.Tags;
@@ -116,6 +118,16 @@ public class GeneralMethod {
         }
 
     }
+    @BindingAdapter("rate")
+    public static void rate(SimpleRatingBar simpleRatingBar, double rate) {
+        SimpleRatingBar.AnimationBuilder builder = simpleRatingBar.getAnimationBuilder()
+                .setRatingTarget((float) rate)
+                .setDuration(1000)
+                .setRepeatCount(0)
+                .setInterpolator(new LinearInterpolator());
+        builder.start();
+    }
+
 }
 
 

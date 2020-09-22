@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">V60BNS</string>
-    <string name="map_api_key">AIzaSyA6QI378BHt9eqBbiJKtqWHTSAZxcSwN3Q</string>
+<!--    AIzaSyA6QI378BHt9eqBbiJKtqWHTSAZxcSwN3Q-->
+    <string name="map_api_key">AIzaSyDWL4T8WERSHrXQ464jk8pKQf_0WLiDbgE</string>
     <string name="search_key">AIzaSyAeyMUJgKAhnNXbILHONb1um72CNzELFRY</string>
     <string name="field_req">Field required</string>
     <string name="login">Login</string>

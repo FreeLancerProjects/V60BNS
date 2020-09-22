@@ -75,7 +75,7 @@ public class Fragment_Main extends Fragment {
     private RecyclerView recViewcomments;
     private TextView tvcount;
     private List<ReviewModels.Reviews> reviewsList;
-    private ImageView imclose,imshare;
+    private ImageView imclose, imshare;
     private CheckBox ch_like;
     private Comments_Adapter comments_adapter;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -139,16 +139,17 @@ public class Fragment_Main extends Fragment {
                 share(pos);
             }
         });
-ch_like.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-if(userModel!=null){
-    like_dislike(pos);
-}else {
-    recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
-}
-    }
-});
+        ch_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userModel != null) {
+                    like_dislike(pos);
+                } else {
+                    ch_like.setChecked(false);
+                    Common.CreateDialogAlert(activity, getResources().getString(R.string.please_sign_in_or_sign_up));
+                }
+            }
+        });
     }
 
     private void setUpBottomSheet() {
@@ -172,17 +173,17 @@ if(userModel!=null){
 
     }
 
-    public void getPlaceDetails(String placeid,int pos) {
+    public void getPlaceDetails(String placeid, int pos) {
         ch_like.setChecked(false);
 
-        if(postlist.get(pos).isLove_check()){
+        if (postlist.get(pos).isLove_check()) {
             ch_like.setChecked(true);
         }
         reviewsList.clear();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
-        this.pos=pos;
-       // dialog.show();
+        this.pos = pos;
+        // dialog.show();
 
 
         Api.getService("https://maps.googleapis.com/maps/api/")
@@ -236,8 +237,9 @@ if(userModel!=null){
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
 
                                 storylist.clear();
-                                if(userModel!=null){
-                                storylist.add(new StoryModel.Data());}
+                                if (userModel != null) {
+                                    storylist.add(new StoryModel.Data());
+                                }
                                 storylist.addAll(response.body().getData());
                                 if (storylist.size() > 0) {
                                     story_adapter.notifyDataSetChanged();
@@ -292,17 +294,17 @@ if(userModel!=null){
     }
 
     public void getPosts() {
-binding.progpost.setVisibility(View.VISIBLE);
+        binding.progpost.setVisibility(View.VISIBLE);
         try {
             String uid;
             if (userModel != null) {
-                uid = userModel.getId()+"";
+                uid = userModel.getId() + "";
             } else {
                 uid = "all";
             }
 
             Api.getService(Tags.base_url).
-                    getposts("off", uid ).
+                    getposts("off", uid).
                     enqueue(new Callback<PostModel>() {
                         @Override
                         public void onResponse(Call<PostModel> call, Response<PostModel> response) {
@@ -457,11 +459,12 @@ binding.progpost.setVisibility(View.VISIBLE);
                 });
 
     }
-    public int like_dislike( int pos) {
+
+    public int like_dislike(int pos) {
         if (userModel != null) {
             try {
                 Api.getService(Tags.base_url)
-                        .likepost("Bearer "+userModel.getToken(), postlist.get(pos).getId()+"")
+                        .likepost("Bearer " + userModel.getToken(), postlist.get(pos).getId() + "")
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -517,7 +520,8 @@ binding.progpost.setVisibility(View.VISIBLE);
 
         }
     }
-    public void share( int pos) {
+
+    public void share(int pos) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, postlist.get(pos).getLink_for_share());

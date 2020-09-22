@@ -1,12 +1,17 @@
 package com.v60BNS.services;
 
 
+import com.v60BNS.models.ExpertModel;
+import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ReviewModels;
+import com.v60BNS.models.RoomModelID;
 import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
+
+import org.androidannotations.annotations.rest.Post;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -131,7 +136,20 @@ public interface Service {
     Call<UserModel> getprofile(
             @Header("Authorization") String Authorization,
             @Field("phone") String phone);
+    @GET("api/experts")
+    Call<ExpertModel> getExperts(@Query("pagination") String pagination
+    );
 
-
-
+    @POST("api/chatRoom/get")
+    Call<RoomModelID> getchatroom(
+            @Header("Authorization") String Authorization,
+            @Field("from_user_id") String from_user_id,
+            @Field("to_user_id") String to_user_id
+            );
+    @FormUrlEncoded
+    @POST("api/single-chat-room")
+    Call<MessageDataModel> getRoomMessages(@Field("user_id") int user_id,
+                                           @Field("room_id") int room_id,
+                                           @Field("page") int page
+    );
 }

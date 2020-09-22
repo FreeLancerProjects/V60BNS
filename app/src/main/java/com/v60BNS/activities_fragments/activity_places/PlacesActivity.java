@@ -112,6 +112,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
     @SuppressLint("MissingPermission")
     public void getNearbyPlaces(Location location) {
+        getGeoData(location.getLatitude(), location.getLongitude());
 
         String loc = location.getLatitude() + "," + location.getLatitude();
 
@@ -128,7 +129,6 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                                 dataList.addAll(response.body().getResults());
                                 food_adapter.notifyDataSetChanged();
                             }
-                            getGeoData(location.getLatitude(), location.getLongitude());
                         } else {
 
 
@@ -316,6 +316,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
         dialog.setCancelable(false);
         dialog.show();
         String location = lat + "," + lng;
+        Log.e("fllflfl", location);
         Api.getService("https://maps.googleapis.com/maps/api/")
                 .getGeoData(location, lang, getString(R.string.map_api_key))
                 .enqueue(new Callback<PlaceGeocodeData>() {

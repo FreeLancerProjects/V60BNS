@@ -57,7 +57,7 @@
 
 
                     <ProgressBar
-                        android:id="@+id/progBarOffer"
+                        android:id="@+id/progBarexpert"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center" />
