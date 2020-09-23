@@ -169,6 +169,9 @@ public class Fragment_Add extends Fragment {
         MultipartBody.Part image = Common.getMultiPart(activity, uri, "image");
         RequestBody titlepart = Common.getRequestBodyText(content);
         RequestBody placepart = Common.getRequestBodyText(nearbyModel.getPlace_id());
+        if(address==null||address.isEmpty()){
+            address="السعودية الرياض";
+        }
         RequestBody addresspart = Common.getRequestBodyText(address);
         RequestBody latpart = Common.getRequestBodyText(lat+"");
         RequestBody lngpart = Common.getRequestBodyText(lng+"");

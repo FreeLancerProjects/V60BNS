@@ -22,11 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_chat.ChatActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.activities_fragments.activity_setting.SettingsActivity;
 import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
 import com.v60BNS.databinding.FragmentProfileBinding;
+import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ReviewModels;
@@ -65,6 +67,9 @@ public class Fragment_Profile extends Fragment {
     private TextView tvcount;
     private CheckBox ch_like;
     private int position;
+    private LinearLayoutManager manager;
+    private int current_page = 1;
+    private boolean isLoading = false;
 
     public static Fragment_Profile newInstance() {
 
@@ -93,7 +98,7 @@ public class Fragment_Profile extends Fragment {
         reviewsList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
-        userModel=preferences.getUserData(activity);
+        userModel = preferences.getUserData(activity);
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
@@ -104,8 +109,8 @@ public class Fragment_Profile extends Fragment {
         imageshare = binding.getRoot().findViewById(R.id.imageshare);
 
         post_adapter = new Post_Adapter(postlist, activity, this);
-
-        binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
+        manager = new LinearLayoutManager(activity);
+        binding.recViewFavoriteOffers.setLayoutManager(manager);
         binding.recViewFavoriteOffers.setAdapter(post_adapter);
         comments_adapter = new Comments_Adapter(reviewsList, activity);
         recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
@@ -114,7 +119,7 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         imageshare.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +142,26 @@ public class Fragment_Profile extends Fragment {
             imclose.setRotation(180);
         }
         setUpBottomSheet();
+        binding.recViewFavoriteOffers.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy < 0) {
+                    int lastItemPos = manager.findLastCompletelyVisibleItemPosition();
+                    int total_items = post_adapter.getItemCount();
 
+                    if (total_items > 5 && (total_items - lastItemPos) == 1 && !isLoading) {
+                        isLoading = true;
+                        postlist.add(postlist.size(), null);
+                        post_adapter.notifyItemInserted(postlist.size() - 1);
+                        int next_page = current_page + 1;
+                        loadMore(next_page);
+
+
+                    }
+                }
+            }
+        });
     }
 
     private void setUpBottomSheet() {
@@ -147,7 +171,7 @@ public class Fragment_Profile extends Fragment {
     }
 
     public void getPosts() {
-
+binding.progBarOffer.setVisibility(View.VISIBLE);
         try {
             int uid;
             if (userModel != null) {
@@ -157,7 +181,7 @@ public class Fragment_Profile extends Fragment {
             }
 
             Api.getService(Tags.base_url).
-                    getmyposts("off", uid + "").
+                    getmyposts("Bearer " + userModel.getToken(), "on", uid + "", 1).
                     enqueue(new Callback<PostModel>() {
                         @Override
                         public void onResponse(Call<PostModel> call, Response<PostModel> response) {
@@ -217,6 +241,73 @@ public class Fragment_Profile extends Fragment {
         }
 
 
+    }
+
+    private void loadMore(int next_page) {
+        try {
+            int uid;
+            if (userModel != null) {
+                uid = userModel.getId();
+            } else {
+                uid = 0;
+            }
+            Api.getService(Tags.base_url).
+                    getmyposts("Bearer " + userModel.getToken(), "on", uid + "", next_page).
+                    enqueue(new Callback<PostModel>() {
+                        @Override
+                        public void onResponse(Call<PostModel> call, Response<PostModel> response) {
+                            isLoading = false;
+                            postlist.remove(postlist.size() - 1);
+                            post_adapter.notifyItemRemoved(postlist.size() - 1);
+                            if (response.isSuccessful() && response.body() != null) {
+
+                                current_page = response.body().getCurrent_page();
+                                postlist.addAll(response.body().getData());
+                                post_adapter.notifyDataSetChanged();
+
+                            } else {
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<PostModel> call, Throwable t) {
+                            try {
+                                isLoading = false;
+
+                                if (postlist.get(postlist.size() - 1) == null) {
+                                    postlist.remove(postlist.size() - 1);
+                                    post_adapter.notifyItemRemoved(postlist.size() - 1);
+                                }
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
     }
 
     public void getPlaceDetails(String placeid, int position) {
@@ -335,13 +426,18 @@ public class Fragment_Profile extends Fragment {
     }
 
     public void getprofile() {
+        ProgressDialog dialog = Common.createProgressDialog(activity, activity.getResources().getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Log.e("llkkkk", "Bearer " + userModel.getToken());
         if (userModel != null) {
             try {
                 Api.getService(Tags.base_url)
-                        .getprofile("Bearer " + userModel.getToken(), userModel.getPhone())
+                        .getprofile("Bearer " + userModel.getToken())
                         .enqueue(new Callback<UserModel>() {
                             @Override
                             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                                dialog.dismiss();
                                 if (response.isSuccessful()) {
 
                                     updateprofile(response.body());
@@ -368,7 +464,7 @@ public class Fragment_Profile extends Fragment {
                             @Override
                             public void onFailure(Call<UserModel> call, Throwable t) {
                                 try {
-
+                                    dialog.dismiss();
                                     if (t.getMessage() != null) {
                                         Log.e("error", t.getMessage());
                                         if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
@@ -395,9 +491,27 @@ public class Fragment_Profile extends Fragment {
     }
 
     private void updateprofile(UserModel body) {
+        body.setToken(userModel.getToken());
         userModel = body;
         preferences.create_update_userdata(activity, userModel);
         binding.setModel(userModel);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (userModel != null) {
+            getprofile();
+            getPosts();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            getPosts();
+            getprofile();
+        }
+    }
 }

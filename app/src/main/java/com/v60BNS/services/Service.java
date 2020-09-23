@@ -6,6 +6,7 @@ import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.MessageModel;
 import com.v60BNS.models.CategoryDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
+import com.v60BNS.models.NotificationDataModel;
 import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ProductModel;
@@ -16,6 +17,7 @@ import com.v60BNS.models.SettingModel;
 import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
 
+import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Post;
 
 import okhttp3.MultipartBody;
@@ -51,6 +53,14 @@ public interface Service {
     Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
                                       @Query(value = "language") String language,
                                       @Query(value = "key") String key);
+
+    @FormUrlEncoded
+    @POST("api/firebase-tokens")
+    Call<ResponseBody> updateToken(
+            @Field("user_id") int user_id,
+            @Field("firebase_token") String firebase_token,
+            @Field("software_type") String software_type
+    );
 
     @FormUrlEncoded
     @POST("api/login")
@@ -113,8 +123,11 @@ public interface Service {
     );
 
     @GET("api/myPosts")
-    Call<PostModel> getmyposts(@Query("pagination") String pagination,
-                               @Query("user_id") String user_id
+    Call<PostModel> getmyposts(
+            @Header("Authorization") String Authorization,
+            @Query("pagination") String pagination,
+            @Query("user_id") String user_id,
+            @Query("page") int page
     );
 
     @Multipart
@@ -143,8 +156,8 @@ public interface Service {
 
     @GET("api/currentUser")
     Call<UserModel> getprofile(
-            @Header("Authorization") String Authorization,
-            @Field("phone") String phone);
+            @Header("Authorization") String Authorization)
+            ;
 
     @GET("api/experts")
     Call<ExpertModel> getExperts(@Query("pagination") String pagination
@@ -212,5 +225,12 @@ public interface Service {
             @Header("Authorization") String Authorization,
             @Part MultipartBody.Part logo
 
+    );
+
+    @GET("api/my-notifications")
+    Call<NotificationDataModel> getNotification(
+            @Header("Authorization") String Authorization,
+            @Header("lang") String lang,
+            @Query("page") int page
     );
 }

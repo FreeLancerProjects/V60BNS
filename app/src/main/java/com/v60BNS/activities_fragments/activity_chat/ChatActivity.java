@@ -182,7 +182,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                     int lastItemPos = manager.findLastCompletelyVisibleItemPosition();
                     int total_items = chat_adapter.getItemCount();
 
-                    if (lastItemPos == (total_items - 1) && !isLoading) {
+                    if (lastItemPos <= (total_items - 2) && !isLoading) {
                         isLoading = true;
                         messagedatalist.add(0, null);
                         chat_adapter.notifyItemInserted(0);
@@ -192,6 +192,12 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
                     }
                 }
+            }
+        });
+        binding.imageSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkdata();
             }
         });
     }

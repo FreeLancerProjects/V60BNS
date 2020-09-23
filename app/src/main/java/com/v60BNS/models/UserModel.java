@@ -89,9 +89,14 @@ public class UserModel implements Serializable {
         return logout_time;
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getToken() {
         return token;
     }
+
 
     public int getOrders_count() {
         return orders_count;

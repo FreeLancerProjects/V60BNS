@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +24,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_cart.CartActivity;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Add;
@@ -38,11 +43,20 @@ import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
+import com.v60BNS.remote.Api;
 import com.v60BNS.share.Common;
+import com.v60BNS.tags.Tags;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -81,6 +95,11 @@ public class HomeActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
+        if (userModel != null) {
+//            EventBus.getDefault().register(this);
+            updateToken();
+
+        }
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
@@ -382,7 +401,6 @@ public class HomeActivity extends AppCompatActivity {
                 fragment_profile = Fragment_Profile.newInstance();
             }
 
-
             if (fragment_add != null && fragment_add.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_add).commit();
             }
@@ -398,6 +416,8 @@ public class HomeActivity extends AppCompatActivity {
             }
             if (fragment_profile.isAdded()) {
                 fragmentManager.beginTransaction().show(fragment_profile).commit();
+                fragment_profile.getprofile();
+                fragment_profile.getPosts();
 
             } else {
                 fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_profile, "fragment_profile").addToBackStack("fragment_profile").commit();
@@ -471,4 +491,57 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void updateToken() {
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                            String token = task.getResult().getToken();
+                            task.getResult().getId();
+                            Log.e("sssssss", token);
+                            Api.getService(Tags.base_url)
+                                    .updateToken(userModel.getId(), token, "android")
+                                    .enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                            if (response.isSuccessful()) {
+                                                try {
+                                                    Log.e("Success", "token updated");
+                                                } catch (Exception e) {
+                                                    //  e.printStackTrace();
+                                                }
+                                            } else {
+                                                try {
+                                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            try {
+                                                Log.e("Error", t.getMessage());
+                                            } catch (Exception e) {
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 }

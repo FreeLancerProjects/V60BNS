@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">V60BNS</string>
-    <string name="map_api_key">AIzaSyDWL4T8WERSHrXQ464jk8pKQf_0WLiDbgE</string>
+    <string name="map_api_key">AIzaSyA6QI378BHt9eqBbiJKtqWHTSAZxcSwN3Q</string>
     <string name="search_key">AIzaSyAeyMUJgKAhnNXbILHONb1um72CNzELFRY</string>
 
     <string name="field_req">الحقل مطلوب</string>
@@ -109,7 +109,8 @@
     <string name="something">تحقق من الاتصال بالانترنت</string>
     <string name="user_found">User Found</string>
     <string name="show_all_comment">مشاهدة كل التعليقات</string>
-    <string name="ch_image">Choose Image</string>
+    <string name="ch_image">اختر الصورة</string>
+    <string name="no_data_found">لا يوجد بيانات</string>
     <string name="rial">ر.س</string>
     <string name="kilo">ك.ج</string>
 </resources>

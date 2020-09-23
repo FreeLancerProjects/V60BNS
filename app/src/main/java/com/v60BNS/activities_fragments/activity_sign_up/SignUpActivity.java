@@ -70,8 +70,9 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
-        initView();
         getDataFromIntent();
+
+        initView();
 
     }
 
@@ -81,6 +82,14 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         binding.setModel(signUpModel);
         binding.setListener(this);
         userModel = preferences.getUserData(this);
+        if (typeedit == 2) {
+            signUpModel.setEmail(userModel.getEmail());
+            signUpModel.setName(userModel.getName());
+            Picasso.get().load(Tags.IMAGE_URL + userModel.getLogo()).placeholder(R.drawable.ic_avatar).into(binding.imgLogo);
+            Picasso.get().load(Tags.IMAGE_URL + userModel.getBanner()).placeholder(R.drawable.ic_gallery).into(binding.imgBanner);
+            binding.setModel(signUpModel);
+        }
+
 
     }
 
@@ -465,6 +474,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
+                                response.body().setToken(userModel.getToken());
                                 preferences.create_update_userdata(SignUpActivity.this, response.body());
                                 Intent intent = getIntent();
                                 if (intent != null) {
@@ -539,6 +549,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
+                                response.body().setToken(userModel.getToken());
                                 preferences.create_update_userdata(SignUpActivity.this, response.body());
                                 Intent intent = getIntent();
                                 if (intent != null) {
@@ -608,6 +619,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
+                                response.body().setToken(userModel.getToken());
                                 preferences.create_update_userdata(SignUpActivity.this, response.body());
                                 Intent intent = getIntent();
                                 if (intent != null) {

@@ -27,7 +27,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
-        fragment_store=fragment_store;
+        this.fragment_store=fragment_store;
 
 
     }
@@ -52,7 +52,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         myHolder.itemView.setOnClickListener(view -> {
             Log.e("sssss",list.get(holder.getLayoutPosition()).getId()+"");
 
-            Fragment_Store fragment_store=new Fragment_Store();
             fragment_store.setitemData(list.get(holder.getLayoutPosition()).getId()+"");
         });
     }

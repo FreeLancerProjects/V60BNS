@@ -5,9 +5,14 @@ import java.util.List;
 
 public class PostModel implements Serializable {
     private List<Data> data;
+    private int current_page;
 
     public List<Data> getData() {
         return data;
+    }
+
+    public int getCurrent_page() {
+        return current_page;
     }
 
     public static class Data implements Serializable {

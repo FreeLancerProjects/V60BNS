@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,15 +24,12 @@ import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_coffee_detials.CoffeeDetialsActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.CategoryAdapter;
-import com.v60BNS.adapters.Department_Adapter;
-import com.v60BNS.adapters.Food_Adapter;
 import com.v60BNS.adapters.ProductAdapter;
 import com.v60BNS.adapters.Slider_Adapter;
 import com.v60BNS.databinding.FragmentStoreBinding;
 import com.v60BNS.models.CategoryDataModel;
 import com.v60BNS.models.ProductModel;
 import com.v60BNS.models.SingleProductModel;
-import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
@@ -129,7 +125,7 @@ public class Fragment_Store extends Fragment {
                     int last_visible_item = ((LinearLayoutManager) binding.recView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
                     if (total_item >= 20 && (total_item - last_visible_item) == 5 && !isLoading) {
-
+Log.e("kldkkdkdk","dkkdkkdkdk");
                         isLoading = true;
                         int page = current_page + 1;
                         reDataList.add(null);
@@ -147,9 +143,10 @@ public class Fragment_Store extends Fragment {
     }
 
     private void getProducts() {
-
+//Log.e("llll",reDataList.size()+"");
         try {
             reDataList.clear();
+           // reDataList = new ArrayList<>();
             productAdapter.notifyDataSetChanged();
             // binding.tvNoData.setVisibility(View.GONE);
             binding.progBar.setVisibility(View.VISIBLE);
@@ -160,10 +157,10 @@ public class Fragment_Store extends Fragment {
                         @Override
                         public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                             binding.progBar.setVisibility(View.GONE);
-                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null && response.body().getData().size() > 0) {
                                 reDataList.addAll(response.body().getData());
                                 if (reDataList.size() > 0) {
-
+                                 //   Log.e("lllll", reDataList.size() + "");
                                     productAdapter.notifyDataSetChanged();
 
                                     //   binding.tvNoData.setVisibility(View.GONE);
@@ -182,8 +179,8 @@ public class Fragment_Store extends Fragment {
                                     try {
 
                                         Log.e("error", response.code() + "_" + response.errorBody().string());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                    } catch (Exception e) {
+                                        //e.printStackTrace();
                                     }
                                 }
                             }
@@ -208,7 +205,7 @@ public class Fragment_Store extends Fragment {
                         }
                     });
         } catch (Exception e) {
-Log.e("flfllflfl",e.toString());
+            Log.e("flfllflfl", e.toString());
         }
     }
 
@@ -223,11 +220,12 @@ Log.e("flfllflfl",e.toString());
                         @Override
                         public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                             isLoading = false;
-                            reDataList.remove(reDataList.size() - 1);
-                            productAdapter.notifyItemRemoved(reDataList.size() - 1);
+                            if(reDataList.get(reDataList.size()-1)==null) {
+                                reDataList.remove(reDataList.size() - 1);
+                                productAdapter.notifyItemRemoved(reDataList.size() - 1);
+                            }
 
-
-                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null&&response.body().getData().size()>0) {
 
                                 int oldPos = reDataList.size() - 1;
 
@@ -364,15 +362,16 @@ Log.e("flfllflfl",e.toString());
         }, 3000, 3000);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        YoYo.with(Techniques.ZoomIn)
-                .duration(900)
-                .repeat(0)
-                .playOn(binding.getRoot());
-
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        reDataList=new ArrayList<>();
+//        YoYo.with(Techniques.ZoomIn)
+//                .duration(900)
+//                .repeat(0)
+//                .playOn(binding.getRoot());
+//
+//    }
 
 
     public void showdetials() {
