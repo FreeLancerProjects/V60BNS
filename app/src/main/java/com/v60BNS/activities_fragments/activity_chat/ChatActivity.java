@@ -37,6 +37,10 @@ import com.v60BNS.share.Common;
 import com.v60BNS.tags.Tags;
 
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -153,7 +157,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
 
     private void initView() {
-
+        EventBus.getDefault().register(this);
         Paper.init(this);
         messagedatalist = new ArrayList<>();
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -439,5 +443,20 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         } catch (Exception e) {
 
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void listenToNewMessage(MessageModel messageModel) {
+        messagedatalist.add(messageModel);
+        scrollToLastPosition();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        preferences.clearChatUserData(this);
     }
 }
