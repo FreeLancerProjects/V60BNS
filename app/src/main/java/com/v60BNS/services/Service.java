@@ -3,11 +3,13 @@ package com.v60BNS.services;
 
 import com.v60BNS.models.ExpertModel;
 import com.v60BNS.models.MessageDataModel;
+import com.v60BNS.models.MessageModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ReviewModels;
 import com.v60BNS.models.RoomModelID;
+import com.v60BNS.models.SettingModel;
 import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
 
@@ -156,5 +158,40 @@ public interface Service {
             @Header("Authorization") String Authorization,
             @Field("room_id") int room_id,
             @Field("page") int page
+    );
+
+    @FormUrlEncoded
+    @POST("api/message/send")
+    Call<MessageModel> sendChatMessage(
+            @Header("Authorization") String Authorization,
+            @Field("room_id") int room_id,
+            @Field("from_user_id") int from_user_id,
+            @Field("to_user_id") int to_user_id,
+            @Field("message_kind") String message_kind,
+            @Field("message") String message,
+            @Field("date") long date
+
+
+    );
+
+    @GET("api/app/info")
+    Call<SettingModel> getSetting(
+
+    );
+
+    @Multipart
+    @POST("api/profile/update")
+    Call<UserModel> editClientProfileWithoutImage(
+            @Header("Authorization") String Authorization,
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email
+    );
+
+    @Multipart
+    @POST("api/profile/update")
+    Call<UserModel> editClientProfileWithImage(
+            @Header("Authorization") String Authorization,
+            @Part MultipartBody.Part logo
+
     );
 }

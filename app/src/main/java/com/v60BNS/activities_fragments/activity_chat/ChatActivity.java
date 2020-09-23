@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import com.v60BNS.tags.Tags;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -164,7 +166,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         getchatroom();
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         manager = new LinearLayoutManager(this);
-        chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), chatUserModel.getImage(), this);
+        chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), expertData.getLogo(), this);
         binding.recView.setItemViewCacheSize(25);
         binding.recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recView.setDrawingCacheEnabled(true);
@@ -180,7 +182,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                     int lastItemPos = manager.findLastCompletelyVisibleItemPosition();
                     int total_items = chat_adapter.getItemCount();
 
-                    if (lastItemPos == (total_items - 2) && !isLoading) {
+                    if (lastItemPos == (total_items - 1) && !isLoading) {
                         isLoading = true;
                         messagedatalist.add(0, null);
                         chat_adapter.notifyItemInserted(0);
@@ -366,5 +368,70 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                 .postDelayed(() -> binding.recView.scrollToPosition(messagedatalist.size() - 1), 10);
     }
 
+    private void checkdata() {
+        String message = binding.edtMsgContent.getText().toString();
+        if (!TextUtils.isEmpty(message)) {
+            Common.CloseKeyBoard(this, binding.edtMsgContent);
+            binding.edtMsgContent.setText("");
+            sendMessage(message);
 
+        } else {
+            binding.edtMsgContent.setError(getResources().getString(R.string.field_req));
+        }
+    }
+
+    private void sendMessage(String message) {
+        try {
+
+            long date = Calendar.getInstance().getTimeInMillis() / 1000;
+
+            Api.getService(Tags.base_url)
+                    .sendChatMessage("Bearer " + userModel.getToken(), chatUserModel.getRoom_id(), userModel.getId(), chatUserModel.getId(), "text", message, date)
+                    .enqueue(new Callback<MessageModel>() {
+                        @Override
+                        public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                //  Log.e("ddd",response.body().getMessage_type()+"__");
+                                messagedatalist.add(response.body());
+                                chat_adapter.notifyDataSetChanged();
+                                scrollToLastPosition();
+                            } else {
+
+                                try {
+
+                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                if (response.code() == 500) {
+                                    Toast.makeText(ChatActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    Toast.makeText(ChatActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MessageModel> call, Throwable t) {
+                            try {
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(ChatActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ChatActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+    }
 }

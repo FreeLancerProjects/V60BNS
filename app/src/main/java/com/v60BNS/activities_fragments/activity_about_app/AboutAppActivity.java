@@ -3,6 +3,9 @@ package com.v60BNS.activities_fragments.activity_about_app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -12,10 +15,17 @@ import com.v60BNS.R;
 import com.v60BNS.databinding.ActivityAppDataBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
+import com.v60BNS.models.SettingModel;
+import com.v60BNS.remote.Api;
+import com.v60BNS.tags.Tags;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AboutAppActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityAppDataBinding binding;
@@ -74,60 +84,60 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
     private void getAppData()
     {
 
-//        Api.getService(Tags.base_url)
-//                .getSetting()
-//                .enqueue(new Callback<SettingModel>() {
-//                    @Override
-//                    public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
-//                        binding.progBar.setVisibility(View.GONE);
-//                        if (response.isSuccessful() && response.body() != null) {
+        Api.getService(Tags.base_url)
+                .getSetting()
+                .enqueue(new Callback<SettingModel>() {
+                    @Override
+                    public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
+                      //  binding.progBar.setVisibility(View.GONE);
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            if (type==1)
+                            {
 //
-//                            if (type==1)
-//                            {
-//
-//                                binding.setContent(response.body().getData().getTerm_conditions());
-//                            }else
-//                            {
-//                                binding.setContent(response.body().getData().getAbout_app());
-//
-//                            }
-//
-//                        } else {
-//                            try {
-//
-//                                Log.e("error", response.code() + "_" + response.errorBody().string());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            if (response.code() == 500) {
-//                                Toast.makeText(AboutAppActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-//
-//                            } else {
-//                                Toast.makeText(AboutAppActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-//
-//
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<SettingModel> call, Throwable t) {
-//                        try {
-//                            binding.progBar.setVisibility(View.GONE);
-//
-//                            if (t.getMessage() != null) {
-//                                Log.e("error", t.getMessage());
-//                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-//                                    Toast.makeText(AboutAppActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
-//                                } else {
-//                                    Toast.makeText(AboutAppActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//
-//                        } catch (Exception e) {
-//                        }
-//                    }
-//                });
+                         //       binding.setContent(response.body().getData().getTerm_conditions());
+                            }else
+                            {
+                           //     binding.setContent(response.body().getData().getAbout_app());
+
+                            }
+
+                        } else {
+                            try {
+
+                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code() == 500) {
+                                Toast.makeText(AboutAppActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(AboutAppActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SettingModel> call, Throwable t) {
+                        try {
+                          //  binding.progBar.setVisibility(View.GONE);
+
+                            if (t.getMessage() != null) {
+                                Log.e("error", t.getMessage());
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(AboutAppActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(AboutAppActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
 
     }
 
