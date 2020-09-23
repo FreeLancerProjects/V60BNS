@@ -110,4 +110,6 @@
     <string name="user_found">User Found</string>
     <string name="show_all_comment">مشاهدة كل التعليقات</string>
     <string name="ch_image">Choose Image</string>
+    <string name="rial">ر.س</string>
+    <string name="kilo">ك.ج</string>
 </resources>

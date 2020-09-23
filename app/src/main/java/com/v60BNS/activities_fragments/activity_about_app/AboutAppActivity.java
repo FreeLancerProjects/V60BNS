@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-
 import com.v60BNS.R;
 import com.v60BNS.databinding.ActivityAppDataBinding;
 import com.v60BNS.interfaces.Listeners;
@@ -21,7 +19,6 @@ import com.v60BNS.tags.Tags;
 
 import java.io.IOException;
 import java.util.Locale;
-
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;

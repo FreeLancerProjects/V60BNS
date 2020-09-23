@@ -41,24 +41,23 @@ public class SplashActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     private LinearLayout llLang;
     private boolean status;
-    private CardView cardAr,cardEn;
-    private TextView tvAr,tvEn;
+    private CardView cardAr, cardEn;
+    private TextView tvAr, tvEn;
     private Button btnNext;
     private String lang = "ar";
     private Preferences preferences;
-
 
 
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         super.attachBaseContext(Language_Helper.updateResources(newBase, Language_Helper.getLanguage(newBase)));
-}
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         initView();
     }
 
@@ -73,65 +72,64 @@ public class SplashActivity extends AppCompatActivity {
         tvEn = findViewById(R.id.tvEn);
 
 
+        if (preferences.getAppSetting(this) != null && preferences.getAppSetting(this).isLanguageSelected()) {
 
-if (preferences.getAppSetting(this)!=null&&preferences.getAppSetting(this).isLanguageSelected()) {
+            if (preferences.getSession(this).equals(Tags.session_login)) {
+                Intent intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
 
-    if (preferences.getSession(this).equals(Tags.session_login)) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
-    } else {
+                new Handler().postDelayed(() -> {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }, 1500);
 
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }, 1500);
-
-    }
+            }
 
 
-}else {
+        } else {
             constraintSetOld.clone(constraintLayout);
-            constraintSetNew.clone(this,R.layout.language_layout);
+            constraintSetNew.clone(this, R.layout.language_layout);
             new Handler().postDelayed(() -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     Transition transition = new ChangeBounds();
                     transition.setDuration(400);
                     transition.setInterpolator(new AccelerateDecelerateInterpolator());
-                    TransitionManager.beginDelayedTransition(constraintLayout,transition);
+                    TransitionManager.beginDelayedTransition(constraintLayout, transition);
 
                 }
 
-                if (!status){
+                if (!status) {
                     constraintSetNew.applyTo(constraintLayout);
-                }else {
+                } else {
                     constraintSetOld.applyTo(constraintLayout);
 
                 }
-                status =!status;
+                status = !status;
 
 
-                Animation animation = AnimationUtils.loadAnimation(SplashActivity.this,R.anim.lanuch);
+                Animation animation = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.lanuch);
                 constraintLayout.startAnimation(animation);
 
-            },1000);
+            }, 1000);
         }
 
 
         cardAr.setOnClickListener(v -> {
             cardAr.setCardElevation(5f);
             cardEn.setCardElevation(0f);
-            tvAr.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
-            tvEn.setTextColor(ContextCompat.getColor(this,R.color.color2));
+            tvAr.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            tvEn.setTextColor(ContextCompat.getColor(this, R.color.color2));
             lang = "ar";
 
         });
         cardEn.setOnClickListener(v -> {
             cardAr.setCardElevation(0f);
             cardEn.setCardElevation(5f);
-            tvAr.setTextColor(ContextCompat.getColor(this,R.color.color2));
-            tvEn.setTextColor(ContextCompat.getColor(this,R.color.colorPrimary));
+            tvAr.setTextColor(ContextCompat.getColor(this, R.color.color2));
+            tvEn.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
             lang = "en";
         });
         btnNext.setOnClickListener(v -> {
@@ -142,21 +140,15 @@ if (preferences.getAppSetting(this)!=null&&preferences.getAppSetting(this).isLan
 
     private void refreshActivity() {
         Paper.init(this);
-        Paper.book().write("lang",lang);
+        Paper.book().write("lang", lang);
         DefaultSettings defaultSettings = new DefaultSettings();
         defaultSettings.setLanguageSelected(true);
-        preferences.createUpdateAppSetting(this,defaultSettings);
+        preferences.createUpdateAppSetting(this, defaultSettings);
         Intent intent = getIntent();
         finish();
         startActivity(intent);
 
     }
-
-
-
-
-
-
 
 
 }

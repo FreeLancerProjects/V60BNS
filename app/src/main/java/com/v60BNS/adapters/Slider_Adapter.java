@@ -1,73 +1,75 @@
 package com.v60BNS.adapters;
 
-
 import android.content.Context;
-import android.os.Parcelable;
+import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.v60BNS.R;
-import com.v60BNS.databinding.SliderRowBinding;
 import com.v60BNS.models.SliderModel;
+import com.v60BNS.tags.Tags;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
 public class Slider_Adapter extends PagerAdapter {
-
-
-    List<SliderModel> IMAGES;
+    private List<SliderModel.Data> list;
+    private Context context;
     private LayoutInflater inflater;
-    Context context;
 
-    public Slider_Adapter(Context context, List<SliderModel> IMAGES) {
+    public Slider_Adapter(List<SliderModel.Data> list, Context context) {
+        this.list = list;
         this.context = context;
-        this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
-    @Override
     public int getCount() {
-        return IMAGES.size();
+        return list.size();
     }
 
     @Override
-    public Object instantiateItem(ViewGroup view, int position) {
-        SliderRowBinding rowBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.slider_row, view, false);
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+        return view == object;
+    }
+
+    @NonNull
+    @Override
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        View view = inflater.inflate(R.layout.slider_row,container,false);
+        ImageView image = view.findViewById(R.id.image);
+        ProgressBar progressBar = view.findViewById(R.id.progBar);
+        SliderModel.Data sliderModel = list.get(position);
+//        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        String path = Tags.IMAGE_URL+sliderModel.getImage();
+        Picasso.get().load(Uri.parse(path)).fit().into(image, new Callback() {
+            @Override
+            public void onSuccess() {
+//                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
 
 
-    //    Picasso.get().load(Uri.parse(Tags.IMAGE_URL + IMAGES.get(position).getFull_file())).fit().into(rowBinding.image);
-
-        view.addView(rowBinding.getRoot());
-        return rowBinding.getRoot();
+        });
+        container.addView(view);
+        return view;
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view.equals(object);
-    }
-
-    @Override
-    public void restoreState(Parcelable state, ClassLoader loader) {
-    }
-
-    @Override
-    public Parcelable saveState() {
-        return null;
-    }
-
-    @Override
-    public int getItemPosition(@NonNull Object object) {
-        return POSITION_NONE;
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView((View) object);
     }
 }

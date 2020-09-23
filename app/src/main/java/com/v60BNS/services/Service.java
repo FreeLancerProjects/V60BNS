@@ -4,10 +4,13 @@ package com.v60BNS.services;
 import com.v60BNS.models.ExpertModel;
 import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.MessageModel;
+import com.v60BNS.models.CategoryDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.models.PostModel;
+import com.v60BNS.models.ProductModel;
 import com.v60BNS.models.ReviewModels;
+import com.v60BNS.models.SliderModel;
 import com.v60BNS.models.RoomModelID;
 import com.v60BNS.models.SettingModel;
 import com.v60BNS.models.StoryModel;
@@ -128,6 +131,9 @@ public interface Service {
 
     );
 
+    @GET("api/sliders")
+    Call<SliderModel> getSliders(@Query("pagination") String pagination);
+
     @FormUrlEncoded
     @POST("api/apiPosts/love")
     Call<ResponseBody> likepost(
@@ -187,6 +193,19 @@ public interface Service {
             @Part("email") RequestBody email
     );
 
+    @GET("api/categories")
+    Call<CategoryDataModel> getMainCategory(@Query("pagination") String pagination);
+
+
+    @POST("api/products")
+    Call<ProductModel> getProduct(
+            @Query("pagination") String pagination,
+            @Query("category_id") String category_id,
+            @Query("limit_per_page") String limit_per_page,
+            @Query("page") int page
+
+
+    );
     @Multipart
     @POST("api/profile/update")
     Call<UserModel> editClientProfileWithImage(

@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="model"
+            type="com.v60BNS.models.SingleProductModel" />
 
     </data>
 
@@ -35,7 +38,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/post"
+                        image2="@{model.main_image}"
                         app:riv_corner_radius="10dp" />
 
 
@@ -59,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:padding="3dp"
-                        android:text="بن العبد"
+                        android:text="@{model.ar_title}"
                         android:textColor="@color/gray12"
                         android:textSize="15sp" />
 
@@ -74,7 +77,7 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="20 "
+                            android:text="@{model.price}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="13sp"
 
@@ -85,7 +88,7 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="ryal "
+                            android:text="@string/rial"
                             android:textColor="@color/gray14"
                             android:textSize="13sp"
 
@@ -103,7 +106,7 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="20 "
+                            android:text="@{model.amount}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="13sp"
 
@@ -114,7 +117,7 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="kilo"
+                            android:text="@string/kilo"
                             android:textColor="@color/gray14"
                             android:textSize="13sp"
 
