@@ -28,6 +28,8 @@ import com.v60BNS.remote.Api;
 import com.v60BNS.share.Common;
 import com.v60BNS.tags.Tags;
 
+import org.jsoup.Jsoup;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,6 +163,14 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     }
 
     private void update(SingleProductModel body) {
+        try {
+            binding.tvContent.setText(Jsoup.parse(body.getAr_components()).text());
+            binding.tvdesc.setText(Jsoup.parse(body.getAr_desc()).text());
+        } catch (Exception e) {
+            binding.tvContent.setText(body.getAr_components());
+            binding.tvdesc.setText(body.getAr_desc());
+            Log.e("kskskks", e.toString());
+        }
         singleProductModel = body;
         binding.setModel(body);
         sliderModels = new ArrayList<>();

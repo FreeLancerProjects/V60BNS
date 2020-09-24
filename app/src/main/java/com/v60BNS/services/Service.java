@@ -278,4 +278,12 @@ public interface Service {
             @Field("order_id") String order_id
 
     );
+    @FormUrlEncoded
+    @POST("api/firebase/token/delete")
+    Call<ResponseBody> deltePhoneToken(
+            @Header("Authorization") String Authorization,
+            @Field("firebase_token") String firebase_token,
+            @Field("user_id") int user_id
+
+    );
 }

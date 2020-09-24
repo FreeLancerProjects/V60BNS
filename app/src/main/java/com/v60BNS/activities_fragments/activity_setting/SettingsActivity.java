@@ -175,7 +175,7 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
     @Override
     public void logout() {
         if (preferences.getUserData(this) != null) {
-            Logout();
+            DeleteTokenFireBase();
         } else {
             navigateToSignInActivity();
         }
@@ -252,6 +252,65 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
             navigateToSignInActivity();
         }
 
+    }
+
+    private void DeleteTokenFireBase() {
+
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String token = task.getResult().getToken();
+
+                try {
+
+                    try {
+
+                        Api.getService(Tags.base_url)
+                                .deltePhoneToken("Bearer " + userModel.getToken(), token, userModel.getId())
+                                .enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        if (response.isSuccessful() && response.body() != null) {
+                                            Logout();
+                                        } else {
+                                            try {
+
+                                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                        try {
+
+                                            if (t.getMessage() != null) {
+                                                Log.e("error", t.getMessage());
+                                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                                    Toast.makeText(SettingsActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(SettingsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                        } catch (Exception e) {
+                                        }
+                                    }
+                                });
+                    } catch (Exception e) {
+
+
+                    }
+                } catch (Exception e) {
+
+
+                }
+
+            }
+        });
     }
 
     private void navigateToSignInActivity() {

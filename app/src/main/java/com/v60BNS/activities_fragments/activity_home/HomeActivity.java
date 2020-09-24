@@ -41,6 +41,7 @@ import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Store;
 import com.v60BNS.activities_fragments.activity_notification.NotificationActivity;
 import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language_Helper;
+import com.v60BNS.models.NotFireModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
 import com.v60BNS.remote.Api;
@@ -48,6 +49,8 @@ import com.v60BNS.share.Common;
 import com.v60BNS.tags.Tags;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -88,7 +91,15 @@ public class HomeActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             displayFragmentMain();
         }
+        getdatafromintent();
 
+    }
+
+    private void getdatafromintent() {
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("not", false)) {
+            displayFragmentProfile();
+        }
     }
 
     private void initView() {
@@ -96,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         if (userModel != null) {
-//            EventBus.getDefault().register(this);
+            EventBus.getDefault().register(this);
             updateToken();
 
         }
@@ -542,6 +553,15 @@ public class HomeActivity extends AppCompatActivity {
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void listenToNotifications(NotFireModel notFireModel) {
+        if (userModel != null) {
+            if (fragment_profile != null && fragment_profile.isVisible()) {
+                fragment_profile.getPosts();
+            }
         }
     }
 }
