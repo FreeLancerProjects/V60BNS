@@ -1,13 +1,17 @@
 package com.v60BNS.services;
 
 
+import com.v60BNS.models.Add_Order_Model;
 import com.v60BNS.models.ExpertModel;
 import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.MessageModel;
 import com.v60BNS.models.CategoryDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.NotificationDataModel;
+import com.v60BNS.models.OrderDataModel;
+import com.v60BNS.models.OrderModel;
 import com.v60BNS.models.PlaceGeocodeData;
+import com.v60BNS.models.PlaceMapDetailsData;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ProductModel;
 import com.v60BNS.models.ReviewModels;
@@ -25,6 +29,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -36,6 +41,13 @@ import retrofit2.http.Query;
 
 public interface Service {
 
+    @GET("place/findplacefromtext/json")
+    Call<PlaceMapDetailsData> searchOnMap(@Query(value = "inputtype") String inputtype,
+                                          @Query(value = "input") String input,
+                                          @Query(value = "fields") String fields,
+                                          @Query(value = "language") String language,
+                                          @Query(value = "key") String key
+    );
 
     @GET("place/details/json")
     Call<NearbyStoreDataModel> getPlaceReview(@Query(value = "placeid") String placeid,
@@ -220,6 +232,7 @@ public interface Service {
 
 
     );
+
     @Multipart
     @POST("api/profile/update")
     Call<UserModel> editClientProfileWithImage(
@@ -234,7 +247,35 @@ public interface Service {
             @Header("lang") String lang,
             @Query("page") int page
     );
-    @POST("api/single-product")
-    Call<SingleProductModel> getSingleProduct( @Query("product_id") String product_id);
 
+    @FormUrlEncoded
+    @POST("api/single-product")
+    Call<SingleProductModel> getSingleProduct(@Field("product_id") String product_id);
+
+    @POST("api/order/creating")
+    Call<ResponseBody> accept_orders(
+            @Header("Authorization") String Authorization,
+            @Body Add_Order_Model add_order_model);
+
+    @GET("api/orders/current")
+    Call<OrderDataModel> getcurrentOrders(
+            @Header("Authorization") String Authorization,
+            @Query("pagination")String pagination,
+            @Query("page") int page
+    );
+
+
+    @GET("api/orders/previous")
+    Call<OrderDataModel> getfinshiorders(
+            @Header("Authorization") String Authorization,
+            @Query("pagination")String pagination,
+            @Query("page") int page
+    );
+    @FormUrlEncoded
+    @POST("api/single-order")
+    Call<OrderModel> getorderdetials(
+            @Header("Authorization") String Authorization,
+            @Field("order_id") String order_id
+
+    );
 }

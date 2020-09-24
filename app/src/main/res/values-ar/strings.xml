@@ -113,4 +113,10 @@
     <string name="no_data_found">لا يوجد بيانات</string>
     <string name="rial">ر.س</string>
     <string name="kilo">ك.ج</string>
+    <string name="ryal">ريال</string>
+    <string name="select_location_on_map">حدد موقع على الخريطة</string>
+    <string name="order_detials">تفاصيل الطلب</string>
+    <string name="current_order">الطلبات الحاليه</string>
+    <string name="finish_order">الطالبات السابقة</string>
+    <string name="suc">تم بنجاح</string>
 </resources>

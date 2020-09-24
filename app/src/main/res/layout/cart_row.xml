@@ -9,6 +9,9 @@
         <variable
             name="lang"
             type="String" />
+<variable
+    name="model"
+    type="com.v60BNS.models.Add_Order_Model.ProductDetails" />
     </data>
 
     <FrameLayout
@@ -45,7 +48,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/post"
+                       image2="@{model.image}"
                         app:riv_corner_radius="10dp" />
 
 
@@ -70,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:padding="3dp"
-                        android:text="بن العبد"
+                        android:text="@{model.name}"
                         android:textColor="@color/gray12"
                         android:textSize="15sp" />
 
@@ -96,7 +99,7 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="ryal "
+                            android:text="@string/ryal"
                             android:textColor="@color/gray14"
                             android:textSize="13sp"
 
@@ -146,7 +149,7 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginEnd="15dp"
                         android:gravity="center"
-                        android:text="1"
+                        android:text='@{model.amount+""}'
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 

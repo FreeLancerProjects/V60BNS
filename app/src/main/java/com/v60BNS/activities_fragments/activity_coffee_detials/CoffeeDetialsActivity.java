@@ -12,12 +12,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.v60BNS.R;
 import com.v60BNS.adapters.Ingredients_Adapter;
 import com.v60BNS.adapters.SlidingImage_Adapter;
 import com.v60BNS.databinding.ActivityCoffeeDetialsBinding;
 import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
+import com.v60BNS.models.Add_Order_Model;
 import com.v60BNS.models.SingleProductModel;
 import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.SliderModel;
@@ -32,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +45,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private ActivityCoffeeDetialsBinding binding;
     private String lang;
     private Preferences preferences;
-    private List<SliderModel.Data> sliderModels;
+    private List<SingleProductModel.ProductImage> sliderModels;
     private SlidingImage_Adapter sliderAdapter;
     private List<StoryModel.Data> dataList;
     private Ingredients_Adapter food_adapter;
@@ -75,13 +78,17 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private void initView() {
         preferences = Preferences.getInstance();
         dataList = new ArrayList<>();
-        singleProductModel=new SingleProductModel();
+        singleProductModel = new SingleProductModel();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setModel(singleProductModel);
         binding.setBackListener(this);
+
+        binding.tab.setupWithViewPager(binding.pager);
+        binding.progBarSlider.setVisibility(View.GONE);
         change_slide_image();
+
         food_adapter = new Ingredients_Adapter(dataList, this, null);
         binding.recview.setLayoutManager(new LinearLayoutManager(this));
         binding.recview.setAdapter(food_adapter);
@@ -100,47 +107,39 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
 
             }
         });
-        initData();
-
+        binding.flAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Add_Order_Model.OrderDetails> orderDetailsList;
+                List<Add_Order_Model.ProductDetails> productDetailsList;
+                Add_Order_Model add_order_model = preferences.getUserOrder(CoffeeDetialsActivity.this);
+                if (add_order_model != null) {
+                    orderDetailsList = add_order_model.getOrder_details();
+                    productDetailsList = add_order_model.getProductDetails();
+                } else {
+                    add_order_model = new Add_Order_Model();
+                    orderDetailsList = new ArrayList<>();
+                    productDetailsList = new ArrayList<>();
+                }
+                Add_Order_Model.ProductDetails productDetails = new Add_Order_Model.ProductDetails();
+                Add_Order_Model.OrderDetails orderDetails = new Add_Order_Model.OrderDetails();
+                productDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()));
+                orderDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()));
+                productDetails.setImage(singleProductModel.getMain_image());
+                productDetails.setName(singleProductModel.getAr_title());
+                productDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
+                orderDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
+                orderDetails.setProduct_id(singleProductModel.getId());
+                orderDetailsList.add(orderDetails);
+                productDetailsList.add(productDetails);
+                add_order_model.setProductDetails(productDetailsList);
+                add_order_model.setOrder_details(orderDetailsList);
+                preferences.create_update_order(CoffeeDetialsActivity.this, add_order_model);
+                Toast.makeText(CoffeeDetialsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-    private void initData() {
-
-        sliderModels = new ArrayList<>();
-        sliderModels.add(new SliderModel.Data());
-        sliderModels.add(new SliderModel.Data());
-        sliderModels.add(new SliderModel.Data());
-        sliderModels.add(new SliderModel.Data());
-        sliderModels.add(new SliderModel.Data());
-        sliderModels.add(new SliderModel.Data());
-
-
-        sliderAdapter = new SlidingImage_Adapter(this, sliderModels);
-        binding.pager.setAdapter(sliderAdapter);
-        binding.tab.setupWithViewPager(binding.pager);
-        binding.progBarSlider.setVisibility(View.GONE);
-        Adddata();
-    }
-
-    private void Adddata() {
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        dataList.add(new StoryModel.Data());
-        food_adapter.notifyDataSetChanged();
-    }
 
     private void change_slide_image() {
         final Handler handler = new Handler();
@@ -164,8 +163,14 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private void update(SingleProductModel body) {
         singleProductModel = body;
         binding.setModel(body);
+        sliderModels = new ArrayList<>();
+        sliderModels.addAll(body.getProduct_images());
+        Log.e("dkdkdk", sliderModels.size() + "");
+        sliderAdapter = new SlidingImage_Adapter(this, sliderModels);
+        binding.pager.setAdapter(sliderAdapter);
 
     }
+
     public void getSingleProduct() {
         //   Common.CloseKeyBoard(homeActivity, edt_name);
 
@@ -173,49 +178,48 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
         dialog.setCancelable(false);
         dialog.show();
         // rec_sent.setVisibility(View.GONE);
-      //  try {
-            Api.getService(Tags.base_url)
-                    .getSingleProduct(product_id)
-                    .enqueue(new Callback<SingleProductModel>() {
-                        @Override
-                        public void onResponse(Call<SingleProductModel> call, Response<SingleProductModel> response) {
+        //  try {
+        Api.getService(Tags.base_url)
+                .getSingleProduct(product_id)
+                .enqueue(new Callback<SingleProductModel>() {
+                    @Override
+                    public void onResponse(Call<SingleProductModel> call, Response<SingleProductModel> response) {
+                        dialog.dismiss();
+
+                        //  binding.progBar.setVisibility(View.GONE);
+                        if (response.isSuccessful() && response.body() != null) {
+                            //binding.coord1.scrollTo(0,0);
+
+                            update(response.body());
+                        } else {
+
+
+                            Toast.makeText(CoffeeDetialsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            try {
+                                Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SingleProductModel> call, Throwable t) {
+                        try {
+
                             dialog.dismiss();
 
-                            //  binding.progBar.setVisibility(View.GONE);
-                            if (response.isSuccessful() && response.body() != null) {
-                                //binding.coord1.scrollTo(0,0);
-
-                                update(response.body());
-                            } else {
-
-
-                                Toast.makeText(CoffeeDetialsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                                try {
-                                    Log.e("Error_code", response.code() + "_" + response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            Toast.makeText(CoffeeDetialsActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                            Log.e("error", t.getMessage());
+                        } catch (Exception e) {
                         }
-
-                        @Override
-                        public void onFailure(Call<SingleProductModel> call, Throwable t) {
-                            try {
-
-                                dialog.dismiss();
-
-                                Toast.makeText(CoffeeDetialsActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
-                                Log.e("error", t.getMessage());
-                            } catch (Exception e) {
-                            }
-                        }
-                    });
+                    }
+                });
 //        } catch (Exception e) {
 //            Log.e("fllvlvl", e.toString());
 //            dialog.dismiss();
 //        }
     }
-
 
 
     @Override

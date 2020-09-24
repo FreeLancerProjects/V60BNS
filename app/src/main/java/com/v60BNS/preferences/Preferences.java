@@ -4,11 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
+import com.google.gson.reflect.TypeToken;
+import com.v60BNS.models.Add_Order_Model;
 import com.v60BNS.models.ChatUserModel;
 import com.v60BNS.models.DefaultSettings;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.tags.Tags;
 import com.google.gson.Gson;
+
+import java.lang.reflect.Type;
 
 public class Preferences {
 
@@ -120,5 +124,24 @@ public class Preferences {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();
+    }
+    public void create_update_order(Context context, Add_Order_Model buy_models){
+        SharedPreferences sharedPreferences=context.getSharedPreferences("order",Context.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String user_order=gson.toJson(buy_models);
+
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("user_order",user_order);
+        editor.apply();
+        editor.commit();
+    }
+    public Add_Order_Model getUserOrder(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("order",Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String user_order = preferences.getString("user_order",null);
+        Type type=new TypeToken<Add_Order_Model>(){}.getType();
+        Add_Order_Model buy_models=gson.fromJson(user_order,type);
+        return buy_models;
     }
 }

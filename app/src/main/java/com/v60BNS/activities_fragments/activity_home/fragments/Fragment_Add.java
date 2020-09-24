@@ -172,7 +172,7 @@ public class Fragment_Add extends Fragment {
         if(address==null||address.isEmpty()){
             address="السعودية الرياض";
         }
-        RequestBody addresspart = Common.getRequestBodyText(address);
+        RequestBody addresspart = Common.getRequestBodyText(nearbyModel.getName());
         RequestBody latpart = Common.getRequestBodyText(lat+"");
         RequestBody lngpart = Common.getRequestBodyText(lng+"");
 

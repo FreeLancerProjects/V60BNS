@@ -369,8 +369,8 @@
 
                         <ImageView
                             android:id="@+id/image_arrow2"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="13dp"
                             android:background="@color/colorPrimary"
                             android:clickable="false"
                             android:longClickable="false"

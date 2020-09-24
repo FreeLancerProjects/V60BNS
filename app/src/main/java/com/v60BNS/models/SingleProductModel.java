@@ -71,7 +71,11 @@ public class SingleProductModel implements Serializable {
     public String getAmount() {
         return amount;
     }
-/*
+
+    public List<ProductImage> getProduct_images() {
+        return product_images;
+    }
+    /*
 
     public List<Category> getCategory() {
         return category;

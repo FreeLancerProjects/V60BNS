@@ -129,7 +129,6 @@
                                 android:gravity="center_vertical"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
-                                android:text="80"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +166,7 @@
 
 
                     <FrameLayout
-                        android:id="@+id/fl_add_to_cart"
+                        android:id="@+id/fl_pay"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"

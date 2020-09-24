@@ -1,75 +1,87 @@
 package com.v60BNS.adapters;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
+
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_cart.CartActivity;
-import com.v60BNS.models.StoryModel;
+import com.v60BNS.databinding.CartRowBinding;
+import com.v60BNS.models.Add_Order_Model;
 
 import java.util.List;
+import java.util.Locale;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
-    private List<StoryModel.Data> orderlist;
+import io.paperdb.Paper;
+
+public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private List<Add_Order_Model.ProductDetails> orderlist;
     private Context context;
-    private int i = -1;
-
-
-    public CartAdapter(List<StoryModel.Data> orderlist, Context context) {
+    private LayoutInflater inflater;
+    private String lang;
+private CartActivity cartActivity;
+    public CartAdapter(List<Add_Order_Model.ProductDetails> orderlist, Context context) {
         this.orderlist = orderlist;
         this.context = context;
+        inflater = LayoutInflater.from(context);
+        Paper.init(context);
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+
+
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+        CartRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.cart_row, parent, false);
+
+        return new EventHolder(binding);
+
+
     }
 
     @Override
-    public Cart_Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cart_row, viewGroup, false);
-        return new Cart_Holder(v);
-    }
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-
+        EventHolder eventHolder = (EventHolder) holder;
+       eventHolder.binding.setLang(lang);
+        eventHolder.binding.setModel(orderlist.get(position));
+eventHolder.binding.icon.setOnClickListener(new View.OnClickListener() {
     @Override
-    public void onBindViewHolder(@NonNull final Cart_Holder holder, final int position) {
-
-
-        holder.imgIncrease.setOnClickListener(v -> {
-                    int count = Integer.parseInt(holder.tvAmount.getText().toString()) + 1;
-                    holder.tvAmount.setText(String.valueOf(count));
-
-                    //   notifyItemChanged(holder.getAdapterPosition());
-                }
-
-        );
-        holder.imgDecrease.setOnClickListener(v -> {
-
-                    int count = Integer.parseInt(holder.tvAmount.getText().toString());
-                    if (count > 1) {
-                        count = count - 1;
-                        holder.tvAmount.setText(String.valueOf(count));
-
-                        //     notifyItemChanged(holder.getAdapterPosition());            }
-                    }
-                }
-
-        );
-        holder.imDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CartActivity activity=(CartActivity)context;
-                activity.remove(holder.getLayoutPosition());
-            }
-        });
-
+    public void onClick(View v) {
+        if(context instanceof  CartActivity){
+            cartActivity=(CartActivity)context;
+            cartActivity.removeitem(eventHolder.getLayoutPosition());
+        }
+    }
+});
+eventHolder.binding.imgIncrease.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(context instanceof  CartActivity){
+            cartActivity=(CartActivity)context;
+            cartActivity.additem(eventHolder.getLayoutPosition());
+        }
+    }
+});
+eventHolder.binding.imgDecrease.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(context instanceof  CartActivity){
+            cartActivity=(CartActivity)context;
+            cartActivity.minusitem(eventHolder.getLayoutPosition());
+        }
+    }
+});
     }
 
     @Override
@@ -77,28 +89,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
         return orderlist.size();
     }
 
-    public class Cart_Holder extends RecyclerView.ViewHolder {
-        private TextView tvTitle, tvCost, tvAmount;
-        private RoundedImageView image;
-        private ImageView imgIncrease, imgDecrease, imDelete;
-        public ConstraintLayout consBackground, consForeground;
-        public LinearLayout llLeft, llRight;
+    public class EventHolder extends RecyclerView.ViewHolder {
+        public CartRowBinding binding;
 
-
-        public Cart_Holder(@NonNull View itemView) {
-            super(itemView);
-            image = itemView.findViewById(R.id.image);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            imgIncrease = itemView.findViewById(R.id.imgIncrease);
-            imgDecrease = itemView.findViewById(R.id.imgDecrease);
-            tvAmount = itemView.findViewById(R.id.tvAmount);
-            imDelete = itemView.findViewById(R.id.icon);
-            consForeground = itemView.findViewById(R.id.consForeground);
-
+        public EventHolder(@NonNull CartRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
         }
-
-
     }
+
 
 }

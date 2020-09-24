@@ -24,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_chat.ChatActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
+import com.v60BNS.activities_fragments.activity_orders.OrdersActivity;
 import com.v60BNS.activities_fragments.activity_setting.SettingsActivity;
 import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
@@ -162,6 +163,13 @@ public class Fragment_Profile extends Fragment {
                 }
             }
         });
+        binding.llorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, OrdersActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setUpBottomSheet() {
@@ -171,7 +179,7 @@ public class Fragment_Profile extends Fragment {
     }
 
     public void getPosts() {
-binding.progBarOffer.setVisibility(View.VISIBLE);
+        binding.progBarOffer.setVisibility(View.VISIBLE);
         try {
             int uid;
             if (userModel != null) {

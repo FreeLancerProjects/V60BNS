@@ -94,6 +94,7 @@
                         android:gravity="center"
                         android:longClickable="false"
                         android:singleLine="true"
+                        android:visibility="gone"
                         android:text='@{String.valueOf(notCount),default="0"}'
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="12sp" />
