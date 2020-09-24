@@ -10,7 +10,9 @@
         <variable
             name="lang"
             type="String" />
-
+        <variable
+            name="model"
+            type="com.v60BNS.models.SingleProductModel" />
         <variable
             name="backListener"
             type="com.v60BNS.interfaces.Listeners.BackListener" />
@@ -118,7 +120,7 @@
                     android:gravity="center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="قهوة"
+                    android:text="@{model.ar_title}"
                     android:textColor="@color/color5"
                     android:textSize="17sp" />
 
@@ -129,7 +131,7 @@
                     android:gravity="center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="افضل مكونات القهوة ممزوجة معا لإعطاء افضل مزاق"
+                    android:text="@{model.ar_desc}"
                     android:textColor="@color/color5"
                     android:textSize="15sp" />
 
@@ -163,10 +165,7 @@
                     android:layout_gravity="center"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="قهوة ببندق
-لبن
-سكر زيدة
-         "
+                    android:text="@{model.ar_components}"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -227,7 +226,7 @@
                         android:layout_gravity="center"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-                        android:text="@string/g"
+                        android:text="@{model.weight}"
                         android:textColor="@color/color5"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -255,8 +254,7 @@
                         android:layout_gravity="center"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-
-                        android:text="@string/light"
+                        android:text="@{model.color}"
                         android:textColor="@color/color5"
                         android:textSize="14sp" />
                 </LinearLayout>

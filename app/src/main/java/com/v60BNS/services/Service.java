@@ -11,6 +11,7 @@ import com.v60BNS.models.PlaceGeocodeData;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.ProductModel;
 import com.v60BNS.models.ReviewModels;
+import com.v60BNS.models.SingleProductModel;
 import com.v60BNS.models.SliderModel;
 import com.v60BNS.models.RoomModelID;
 import com.v60BNS.models.SettingModel;
@@ -233,4 +234,7 @@ public interface Service {
             @Header("lang") String lang,
             @Query("page") int page
     );
+    @POST("api/single-product")
+    Call<SingleProductModel> getSingleProduct( @Query("product_id") String product_id);
+
 }

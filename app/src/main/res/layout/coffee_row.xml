@@ -106,22 +106,13 @@
                             android:layout_height="wrap_content"
 
                             android:padding="3dp"
-                            android:text="@{model.amount}"
+                            android:text="@{model.weight}"
                             android:textColor="@color/colorPrimary"
                             android:textSize="13sp"
 
                             />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
 
-                            android:padding="3dp"
-                            android:text="@string/kilo"
-                            android:textColor="@color/gray14"
-                            android:textSize="13sp"
-
-                            />
                     </LinearLayout>
                 </LinearLayout>
 

@@ -374,10 +374,6 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
 //    }
 
 
-    public void showdetials() {
-        Intent intent = new Intent(activity, CoffeeDetialsActivity.class);
-        startActivity(intent);
-    }
 
 
     private void getData() {
@@ -460,11 +456,12 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
 
     }
 
-    public void setProduct(String s) {
+    public void setProduct(String product_id) {
         Intent intent = new Intent(activity, CoffeeDetialsActivity.class);
-        intent.putExtra("product_id", s);
+        intent.putExtra("product_id", product_id);
         startActivity(intent);
     }
+
 
     private void stopTimer() {
 

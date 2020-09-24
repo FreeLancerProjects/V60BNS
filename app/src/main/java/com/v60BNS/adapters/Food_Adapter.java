@@ -58,7 +58,7 @@ msgRightHolder.itemView.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
         Fragment_Store fragment_store=(Fragment_Store)fragment;
-        fragment_store.showdetials();
+       // fragment_store.setProduct();
     }
 });
 
