@@ -146,7 +146,7 @@ public class Fragment_Main extends Fragment {
                     like_dislike(pos);
                 } else {
                     ch_like.setChecked(false);
-                    Common.CreateDialogAlert(activity, getResources().getString(R.string.please_sign_in_or_sign_up));
+                    Common.CreateDialogAlert2(activity, getResources().getString(R.string.please_sign_in_or_sign_up));
                 }
             }
         });
@@ -515,7 +515,7 @@ public class Fragment_Main extends Fragment {
 
         } else {
 
-            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
             return 0;
 
         }

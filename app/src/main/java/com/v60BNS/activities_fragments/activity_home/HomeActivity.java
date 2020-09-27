@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
                         if (userModel != null) {
                             displayFragmentProfile();
                         } else {
-                            Common.CreateDialogAlert(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                            Common.CreateDialogAlert2(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
                         }
                         break;
                 }

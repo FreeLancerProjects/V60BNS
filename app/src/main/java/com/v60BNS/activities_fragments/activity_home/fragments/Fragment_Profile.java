@@ -420,7 +420,7 @@ public class Fragment_Profile extends Fragment {
 
         } else {
 
-            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
             return 0;
 
         }
@@ -493,7 +493,7 @@ public class Fragment_Profile extends Fragment {
 
         } else {
 
-            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
 
         }
     }

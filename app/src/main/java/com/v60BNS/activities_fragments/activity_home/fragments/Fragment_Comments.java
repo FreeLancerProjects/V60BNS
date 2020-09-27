@@ -87,7 +87,7 @@ public class Fragment_Comments extends Fragment {
             intent.putExtra("data",data);
             startActivity(intent);
         } else {
-            Common.CreateDialogAlert(activity, activity.getResources().getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(activity, activity.getResources().getString(R.string.please_sign_in_or_sign_up));
         }
     }
 

@@ -84,7 +84,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
                 if (userModel != null) {
                     checkdata();
                 } else {
-                    Common.CreateDialogAlert(CartActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                    Common.CreateDialogAlert2(CartActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
                 }
             }
         });
@@ -270,6 +270,9 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
 
     private void showdetials() {
         preferences.create_update_order(CartActivity.this, null);
+        dataList.clear();
+        orderDetailsList.clear();
+        cartAdapter.notifyDataSetChanged();
         getorders();
         Intent intent = new Intent(this, OrdersActivity.class);
         startActivity(intent);

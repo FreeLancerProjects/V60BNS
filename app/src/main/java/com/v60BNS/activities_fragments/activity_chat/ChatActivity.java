@@ -150,7 +150,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
 
         } else {
 
-            Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(this, getString(R.string.please_sign_in_or_sign_up));
 
         }
     }
