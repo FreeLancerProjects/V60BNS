@@ -18,6 +18,7 @@ public class SignUpModel extends BaseObservable {
     private Uri banner;
     private String name;
     private String email;
+    private String user_type;
 
     private String phone_code;
     private String phone;
@@ -81,6 +82,16 @@ public class SignUpModel extends BaseObservable {
 
     }
 
+
+    @Bindable
+    public String getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+        notifyPropertyChanged(BR.user_type);
+    }
 
     @Bindable
     public String getEmail() {

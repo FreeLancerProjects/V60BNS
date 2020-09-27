@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.v60BNS.R;
@@ -90,7 +91,24 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             binding.setModel(signUpModel);
         }
 
+        binding.rbChoose1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    signUpModel.setUser_type("client");
 
+                }
+            }
+        });
+        binding.rbChoose2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    signUpModel.setUser_type("expert");
+
+                }
+            }
+        });
     }
 
     private void getDataFromIntent() {
@@ -346,7 +364,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
 
-        RequestBody type_part = Common.getRequestBodyText("client");
+        RequestBody type_part = Common.getRequestBodyText(signUpModel.getUser_type());
         RequestBody soft_part = Common.getRequestBodyText("android");
 
         MultipartBody.Part image = Common.getMultiPart(this, uribanner, "banner");
@@ -404,7 +422,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
 
-        RequestBody type_part = Common.getRequestBodyText("client");
+        RequestBody type_part = Common.getRequestBodyText(signUpModel.getUser_type());
         RequestBody soft_part = Common.getRequestBodyText("android");
 
         MultipartBody.Part image = Common.getMultiPart(this, uri, "banner");

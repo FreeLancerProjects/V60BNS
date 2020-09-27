@@ -120,5 +120,7 @@
     <string name="current_order">Current Order</string>
     <string name="finish_order">Previous Order</string>
     <string name="suc">Success</string>
+    <string name="client">client</string>
+    <string name="expert">expert</string>
 
 </resources>
