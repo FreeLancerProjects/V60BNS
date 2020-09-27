@@ -1,5 +1,6 @@
 package com.v60BNS.activities_fragments.activity_about_app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import com.v60BNS.interfaces.Listeners;
 import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.SettingModel;
 import com.v60BNS.remote.Api;
+import com.v60BNS.share.Common;
 import com.v60BNS.tags.Tags;
 
 import java.io.IOException;
@@ -90,13 +92,16 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
 
     private void getAppData()
     {
-
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
         Api.getService(Tags.base_url)
                 .getSetting()
                 .enqueue(new Callback<SettingModel>() {
                     @Override
                     public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
                       //  binding.progBar.setVisibility(View.GONE);
+                        dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
 
                             if (type==1)
@@ -137,6 +142,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                     @Override
                     public void onFailure(Call<SettingModel> call, Throwable t) {
                         try {
+                            dialog.dismiss();
                           //  binding.progBar.setVisibility(View.GONE);
 
                             if (t.getMessage() != null) {

@@ -380,6 +380,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             preferences.create_update_userdata(SignUpActivity.this, response.body());
                             navigateToHomeActivity();
                         } else {
+                            try {
+                                Log.e("lflflfl",response.errorBody().string());
+                            } catch (Exception e) {
+                            }
                             if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                             } else if (response.code() == 422) {
@@ -441,6 +445,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             preferences.create_update_userdata(SignUpActivity.this, response.body());
                             navigateToHomeActivity();
                         } else {
+                            try {
+                                Log.e("lflflfl",response.errorBody().string());
+                            } catch (Exception e) {
+                            }
                             if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                             } else if (response.code() == 422) {
