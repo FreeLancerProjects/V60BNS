@@ -2,9 +2,16 @@ package com.v60BNS.activities_fragments.activity_about_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,6 +80,9 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
 
         }
 
+        binding.webView.getSettings().setJavaScriptEnabled(true);
+        binding.webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        binding.webView.getSettings().setBuiltInZoomControls(false);
 
         getAppData();
 
@@ -91,11 +101,18 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
 
                             if (type==1)
                             {
-//
+                           binding.webView.loadUrl(response.body().getTerms_link());
                          //       binding.setContent(response.body().getData().getTerm_conditions());
-                            }else
+                            }else if(type==2)
                             {
-                           //     binding.setContent(response.body().getData().getAbout_app());
+                                binding.webView.loadUrl(response.body().getAbout_us_link());
+
+                                //
+                                //     binding.setContent(response.body().getData().getAbout_app());
+
+                            }
+                            else {
+                                binding.webView.loadUrl(response.body().getPrivac_link());
 
                             }
 

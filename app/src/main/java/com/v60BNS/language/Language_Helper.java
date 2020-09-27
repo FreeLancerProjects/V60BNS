@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -16,6 +17,18 @@ public class Language_Helper {
         persistLanguage(c, language);
         updateResources(c, language);
     }
+//    public static void setLocale(Activity context) {
+//        Locale locale;
+//        Sessions session = new Sessions(context);
+//        //Log.e("Lan",session.getLanguage());
+//        locale = new Locale(langCode);
+//        Configuration config = new Configuration(context.getResources().getConfiguration());
+//        Locale.setDefault(locale);
+//        config.setLocale(locale);
+//
+//        context.getBaseContext().getResources().updateConfiguration(config,
+//                context.getBaseContext().getResources().getDisplayMetrics());
+//    }
 
     public static Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
@@ -23,6 +36,7 @@ public class Language_Helper {
 
         Resources res = context.getResources();
         Configuration config = new Configuration(res.getConfiguration());
+       // config.setLocale(locale);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -31,6 +45,7 @@ public class Language_Helper {
 
         } else {
             config.locale = locale;
+
             res.updateConfiguration(config, res.getDisplayMetrics());
 
         }
@@ -50,5 +65,4 @@ public class Language_Helper {
         editor.putString("lang",language);
         editor.apply();
     }
-
 }

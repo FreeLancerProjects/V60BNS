@@ -148,7 +148,7 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
             reDataList.clear();
            // reDataList = new ArrayList<>();
             productAdapter.notifyDataSetChanged();
-            // binding.tvNoData.setVisibility(View.GONE);
+             binding.tvNoData.setVisibility(View.GONE);
             binding.progBar.setVisibility(View.VISIBLE);
             current_page = 1;
             Api.getService(Tags.base_url)
@@ -163,9 +163,9 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
                                  //   Log.e("lllll", reDataList.size() + "");
                                     productAdapter.notifyDataSetChanged();
 
-                                    //   binding.tvNoData.setVisibility(View.GONE);
+                                       binding.tvNoData.setVisibility(View.GONE);
                                 } else {
-                                    //  binding.tvNoData.setVisibility(View.VISIBLE);
+                                      binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 }
                             } else {

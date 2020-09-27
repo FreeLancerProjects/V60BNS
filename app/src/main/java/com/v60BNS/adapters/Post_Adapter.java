@@ -118,12 +118,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     getString(R.string.please_sign_in_or_sign_up));
 
         }
-        msgRightHolder.binding.imageshare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
     }
 
     @Override

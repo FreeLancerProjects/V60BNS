@@ -192,7 +192,7 @@ public class Fragment_Main extends Fragment {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful() && response.body() != null && response.body().getResult().getReviews() != null) {
+                        if (response.isSuccessful() && response.body() != null &&response.body().getResult()!=null&& response.body().getResult().getReviews() != null) {
                             Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
                             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                             Log.e("dddddata", response.body().getResult().getReviews().size() + "");

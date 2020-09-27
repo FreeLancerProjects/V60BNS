@@ -15,6 +15,8 @@ import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.databinding.ActivityLanguageBinding;
 import com.v60BNS.language.Language_Helper;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 
 public class LanguageActivity extends AppCompatActivity {
@@ -39,7 +41,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     private void initView() {
         Paper.init(this);
-        lang = Paper.book().read("lang", "ar");
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         selectedLang = lang;
 
         binding.setLang(lang);

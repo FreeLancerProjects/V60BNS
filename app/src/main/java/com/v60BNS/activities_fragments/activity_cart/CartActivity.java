@@ -94,6 +94,8 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
 
     private void getorders() {
         if (preferences.getUserOrder(this) != null) {
+            binding.consTotal.setVisibility(View.VISIBLE);
+
             dataList.clear();
             orderDetailsList.clear();
             dataList.addAll(preferences.getUserOrder(this).getProductDetails());
@@ -102,7 +104,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
             cartAdapter.notifyDataSetChanged();
             gettotal();
         } else {
-            binding.consTotal.setVisibility(View.VISIBLE);
+            binding.consTotal.setVisibility(View.GONE);
 
         }
     }
@@ -269,6 +271,8 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
     }
 
     private void showdetials() {
+        binding.consTotal.setVisibility(View.GONE);
+
         preferences.create_update_order(CartActivity.this, null);
         dataList.clear();
         orderDetailsList.clear();

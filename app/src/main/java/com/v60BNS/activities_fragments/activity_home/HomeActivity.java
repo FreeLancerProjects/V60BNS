@@ -41,6 +41,7 @@ import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Store;
 import com.v60BNS.activities_fragments.activity_notification.NotificationActivity;
 import com.v60BNS.databinding.ActivityHomeBinding;
 import com.v60BNS.language.Language_Helper;
+import com.v60BNS.models.Add_Order_Model;
 import com.v60BNS.models.NotFireModel;
 import com.v60BNS.models.UserModel;
 import com.v60BNS.preferences.Preferences;
@@ -74,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
     private UserModel userModel;
     private String lang;
     private String token;
+    private Add_Order_Model add_order_model;
 
 
     @Override
@@ -106,6 +108,12 @@ public class HomeActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
+        add_order_model = preferences.getUserOrder(this);
+        if (add_order_model==null){
+            binding.setCartCount(0);
+        }else {
+            binding.setCartCount(add_order_model.getOrder_details().size());
+        }
         if (userModel != null) {
             EventBus.getDefault().register(this);
             updateToken();
@@ -287,11 +295,6 @@ public class HomeActivity extends AppCompatActivity {
 //        binding.ahBottomNav.setCurrentItem(pos, false);
 //
 //    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        setimage();
-    }
 
     @Override
     public void onStart() {
@@ -563,5 +566,18 @@ public class HomeActivity extends AppCompatActivity {
                 fragment_profile.getPosts();
             }
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+         add_order_model = preferences.getUserOrder(this);
+        if (add_order_model==null){
+            binding.setCartCount(0);
+        }else {
+            binding.setCartCount(add_order_model.getOrder_details().size());
+        }
+
+        setimage();
+
     }
 }

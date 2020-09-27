@@ -19,16 +19,35 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 />
-            <TextView
+            <LinearLayout
                 android:id="@+id/tvNoOrder"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_gravity="center"
-                android:textSize="17sp"
-                android:textColor="@color/black"
-                android:text="@string/no_data_found"
                 android:visibility="gone"
-                />
+                >
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/empty_cart"
+                    android:padding="10dp"
+                    android:layout_gravity="start"
+
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:layout_gravity="center"
+                    android:text="@string/no_data_found"
+                    />
+            </LinearLayout>
+
+
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

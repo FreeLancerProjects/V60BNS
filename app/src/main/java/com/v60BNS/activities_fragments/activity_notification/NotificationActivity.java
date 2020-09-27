@@ -111,6 +111,8 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
     }
 
     private void getNotification() {
+        binding.progBar.setVisibility(View.VISIBLE);
+
         try {
             Api.getService(Tags.base_url)
                     .getNotification("Bearer " + userModel.getToken(), lang, 1)
@@ -163,10 +165,14 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
                                 }
 
                             } catch (Exception e) {
+                                binding.progBar.setVisibility(View.GONE);
+
                             }
                         }
                     });
         } catch (Exception e) {
+            binding.progBar.setVisibility(View.GONE);
+
 
         }
     }

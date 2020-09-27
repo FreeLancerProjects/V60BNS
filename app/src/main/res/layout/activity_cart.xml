@@ -74,13 +74,20 @@
                         android:textSize="15sp" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@id/consTotal"
+    app:layout_constraintTop_toBottomOf="@id/toolBar"
+    >
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@id/consTotal"
-                app:layout_constraintTop_toBottomOf="@id/toolBar" />
+
+</FrameLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/consTotal"
@@ -253,15 +260,15 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_shopping_cart"
-                android:tint="@color/colorPrimary" />
+                android:src="@drawable/empty_cart"
+            />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorPrimary"
+                android:text="@string/no_data_found"
                 android:textSize="18sp" />
         </LinearLayout>
 

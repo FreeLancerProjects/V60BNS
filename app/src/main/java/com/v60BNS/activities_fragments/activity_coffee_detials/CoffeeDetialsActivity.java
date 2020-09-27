@@ -14,6 +14,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_cart.CartActivity;
+import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.Ingredients_Adapter;
 import com.v60BNS.adapters.SlidingImage_Adapter;
 import com.v60BNS.databinding.ActivityCoffeeDetialsBinding;
@@ -54,6 +56,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private int current_page = 0, NUM_PAGES;
     private String product_id;
     private SingleProductModel singleProductModel;
+    private Add_Order_Model add_order_model;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -79,6 +82,12 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
 
     private void initView() {
         preferences = Preferences.getInstance();
+        add_order_model = preferences.getUserOrder(this);
+        if (add_order_model == null) {
+            binding.setCartCount(0);
+        } else {
+            binding.setCartCount(add_order_model.getOrder_details().size());
+        }
         dataList = new ArrayList<>();
         singleProductModel = new SingleProductModel();
         Paper.init(this);
@@ -94,6 +103,13 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
         food_adapter = new Ingredients_Adapter(dataList, this, null);
         binding.recview.setLayoutManager(new LinearLayoutManager(this));
         binding.recview.setAdapter(food_adapter);
+        binding.flSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CoffeeDetialsActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
         binding.imageDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

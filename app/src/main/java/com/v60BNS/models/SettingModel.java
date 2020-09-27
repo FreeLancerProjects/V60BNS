@@ -18,8 +18,8 @@ public class SettingModel implements Serializable {
     private String company_profile_pdf;
     private String address1;
     private String address2;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
     private String phone1;
     private String phone2;
     private String fax;
@@ -35,7 +35,7 @@ public class SettingModel implements Serializable {
     private String default_language;
     private String default_theme;
     private String offer_muted;
-                   private int offer_notification;
+    private int offer_notification;
     private String facebook;
     private String twitter;
     private String instagram;
@@ -58,6 +58,9 @@ public class SettingModel implements Serializable {
     private String desc;
     private String about_app;
     private String terms_condition;
+    private String about_us_link;
+    private String terms_link;
+    private String privac_link;
 
     public int getId() {
         return id;
@@ -115,11 +118,11 @@ public class SettingModel implements Serializable {
         return address2;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -273,5 +276,17 @@ public class SettingModel implements Serializable {
 
     public String getTerms_condition() {
         return terms_condition;
+    }
+
+    public String getAbout_us_link() {
+        return about_us_link;
+    }
+
+    public String getTerms_link() {
+        return terms_link;
+    }
+
+    public String getPrivac_link() {
+        return privac_link;
     }
 }

@@ -122,7 +122,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
             public void onVerificationFailed(@NonNull FirebaseException e) {
 
                 if (e.getMessage() != null) {
-                    Common.CreateDialogAlert(VerificationCodeActivity.this, e.getMessage());
+                    //    Common.CreateDialogAlert(VerificationCodeActivity.this, e.getMessage());
                 } else {
                     Common.CreateDialogAlert(VerificationCodeActivity.this, getString(R.string.failed));
 
@@ -194,13 +194,13 @@ public class VerificationCodeActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .login(phone_code.replace("+","00"), phone)
+                .login(phone_code.replace("+", "00"), phone)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-                          //  Log.e("eeeeee", response.body().getUser().getName());
+                            //  Log.e("eeeeee", response.body().getUser().getName());
                             preferences.create_update_userdata(VerificationCodeActivity.this, response.body());
                             navigateToHomeActivity();
                         } else {
