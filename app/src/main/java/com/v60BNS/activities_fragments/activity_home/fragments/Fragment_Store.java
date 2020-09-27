@@ -125,7 +125,7 @@ public class Fragment_Store extends Fragment {
                     int last_visible_item = ((LinearLayoutManager) binding.recView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
                     if (total_item >= 20 && (total_item - last_visible_item) == 5 && !isLoading) {
-Log.e("kldkkdkdk","dkkdkkdkdk");
+                        Log.e("kldkkdkdk", "dkkdkkdkdk");
                         isLoading = true;
                         int page = current_page + 1;
                         reDataList.add(null);
@@ -146,9 +146,9 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
 //Log.e("llll",reDataList.size()+"");
         try {
             reDataList.clear();
-           // reDataList = new ArrayList<>();
+            // reDataList = new ArrayList<>();
             productAdapter.notifyDataSetChanged();
-             binding.tvNoData.setVisibility(View.GONE);
+            binding.tvNoData.setVisibility(View.GONE);
             binding.progBar.setVisibility(View.VISIBLE);
             current_page = 1;
             Api.getService(Tags.base_url)
@@ -160,12 +160,12 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null && response.body().getData().size() > 0) {
                                 reDataList.addAll(response.body().getData());
                                 if (reDataList.size() > 0) {
-                                 //   Log.e("lllll", reDataList.size() + "");
+                                    //   Log.e("lllll", reDataList.size() + "");
                                     productAdapter.notifyDataSetChanged();
 
-                                       binding.tvNoData.setVisibility(View.GONE);
+                                    binding.tvNoData.setVisibility(View.GONE);
                                 } else {
-                                      binding.tvNoData.setVisibility(View.VISIBLE);
+                                    binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 }
                             } else {
@@ -174,7 +174,8 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
 
 
                                 } else {
-                                 //   Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                    binding.tvNoData.setVisibility(View.VISIBLE);
+                                    //   Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
                                     try {
 
@@ -220,12 +221,12 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
                         @Override
                         public void onResponse(Call<ProductModel> call, Response<ProductModel> response) {
                             isLoading = false;
-                            if(reDataList.get(reDataList.size()-1)==null) {
+                            if (reDataList.get(reDataList.size() - 1) == null) {
                                 reDataList.remove(reDataList.size() - 1);
                                 productAdapter.notifyItemRemoved(reDataList.size() - 1);
                             }
 
-                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null&&response.body().getData().size()>0) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null && response.body().getData().size() > 0) {
 
                                 int oldPos = reDataList.size() - 1;
 
@@ -372,8 +373,6 @@ Log.e("kldkkdkdk","dkkdkkdkdk");
 //                .playOn(binding.getRoot());
 //
 //    }
-
-
 
 
     private void getData() {

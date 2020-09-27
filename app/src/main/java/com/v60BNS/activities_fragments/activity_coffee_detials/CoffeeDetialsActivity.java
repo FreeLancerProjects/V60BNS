@@ -154,10 +154,24 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
                 add_order_model.setOrder_details(orderDetailsList);
                 preferences.create_update_order(CoffeeDetialsActivity.this, add_order_model);
                 Toast.makeText(CoffeeDetialsActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+                if (add_order_model == null) {
+                    binding.setCartCount(0);
+                } else {
+                    binding.setCartCount(add_order_model.getOrder_details().size());
+                }
             }
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (add_order_model == null) {
+            binding.setCartCount(0);
+        } else {
+            binding.setCartCount(add_order_model.getOrder_details().size());
+        }
+    }
 
     private void change_slide_image() {
         final Handler handler = new Handler();

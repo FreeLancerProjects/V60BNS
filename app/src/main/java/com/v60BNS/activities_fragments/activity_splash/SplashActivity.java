@@ -141,6 +141,8 @@ public class SplashActivity extends AppCompatActivity {
     private void refreshActivity() {
         Paper.init(this);
         Paper.book().write("lang", lang);
+        Language_Helper.setNewLocale(this, lang);
+
         DefaultSettings defaultSettings = new DefaultSettings();
         defaultSettings.setLanguageSelected(true);
         preferences.createUpdateAppSetting(this, defaultSettings);

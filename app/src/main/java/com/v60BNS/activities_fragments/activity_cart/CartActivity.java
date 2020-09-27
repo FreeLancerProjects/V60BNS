@@ -105,7 +105,7 @@ public class CartActivity extends AppCompatActivity implements Listeners.BackLis
             gettotal();
         } else {
             binding.consTotal.setVisibility(View.GONE);
-
+binding.llEmptyCart.setVisibility(View.VISIBLE);
         }
     }
 
