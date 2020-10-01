@@ -109,9 +109,9 @@ public class HomeActivity extends AppCompatActivity {
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         add_order_model = preferences.getUserOrder(this);
-        if (add_order_model==null){
+        if (add_order_model == null) {
             binding.setCartCount(0);
-        }else {
+        } else {
             binding.setCartCount(add_order_model.getOrder_details().size());
         }
         if (userModel != null) {
@@ -182,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
                 binding.bottomNav.getMenu().getItem(4).setIconTintList(null);
                 binding.bottomNav.getMenu().getItem(4).setIconTintMode(null);
             }
-            Glide.with(getApplicationContext()).asBitmap().load(R.drawable.user)
+            Glide.with(getApplicationContext()).asBitmap().load(Tags.IMAGE_URL + userModel.getLogo())
                     .apply(RequestOptions.circleCropTransform()).into(new SimpleTarget<Bitmap>() {
 
                 @Override
@@ -567,13 +567,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-         add_order_model = preferences.getUserOrder(this);
-        if (add_order_model==null){
+        add_order_model = preferences.getUserOrder(this);
+        if (add_order_model == null) {
             binding.setCartCount(0);
-        }else {
+        } else {
             binding.setCartCount(add_order_model.getOrder_details().size());
         }
 
