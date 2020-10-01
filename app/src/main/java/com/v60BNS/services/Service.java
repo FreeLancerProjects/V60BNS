@@ -237,7 +237,10 @@ public interface Service {
     @POST("api/profile/update")
     Call<UserModel> editClientProfileWithImage(
             @Header("Authorization") String Authorization,
-            @Part MultipartBody.Part logo
+            @Part MultipartBody.Part logo,
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email
+
 
     );
 

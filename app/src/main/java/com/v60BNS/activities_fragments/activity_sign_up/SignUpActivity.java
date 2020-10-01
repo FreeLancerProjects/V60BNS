@@ -489,8 +489,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         dialog.show();
 
         RequestBody id_part = Common.getRequestBodyText(String.valueOf(userModel.getId()));
-        RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
-        RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
+        RequestBody name_part = Common.getRequestBodyText(userModel.getName());
+        RequestBody email_part = Common.getRequestBodyText(userModel.getEmail());
 
 
         try {
@@ -567,10 +567,11 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
 
         MultipartBody.Part image_part = Common.getMultiPart(this, uri, "logo");
-
+        RequestBody name_part = Common.getRequestBodyText(userModel.getName());
+        RequestBody email_part = Common.getRequestBodyText(userModel.getEmail());
         try {
             Api.getService(Tags.base_url)
-                    .editClientProfileWithImage("Bearer " + userModel.getToken(), image_part)
+                    .editClientProfileWithImage("Bearer " + userModel.getToken(), image_part, name_part, email_part)
                     .enqueue(new Callback<UserModel>() {
                         @Override
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -636,11 +637,12 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         dialog.show();
 
 
-        MultipartBody.Part image_part = Common.getMultiPart(this, uri, "banner");
-
+        MultipartBody.Part image_part = Common.getMultiPart(this, uribanner, "banner");
+        RequestBody name_part = Common.getRequestBodyText(userModel.getName());
+        RequestBody email_part = Common.getRequestBodyText(userModel.getEmail());
         try {
             Api.getService(Tags.base_url)
-                    .editClientProfileWithImage("Bearer " + userModel.getToken(), image_part)
+                    .editClientProfileWithImage("Bearer " + userModel.getToken(), image_part, name_part, email_part)
                     .enqueue(new Callback<UserModel>() {
                         @Override
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
