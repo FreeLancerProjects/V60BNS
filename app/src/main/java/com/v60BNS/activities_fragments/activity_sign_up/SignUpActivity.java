@@ -382,7 +382,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             navigateToHomeActivity();
                         } else {
                             try {
-                                Log.e("lflflfl",response.errorBody().string());
+                                Log.e("lflflfl", response.errorBody().string());
                             } catch (Exception e) {
                             }
                             if (response.code() == 500) {
@@ -447,7 +447,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             navigateToHomeActivity();
                         } else {
                             try {
-                                Log.e("lflflfl",response.errorBody().string());
+                                Log.e("lflflfl", response.errorBody().string());
                             } catch (Exception e) {
                             }
                             if (response.code() == 500) {
