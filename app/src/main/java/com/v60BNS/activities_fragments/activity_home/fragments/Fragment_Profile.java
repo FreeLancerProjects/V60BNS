@@ -437,7 +437,7 @@ public class Fragment_Profile extends Fragment {
         ProgressDialog dialog = Common.createProgressDialog(activity, activity.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Log.e("llkkkk", "Bearer " + userModel.getToken());
+//        Log.e("llkkkk", "Bearer " + userModel.getToken());
         if (userModel != null) {
             try {
                 Api.getService(Tags.base_url)

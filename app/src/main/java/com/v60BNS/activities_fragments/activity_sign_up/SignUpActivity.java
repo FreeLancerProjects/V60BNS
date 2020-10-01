@@ -90,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             Picasso.get().load(Tags.IMAGE_URL + userModel.getBanner()).placeholder(R.drawable.ic_gallery).into(binding.imgBanner);
             binding.setModel(signUpModel);
         }
+        signUpModel.setUser_type("client");
 
         binding.rbChoose1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
