@@ -340,8 +340,8 @@ public class Fragment_Profile extends Fragment {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                         if (response.isSuccessful() && response.body() != null && response.body().getResult().getReviews() != null) {
-                            Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
-                            Log.e("dddddata", response.body().getResult().getReviews().size() + "");
+                          //  Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
+                        //    Log.e("dddddata", response.body().getResult().getReviews().size() + "");
 
                             reviewsList.addAll(response.body().getResult().getReviews());
                             comments_adapter.notifyDataSetChanged();
