@@ -10,7 +10,10 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -71,6 +74,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     private LocationCallback locationCallback;
     private String address;
     private double lat, lng;
+    private String query;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -100,6 +104,33 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(food_adapter);
+        binding.edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() > 0) {
+                    query = editable.toString();
+
+                    Search();
+                    binding.recView.setVisibility(View.VISIBLE);
+                } else {
+                    query = "";
+                    //productModelList.clear();
+                    //searchAdapter.notifyDataSetChanged();
+
+
+                }
+            }
+        });
 
     }
 
@@ -316,7 +347,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
         dialog.setCancelable(false);
         dialog.show();
         String location = lat + "," + lng;
-      //  Log.e("fllflfl", location);
+        //  Log.e("fllflfl", location);
         Api.getService("https://maps.googleapis.com/maps/api/")
                 .getGeoData(location, lang, getString(R.string.map_api_key))
                 .enqueue(new Callback<PlaceGeocodeData>() {
@@ -327,14 +358,14 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
                             if (response.body().getResults().size() > 0) {
                                 address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
-                              //  Log.e("kkfkkfkfk", address);
+                                //  Log.e("kkfkkfkfk", address);
                             }
                         } else {
 
                             try {
                                 Log.e("error_code", response.errorBody().string());
                             } catch (Exception e) {
-                               // e.printStackTrace();
+                                // e.printStackTrace();
                             }
                         }
 
@@ -353,6 +384,108 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                         }
                     }
                 });
+    }
+
+    private void Search() {
+
+
+        //AIzaSyArjmbYWTWZhDFFtPOLRLKYwjtBDkOEGrY
+
+        Common.CloseKeyBoard(this, binding.edtSearch);
+        dataList.clear();
+        if (food_adapter != null) {
+            food_adapter.notifyDataSetChanged();
+        }
+
+
+        String loc = lat + "," + lng;
+        Log.e("mmmmm", "https://maps.googleapis.com/maps/api/place/nearbysearch/json" + loc + "5000" + query + lang + getString(R.string.map_api_key));
+        Api.getService("https://maps.googleapis.com/maps/api/")
+                .getNearbySearchStores(loc, 5000, query, lang, getString(R.string.map_api_key))
+                .enqueue(new Callback<NearbyStoreDataModel>() {
+                    @Override
+                    public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body() != null && response.body().getResults() != null && response.body().getResults().size() > 0) {
+                                //  preferences.saveQuery(activity, new QueryModel(query.trim()));
+                                //   updateAdapter(response.body().getResults());
+                                dataList.addAll(response.body().getResults());
+                                food_adapter.notifyDataSetChanged();
+                            } else {
+                                // ll_no_store.setVisibility(View.VISIBLE);
+
+                            }
+                        } else {
+
+                            //progBar.setVisibility(View.GONE);
+
+                            try {
+                                Log.e("error_code", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
+                        try {
+
+
+                            //   progBar.setVisibility(View.GONE);
+                            // Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+
+       /* String loc = "circle:15000@"+lat+","+lng;
+        String fields ="id,place_id,name,geometry,rating,formatted_address,icon,opening_hours";
+
+        Api.getService("https://maps.googleapis.com/maps/api/")
+                .getNearbyStoresWithKeyword(loc,"textquery",(query+user_address),fields,current_language,getString(R.string.map_api_key))
+                .enqueue(new Callback<SearchDataModel>() {
+                    @Override
+                    public void onResponse(Call<SearchDataModel> call, Response<SearchDataModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            progBar.setVisibility(View.GONE);
+                            if (response.body().getCandidates().size() > 0) {
+                                preferences.saveQuery(activity, new QueryModel(query.trim()));
+                                updateAdapter(response.body().getCandidates());
+
+                            } else {
+                                ll_no_store.setVisibility(View.VISIBLE);
+
+                            }
+                        } else {
+
+                            progBar.setVisibility(View.GONE);
+
+                            try {
+                                Log.e("error_code", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SearchDataModel> call, Throwable t) {
+                        try {
+
+
+                            progBar.setVisibility(View.GONE);
+                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });*/
     }
 
 }
