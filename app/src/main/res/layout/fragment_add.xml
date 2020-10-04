@@ -157,7 +157,6 @@
                         android:layout_height="200dp"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="60dp"
-                        android:tint="@color/gray4"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/small_stroke_primary"
                         android:src="@drawable/ic_gallery"

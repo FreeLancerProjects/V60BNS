@@ -73,12 +73,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
 //        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
 //        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
-     int hight=   ((Activity)context).getWindowManager()
-                .getDefaultDisplay()
-               .getHeight();
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hight);
 
-        msgRightHolder.binding.image.setLayoutParams(new ViewGroup.LayoutParams(layoutParams));
         msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
