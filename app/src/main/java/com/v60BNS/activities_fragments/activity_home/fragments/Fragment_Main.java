@@ -185,7 +185,7 @@ public class Fragment_Main extends Fragment {
         dialog.show();
         this.pos = pos;
         // dialog.show();
-
+Log.e("sskksdkkd",placeid);
 
         Api.getService("https://maps.googleapis.com/maps/api/")
                 .getPlaceReview(placeid, getString(R.string.map_api_key))
