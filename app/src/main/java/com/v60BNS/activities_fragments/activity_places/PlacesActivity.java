@@ -346,9 +346,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
     private void getGeoData(final double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
-        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
+        binding.progBar.setVisibility(View.VISIBLE);
         String location = lat + "," + lng;
         //  Log.e("fllflfl", location);
         Api.getService("https://maps.googleapis.com/maps/api/")
@@ -356,7 +354,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                 .enqueue(new Callback<PlaceGeocodeData>() {
                     @Override
                     public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
-                        dialog.dismiss();
+                        binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
 
                             if (response.body().getResults().size() > 0) {
@@ -378,8 +376,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                     @Override
                     public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
                         try {
-                            dialog.dismiss();
-                            //   binding.progBar.setVisibility(View.GONE);
+                            binding.progBar.setVisibility(View.GONE);                            //   binding.progBar.setVisibility(View.GONE);
 
                             Toast.makeText(PlacesActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
                         } catch (Exception e) {

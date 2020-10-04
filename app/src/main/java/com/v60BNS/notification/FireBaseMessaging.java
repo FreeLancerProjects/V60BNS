@@ -100,7 +100,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             int to_user_id = Integer.parseInt(map.get("to_user_id"));
             String type = map.get("message_kind");
 
-
+            Log.e("llfll", room_id + "");
             long date = Long.parseLong(map.get("date"));
             String isRead = map.get("is_read");
 
@@ -133,8 +133,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             }
 
-        }
-        else if (not_type.equals("general_notification")) {
+        } else if (not_type.equals("general_notification")) {
 
             String title = map.get("title");
             String body = map.get("body");
@@ -179,14 +178,10 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                 manager.notify(Tags.not_tag, Tags.not_id, builder.build());
 
 
-
-
             }
 
 
-
-        }
-        else if (not_type.equals("love_on_post")) {
+        } else if (not_type.equals("love_on_post")) {
 
             String title = map.get("ar_title");
             String body = map.get("ar_desc");
@@ -251,7 +246,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     if (manager != null) {
                         builder.setLargeIcon(bitmap);
-                       // builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).bigLargeIcon(null));
+                        // builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).bigLargeIcon(null));
 
 
                         EventBus.getDefault().post(new NotFireModel(true));
@@ -280,9 +275,8 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                         public void run() {
 
 
-                               // Log.e("ldlfllf", image);
-                                Picasso.get().load(R.drawable.logo).resize(250, 250).into(target);
-
+                            // Log.e("ldlfllf", image);
+                            Picasso.get().load(R.drawable.logo).resize(250, 250).into(target);
 
 
                         }
@@ -391,8 +385,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             }
 
-        }
-        else if (not_type.equals("general_notification")) {
+        } else if (not_type.equals("general_notification")) {
 
             String title = map.get("title");
             String body = map.get("body");
@@ -423,9 +416,9 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             builder.setLargeIcon(bitmap);
 
 
-        //    TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+            //    TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
 
-          //  PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            //  PendingIntent pendingIntent = taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
             //builder.setContentIntent(pendingIntent);
 
@@ -438,18 +431,14 @@ public class FireBaseMessaging extends FirebaseMessagingService {
             NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             if (manager != null) {
 
-               // manager.createNotificationChannel(channel);
+                // manager.createNotificationChannel(channel);
                 manager.notify(Tags.not_tag, Tags.not_id, builder.build());
-
-
 
 
             }
 
 
-
-        }
-        else if (not_type.equals("love_on_post")) {
+        } else if (not_type.equals("love_on_post")) {
 
             String title = map.get("ar_title");
             String body = map.get("ar_desc");
@@ -468,7 +457,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 //                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
 //                    .build()
 //            );
-           // builder.setChannelId(CHANNEL_ID);
+            // builder.setChannelId(CHANNEL_ID);
 
             builder.setContentTitle(title);
             builder.setContentText(body);
@@ -518,11 +507,11 @@ public class FireBaseMessaging extends FirebaseMessagingService {
                     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                     if (manager != null) {
                         builder.setLargeIcon(bitmap);
-                     //   builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).bigLargeIcon(null));
+                        //   builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap).bigLargeIcon(null));
 
 
                         EventBus.getDefault().post(new NotFireModel(true));
-                       // manager.createNotificationChannel(channel);
+                        // manager.createNotificationChannel(channel);
                         manager.notify(new Random().nextInt(200), builder.build());
                     }
 
@@ -549,7 +538,6 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
                             // Log.e("ldlfllf", image);
                             Picasso.get().load(R.drawable.logo).resize(250, 250).into(target);
-
 
 
                         }
@@ -583,7 +571,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         builder.setContentTitle(fromusername);
         builder.setLargeIcon(bitmap);
         Intent intent = new Intent(this, ChatActivity.class);
-        ChatUserModel chatUserModel = new ChatUserModel(fromusername, null, messageModel.getChat_room_id(), messageModel.getId());
+        ChatUserModel chatUserModel = new ChatUserModel(fromusername, null, messageModel.getId(),messageModel.getChat_room_id());
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("chat_user_data", chatUserModel);
         intent.putExtra("from_fire", true);
@@ -616,7 +604,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         builder.setContentTitle(fromusername);
 
         Intent intent = new Intent(this, ChatActivity.class);
-        ChatUserModel chatUserModel = new ChatUserModel(fromusername, null, messageModel.getChat_room_id(), messageModel.getId());
+        ChatUserModel chatUserModel = new ChatUserModel(fromusername, null, messageModel.getId(),messageModel.getChat_room_id());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("chat_user_data", chatUserModel);
         intent.putExtra("from_fire", true);

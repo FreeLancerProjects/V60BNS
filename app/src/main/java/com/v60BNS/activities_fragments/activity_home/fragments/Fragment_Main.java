@@ -182,6 +182,7 @@ public class Fragment_Main extends Fragment {
         reviewsList.clear();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
+        dialog.show();
         this.pos = pos;
         // dialog.show();
 
@@ -201,7 +202,7 @@ public class Fragment_Main extends Fragment {
                             comments_adapter.notifyDataSetChanged();
                             tvcount.setText(response.body().getResult().getReviews().size() + "");
                         } else {
-                            Log.e("dddddata", response.code() + "");
+                            Log.e("dddddatassss", response.code() + ""+response.body());
 
                         }
 
