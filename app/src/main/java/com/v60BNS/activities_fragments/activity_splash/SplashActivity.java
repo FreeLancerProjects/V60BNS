@@ -75,9 +75,12 @@ public class SplashActivity extends AppCompatActivity {
         if (preferences.getAppSetting(this) != null && preferences.getAppSetting(this).isLanguageSelected()) {
 
             if (preferences.getSession(this).equals(Tags.session_login)) {
-                Intent intent = new Intent(this, HomeActivity.class);
+                new Handler().postDelayed(() -> {
+
+                    Intent intent = new Intent(this, HomeActivity.class);
                 startActivity(intent);
                 finish();
+                }, 1500);
             } else {
 
                 new Handler().postDelayed(() -> {
@@ -89,7 +92,8 @@ public class SplashActivity extends AppCompatActivity {
             }
 
 
-        } else {
+        }
+        else {
             constraintSetOld.clone(constraintLayout);
             constraintSetNew.clone(this, R.layout.language_layout);
             new Handler().postDelayed(() -> {

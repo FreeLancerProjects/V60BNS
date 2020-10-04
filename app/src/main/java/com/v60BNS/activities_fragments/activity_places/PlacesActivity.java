@@ -391,7 +391,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
     private void Search() {
 
-binding.progBar.setVisibility(View.VISIBLE);
+        binding.progBar.setVisibility(View.VISIBLE);
         //AIzaSyArjmbYWTWZhDFFtPOLRLKYwjtBDkOEGrY
         Common.CloseKeyBoard(this, binding.edtSearch);
         dataList.clear();
@@ -435,7 +435,7 @@ binding.progBar.setVisibility(View.VISIBLE);
                     @Override
                     public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
                         try {
-binding.progBar.setVisibility(View.GONE);
+                            binding.progBar.setVisibility(View.GONE);
 
                             //   progBar.setVisibility(View.GONE);
                             // Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_LONG).show();
