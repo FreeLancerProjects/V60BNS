@@ -8,4 +8,8 @@ public class RoomModelID implements Serializable {
     public int getRoom_id() {
         return room_id;
     }
+
+    public RoomModelID(int room_id) {
+        this.room_id = room_id;
+    }
 }

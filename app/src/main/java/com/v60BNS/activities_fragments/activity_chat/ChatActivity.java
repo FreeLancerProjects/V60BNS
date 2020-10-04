@@ -66,6 +66,7 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
     private int current_page = 1;
     private boolean isLoading = false;
     private ChatUserModel chatUserModel;
+    private RoomModelID romid;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -90,18 +91,26 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         Intent intent = getIntent();
         if (intent.getSerializableExtra("data") != null) {
             expertData = (ExpertModel.Data) intent.getSerializableExtra("data");
+        } else {
+            chatUserModel = (ChatUserModel) intent.getSerializableExtra("chat_user_data");
         }
     }
 
     public void getchatroom() {
         if (userModel != null) {
             try {
+                int touserid;
+                if(expertData!=null){
+                touserid=expertData.getId();}
+                else {
+                    touserid=chatUserModel.getId();
+                }
                 Api.getService(Tags.base_url)
-                        .getchatroom("Bearer " + userModel.getToken(), userModel.getId() + "", expertData.getId() + "")
+                        .getchatroom("Bearer " + userModel.getToken(), userModel.getId() + "", touserid + "")
                         .enqueue(new Callback<RoomModelID>() {
                             @Override
                             public void onResponse(Call<RoomModelID> call, Response<RoomModelID> response) {
-                                Log.e("dlldldl", response.code() + "");
+                                Log.e("dlldldl", userModel.getId() +" "+response.code() + " "+touserid);
                                 if (response.isSuccessful()) {
 
                                     getChatMessages(response.body());           //   updateprofile(response.body());
@@ -163,14 +172,29 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-        binding.setName(expertData.getName());
+        if(expertData!=null){
+        binding.setName(expertData.getName());}
+        else {
+            binding.setName(chatUserModel.getName());
+        }
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
+        if(expertData!=null){
         chatUserModel = new ChatUserModel(expertData.getName(), expertData.getLogo(), expertData.getId(), 0);
-        getchatroom();
+            getchatroom();
+        }
+        else {
+            romid=new RoomModelID(chatUserModel.getRoom_id());
+            getChatMessages(romid);
+        }
+
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         manager = new LinearLayoutManager(this);
-        chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), expertData.getLogo(), this);
+        if(expertData!=null){
+        chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), expertData.getLogo(), this);}
+        else {
+            chat_adapter = new Chat_Adapter(messagedatalist, userModel.getId(), chatUserModel.getImage(), this);
+        }
         binding.recView.setItemViewCacheSize(25);
         binding.recView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recView.setDrawingCacheEnabled(true);
@@ -255,7 +279,8 @@ public class ChatActivity extends AppCompatActivity implements Listeners.BackLis
                         public void onResponse(Call<MessageDataModel> call, Response<MessageDataModel> response) {
                             binding.progBar.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null) {
-                                chatUserModel = new ChatUserModel(expertData.getName(), expertData.getLogo(), expertData.getId(), roomModelID.getRoom_id());
+                                if(expertData!=null){
+                                chatUserModel = new ChatUserModel(expertData.getName(), expertData.getLogo(), expertData.getId(), roomModelID.getRoom_id());}
                                 preferences.create_update_ChatUserData(ChatActivity.this, chatUserModel);
 
                                 messagedatalist.clear();

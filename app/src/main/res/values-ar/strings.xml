@@ -119,6 +119,6 @@
     <string name="current_order">الطلبات الحاليه</string>
     <string name="finish_order">الطالبات السابقة</string>
     <string name="suc">تم بنجاح</string>
-    <string name="client">client</string>
-    <string name="expert">expert</string>
+    <string name="client">عميل</string>
+    <string name="expert">خبير</string>
 </resources>

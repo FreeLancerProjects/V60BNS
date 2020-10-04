@@ -19,6 +19,7 @@
             android:layout_height="370dp"
             android:src="@drawable/language_bottom"
             android:scaleType="fitXY"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

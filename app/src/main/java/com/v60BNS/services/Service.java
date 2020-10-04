@@ -21,6 +21,7 @@ import com.v60BNS.models.RoomModelID;
 import com.v60BNS.models.SettingModel;
 import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.UserModel;
+import com.v60BNS.models.UserRoomModelData;
 
 import org.androidannotations.annotations.rest.Get;
 import org.androidannotations.annotations.rest.Post;
@@ -263,7 +264,7 @@ public interface Service {
     @GET("api/orders/current")
     Call<OrderDataModel> getcurrentOrders(
             @Header("Authorization") String Authorization,
-            @Query("pagination")String pagination,
+            @Query("pagination") String pagination,
             @Query("page") int page
     );
 
@@ -271,9 +272,10 @@ public interface Service {
     @GET("api/orders/previous")
     Call<OrderDataModel> getfinshiorders(
             @Header("Authorization") String Authorization,
-            @Query("pagination")String pagination,
+            @Query("pagination") String pagination,
             @Query("page") int page
     );
+
     @FormUrlEncoded
     @POST("api/single-order")
     Call<OrderModel> getorderdetials(
@@ -281,6 +283,7 @@ public interface Service {
             @Field("order_id") String order_id
 
     );
+
     @FormUrlEncoded
     @POST("api/firebase/token/delete")
     Call<ResponseBody> deltePhoneToken(
@@ -288,5 +291,14 @@ public interface Service {
             @Field("firebase_token") String firebase_token,
             @Field("user_id") int user_id
 
+    );
+
+    @FormUrlEncoded
+    @POST("api/my-chat-rooms")
+    Call<UserRoomModelData> getRooms(
+            @Header("Authorization") String Authorization,
+
+            @Field("user_id") int user_id,
+            @Field("page") int page
     );
 }

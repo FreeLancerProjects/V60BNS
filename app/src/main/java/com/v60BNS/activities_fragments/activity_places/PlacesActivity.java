@@ -316,7 +316,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
         dialog.setCancelable(false);
         dialog.show();
         String location = lat + "," + lng;
-        Log.e("fllflfl", location);
+      //  Log.e("fllflfl", location);
         Api.getService("https://maps.googleapis.com/maps/api/")
                 .getGeoData(location, lang, getString(R.string.map_api_key))
                 .enqueue(new Callback<PlaceGeocodeData>() {
@@ -327,14 +327,14 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
                             if (response.body().getResults().size() > 0) {
                                 address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
-                                Log.e("kkfkkfkfk", address);
+                              //  Log.e("kkfkkfkfk", address);
                             }
                         } else {
 
                             try {
                                 Log.e("error_code", response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            } catch (Exception e) {
+                               // e.printStackTrace();
                             }
                         }
 

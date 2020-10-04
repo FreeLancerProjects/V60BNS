@@ -102,7 +102,7 @@
         <com.github.siyamed.shapeimageview.RoundedImageView
             image2="@{model.image}"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:scaleType="fitXY"
             android:src="@drawable/post"
             app:riv_corner_radius="10dp" />
