@@ -185,7 +185,7 @@ public class Fragment_Main extends Fragment {
         dialog.show();
         this.pos = pos;
         // dialog.show();
-Log.e("sskksdkkd",placeid);
+        Log.e("sskksdkkd", placeid);
 
         Api.getService("https://maps.googleapis.com/maps/api/")
                 .getPlaceReview(placeid, getString(R.string.map_api_key))
@@ -193,16 +193,17 @@ Log.e("sskksdkkd",placeid);
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful() && response.body() != null &&response.body().getResult()!=null&& response.body().getResult().getReviews() != null) {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        if (response.isSuccessful() && response.body() != null && response.body().getResult() != null && response.body().getResult().getReviews() != null) {
                             Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                             Log.e("dddddata", response.body().getResult().getReviews().size() + "");
 
                             reviewsList.addAll(response.body().getResult().getReviews());
                             comments_adapter.notifyDataSetChanged();
                             tvcount.setText(response.body().getResult().getReviews().size() + "");
                         } else {
-                            Log.e("dddddatassss", response.code() + ""+response.body());
+                            Log.e("dddddatassss", response.code() + "" + response.body());
+                            tvcount.setText("0" + "");
 
                         }
 

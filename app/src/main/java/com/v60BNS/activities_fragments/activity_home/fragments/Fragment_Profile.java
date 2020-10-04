@@ -337,9 +337,10 @@ public class Fragment_Profile extends Fragment {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                         if (response.isSuccessful() && response.body() != null && response.body().getResult().getReviews() != null) {
                             Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                             Log.e("dddddata", response.body().getResult().getReviews().size() + "");
 
                             reviewsList.addAll(response.body().getResult().getReviews());
