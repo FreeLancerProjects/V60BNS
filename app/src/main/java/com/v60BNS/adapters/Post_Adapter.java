@@ -1,9 +1,11 @@
 package com.v60BNS.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -25,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+
+import static java.security.AccessController.getContext;
 
 public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -69,6 +73,12 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
 //        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
 //        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
+     int hight=   ((Activity)context).getWindowManager()
+                .getDefaultDisplay()
+               .getHeight();
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hight);
+
+        msgRightHolder.binding.image.setLayoutParams(new ViewGroup.LayoutParams(layoutParams));
         msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -100,6 +100,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/image"
             image2="@{model.image}"
             android:layout_width="match_parent"
             android:layout_height="250dp"
