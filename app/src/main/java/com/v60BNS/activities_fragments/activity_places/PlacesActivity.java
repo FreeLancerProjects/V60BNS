@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -101,6 +103,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
         binding.setLang(lang);
         binding.setBackListener(this);
         food_adapter = new Places_Adapter(dataList, this);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(food_adapter);
@@ -388,9 +391,8 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
     private void Search() {
 
-
+binding.progBar.setVisibility(View.VISIBLE);
         //AIzaSyArjmbYWTWZhDFFtPOLRLKYwjtBDkOEGrY
-
         Common.CloseKeyBoard(this, binding.edtSearch);
         dataList.clear();
         if (food_adapter != null) {
@@ -405,6 +407,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                 .enqueue(new Callback<NearbyStoreDataModel>() {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
+                        binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body() != null && response.body().getResults() != null && response.body().getResults().size() > 0) {
                                 //  preferences.saveQuery(activity, new QueryModel(query.trim()));
@@ -432,7 +435,7 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
                     @Override
                     public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
                         try {
-
+binding.progBar.setVisibility(View.GONE);
 
                             //   progBar.setVisibility(View.GONE);
                             // Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_LONG).show();
