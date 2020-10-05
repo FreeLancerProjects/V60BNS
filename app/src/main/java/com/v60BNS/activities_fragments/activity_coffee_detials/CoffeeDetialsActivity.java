@@ -139,42 +139,42 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
                     orderDetailsList = new ArrayList<>();
                     productDetailsList = new ArrayList<>();
                 }
-                int pos=-1;
+                int pos = -1;
 
-                for(int i=0;i<orderDetailsList.size();i++){
-                    if(orderDetailsList.get(i).getProduct_id()==singleProductModel.getId()){
-                        pos=i;
+                for (int i = 0; i < orderDetailsList.size(); i++) {
+                    if (orderDetailsList.get(i).getProduct_id() == singleProductModel.getId()) {
+                        pos = i;
                         break;
                     }
                 }
-                if(pos==-1){
-                Add_Order_Model.ProductDetails productDetails = new Add_Order_Model.ProductDetails();
-                Add_Order_Model.OrderDetails orderDetails = new Add_Order_Model.OrderDetails();
-                productDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()));
-                orderDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()));
-                productDetails.setImage(singleProductModel.getMain_image());
-                productDetails.setName(singleProductModel.getAr_title());
-                productDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
-                orderDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
-                orderDetails.setProduct_id(singleProductModel.getId());
-                orderDetailsList.add(orderDetails);
-                productDetailsList.add(productDetails);
-                add_order_model.setProductDetails(productDetailsList);
-                add_order_model.setOrder_details(orderDetailsList);}
-                else {
+                if (pos == -1) {
+                    Add_Order_Model.ProductDetails productDetails = new Add_Order_Model.ProductDetails();
+                    Add_Order_Model.OrderDetails orderDetails = new Add_Order_Model.OrderDetails();
+                    productDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()));
+                    orderDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()));
+                    productDetails.setImage(singleProductModel.getMain_image());
+                    productDetails.setName(singleProductModel.getAr_title());
+                    productDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
+                    orderDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
+                    orderDetails.setProduct_id(singleProductModel.getId());
+                    orderDetailsList.add(orderDetails);
+                    productDetailsList.add(productDetails);
+                    add_order_model.setProductDetails(productDetailsList);
+                    add_order_model.setOrder_details(orderDetailsList);
+                } else {
                     Add_Order_Model.ProductDetails productDetails = productDetailsList.get(pos);
                     Add_Order_Model.OrderDetails orderDetails = orderDetailsList.get(pos);
-                    productDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString())+productDetails.getAmount());
-                    orderDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString())+orderDetails.getAmount());
+                    productDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()) + productDetails.getAmount());
+                    orderDetails.setAmount(Integer.parseInt(binding.tvAmount.getText().toString()) + orderDetails.getAmount());
                     productDetails.setImage(singleProductModel.getMain_image());
                     productDetails.setName(singleProductModel.getAr_title());
                     productDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
                     orderDetails.setTotal_cost(Double.parseDouble(singleProductModel.getPrice()) * productDetails.getAmount());
                     orderDetails.setProduct_id(singleProductModel.getId());
                     orderDetailsList.remove(pos);
-                    orderDetailsList.set(pos,orderDetails);
+                    orderDetailsList.set(pos, orderDetails);
                     productDetailsList.remove(pos);
-                    productDetailsList.set(pos,productDetails);
+                    productDetailsList.set(pos, productDetails);
                     add_order_model.setProductDetails(productDetailsList);
                     add_order_model.setOrder_details(orderDetailsList);
                 }
