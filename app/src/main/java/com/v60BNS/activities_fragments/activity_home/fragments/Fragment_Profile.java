@@ -333,15 +333,15 @@ public class Fragment_Profile extends Fragment {
 
 
         Api.getService("https://maps.googleapis.com/maps/api/")
-                .getPlaceReview(placeid, getString(R.string.map_api_key),"ar")
+                .getPlaceReview(placeid, getString(R.string.map_api_key), "ar")
                 .enqueue(new Callback<NearbyStoreDataModel>() {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
 
                         if (response.isSuccessful() && response.body() != null && response.body().getResult().getReviews() != null) {
-                          //  Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
-                        //    Log.e("dddddata", response.body().getResult().getReviews().size() + "");
+                            //  Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
+                            //    Log.e("dddddata", response.body().getResult().getReviews().size() + "");
                             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             reviewsList.addAll(response.body().getResult().getReviews());
@@ -349,7 +349,7 @@ public class Fragment_Profile extends Fragment {
                             tvcount.setText(response.body().getResult().getReviews().size() + "");
                         } else {
                             Log.e("dddddata", response.code() + "");
-                            Toast.makeText(activity,activity.getResources().getString(R.string.no_data_found),Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
 
                         }
 
@@ -502,6 +502,7 @@ public class Fragment_Profile extends Fragment {
     }
 
     private void updateprofile(UserModel body) {
+        Log.e("a;lallalal", body.getBanner());
         body.setToken(userModel.getToken());
         userModel = body;
         preferences.create_update_userdata(activity, userModel);
