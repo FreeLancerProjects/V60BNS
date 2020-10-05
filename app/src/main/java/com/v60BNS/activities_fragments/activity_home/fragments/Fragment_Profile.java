@@ -325,6 +325,7 @@ public class Fragment_Profile extends Fragment {
             ch_like.setChecked(true);
         }
         reviewsList.clear();
+        comments_adapter.notifyDataSetChanged();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         this.position = position;
@@ -337,17 +338,18 @@ public class Fragment_Profile extends Fragment {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                         if (response.isSuccessful() && response.body() != null && response.body().getResult().getReviews() != null) {
                           //  Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
                         //    Log.e("dddddata", response.body().getResult().getReviews().size() + "");
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             reviewsList.addAll(response.body().getResult().getReviews());
                             comments_adapter.notifyDataSetChanged();
                             tvcount.setText(response.body().getResult().getReviews().size() + "");
                         } else {
                             Log.e("dddddata", response.code() + "");
+                            Toast.makeText(activity,activity.getResources().getString(R.string.no_data_found),Toast.LENGTH_LONG).show();
 
                         }
 

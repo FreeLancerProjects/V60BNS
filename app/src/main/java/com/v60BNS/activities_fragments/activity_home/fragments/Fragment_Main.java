@@ -180,6 +180,7 @@ public class Fragment_Main extends Fragment {
             ch_like.setChecked(true);
         }
         reviewsList.clear();
+        comments_adapter.notifyDataSetChanged();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -193,10 +194,10 @@ public class Fragment_Main extends Fragment {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                         if (response.isSuccessful() && response.body() != null && response.body().getResult() != null && response.body().getResult().getReviews() != null) {
                             Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
                             Log.e("dddddata", response.body().getResult().getReviews().size() + "");
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             reviewsList.addAll(response.body().getResult().getReviews());
                             comments_adapter.notifyDataSetChanged();
@@ -204,7 +205,7 @@ public class Fragment_Main extends Fragment {
                         } else {
                             Log.e("dddddatassss", response.code() + "" + response.body());
                             tvcount.setText("0" + "");
-
+                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
                         }
 
 

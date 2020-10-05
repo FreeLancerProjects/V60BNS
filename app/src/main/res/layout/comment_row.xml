@@ -14,154 +14,108 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/r_im_search"
-                image="@{model.profile_photo_url}"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/user"
-                android:tint="@color/colorAccent"
-                app:civ_circle_background_color="@color/gray3"
+                android:id="@+id/image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"
+                android:padding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:siBorderColor="@color/colorAccent"
-                app:siBorderWidth="1dp"
-                tools:ignore="RtlCompat" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="30dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@{model.author_name}"
+                android:textColor="@color/gray5"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/tvDate"
+                app:layout_constraintStart_toEndOf="@id/image"
+                app:layout_constraintTop_toTopOf="@id/image"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:text="@{model.text}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/r_im_search"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@{model.author_name}"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@{model.text}"
-                    android:textColor="@color/gray3"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/tvreplay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/replay"
-                    android:visibility="gone"
-                    android:textColor="@color/black"
-                    android:textSize="10sp" />
-
-                <net.cachapa.expandablelayout.ExpandableLayout
-                    android:id="@+id/expand"
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    app:el_duration="1000"
+                app:layout_constraintTop_toTopOf="@id/tv_name" />
 
 
-                    app:el_expanded="false"
-                    app:el_parallax=".5">
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                android:id="@+id/ratingBar"
+                rate="@{model.rating}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:clickable="false"
+                android:longClickable="false"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                app:srb_isIndicator="true"
+                app:srb_starBorderWidth="2"
+                app:srb_starSize="18dp"
+                app:srb_starsSeparation="5dp"
+                app:srb_stepSize=".5" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:clickable="false"
+                android:longClickable="false"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:text='@{model.rating+""}'
+                app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+                app:layout_constraintStart_toEndOf="@id/ratingBar"
+                app:layout_constraintTop_toTopOf="@id/ratingBar" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recreplayes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/imagemyprofile"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_marginStart="8dp"
-                                android:src="@drawable/user"
-                                android:tint="@color/colorAccent"
-
-                                app:civ_circle_background_color="@color/gray3"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:siBorderColor="@color/colorAccent"
-                                app:siBorderWidth="1dp"
-                                tools:ignore="RtlCompat" />
-
-                            <EditText
-                                android:id="@+id/edtcomment"
-                                android:layout_width="0dp"
-                                android:layout_height="45dp"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginEnd="5dp"
-                                android:background="@color/transparent"
-                                android:hint="@string/add_replay"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:singleLine="true"
-                                android:textColor="@color/black"
-                                android:textColorHint="@color/gray6"
-                                android:textSize="14sp"
-                                app:layout_constraintBottom_toTopOf="@+id/view"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/imagemyprofile"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:ignore="TextFields"
+            <TextView
+                android:id="@+id/tvComment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:text="@{model.text}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image" />
 
 
-                                />
-
-                            <View
-                                android:id="@+id/view"
-                                android:layout_width="0dp"
-                                android:layout_height="2px"
-                                android:background="@color/gray16"
-                                app:layout_constraintEnd_toEndOf="@+id/edtcomment"
-                                app:layout_constraintStart_toStartOf="@+id/edtcomment"
-                                app:layout_constraintTop_toBottomOf="@+id/edtcomment" />
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    </LinearLayout>
-                </net.cachapa.expandablelayout.ExpandableLayout>
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/gray3"
+
+            />
     </LinearLayout>
 </layout>

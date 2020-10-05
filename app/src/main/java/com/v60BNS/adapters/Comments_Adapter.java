@@ -1,6 +1,7 @@
 package com.v60BNS.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.v60BNS.R;
 import com.v60BNS.databinding.CommentRowBinding;
 import com.v60BNS.models.ReviewModels;
@@ -50,6 +52,7 @@ public class Comments_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
 msgRightHolder.binding.setModel(reviewsList.get(position));
+        Picasso.get().load(Uri.parse(reviewsList.get(position).getProfile_photo_url())).into(msgRightHolder.binding.image);
 //        Replayes_Adapter comments_adapter = new Replayes_Adapter(orderlist, context, this, position);
 //        msgRightHolder.binding.recreplayes.setLayoutManager(new LinearLayoutManager(context));
 //        msgRightHolder.binding.recreplayes.setAdapter(comments_adapter);
