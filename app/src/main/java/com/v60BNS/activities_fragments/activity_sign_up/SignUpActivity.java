@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -89,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             Picasso.get().load(Tags.IMAGE_URL + userModel.getLogo()).placeholder(R.drawable.ic_avatar).into(binding.imgLogo);
             Picasso.get().load(Tags.IMAGE_URL + userModel.getBanner()).placeholder(R.drawable.ic_gallery).into(binding.imgBanner);
             binding.setModel(signUpModel);
+            binding.chipGroup.setVisibility(View.GONE);
         }
         signUpModel.setUser_type("client");
 
