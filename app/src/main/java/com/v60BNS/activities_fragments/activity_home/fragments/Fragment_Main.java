@@ -189,7 +189,7 @@ public class Fragment_Main extends Fragment {
         Log.e("sskksdkkd", placeid);
 
         Api.getService("https://maps.googleapis.com/maps/api/")
-                .getPlaceReview(placeid, getString(R.string.map_api_key))
+                .getPlaceReview(placeid, getString(R.string.map_api_key),"ar")
                 .enqueue(new Callback<NearbyStoreDataModel>() {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
