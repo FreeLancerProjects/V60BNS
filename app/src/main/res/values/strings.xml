@@ -122,5 +122,6 @@
     <string name="suc">Success</string>
     <string name="client">client</string>
     <string name="expert">expert</string>
+    <string name="manager_must_accept_your_request_first">Manager Must accept Your Request First</string>
 
 </resources>

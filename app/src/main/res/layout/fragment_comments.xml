@@ -61,7 +61,16 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center" />
-
+<TextView
+    android:id="@+id/tv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/manager_must_accept_your_request_first"
+    android:textColor="@color/colorAccent"
+    android:textSize="15sp"
+    android:layout_gravity="center"
+    android:visibility="gone"
+    />
                 </FrameLayout>
 
 

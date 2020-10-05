@@ -121,4 +121,5 @@
     <string name="suc">تم بنجاح</string>
     <string name="client">عميل</string>
     <string name="expert">خبير</string>
+    <string name="manager_must_accept_your_request_first">Manager Must accept Your Request First</string>
 </resources>
