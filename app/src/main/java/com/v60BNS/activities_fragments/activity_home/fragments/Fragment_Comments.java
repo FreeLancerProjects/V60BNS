@@ -85,12 +85,11 @@ public class Fragment_Comments extends Fragment {
             binding.tv.setVisibility(View.GONE);
 
             getExpertusers();
-        } else if(userModel.getIs_accepted().equals("accepted")) {
+        } else if (userModel.getIs_accepted().equals("accepted")) {
             binding.recViewFavoriteOffers.setAdapter(room_adapter);
             binding.tv.setVisibility(View.GONE);
             getRooms();
-        }
-        else {
+        } else {
             binding.progBarexpert.setVisibility(View.GONE);
             binding.tv.setVisibility(View.VISIBLE);
         }
