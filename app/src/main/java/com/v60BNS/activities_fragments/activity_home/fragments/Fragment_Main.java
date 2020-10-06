@@ -531,4 +531,53 @@ public class Fragment_Main extends Fragment {
         startActivity(intent);
     }
 
+    public void getcomment(int id, int position) {
+        ch_like.setChecked(false);
+
+        if (postlist.get(pos).isLove_check()) {
+            ch_like.setChecked(true);
+        }
+        reviewsList.clear();
+        comments_adapter.notifyDataSetChanged();
+        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        this.pos = pos;
+        // dialog.show();
+    //    Log.e("sskksdkkd", placeid);
+
+//        Api.getService("https://maps.googleapis.com/maps/api/")
+//                .getPlaceReview(placeid, getString(R.string.map_api_key),"ar")
+//                .enqueue(new Callback<NearbyStoreDataModel>() {
+//                    @Override
+//                    public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
+//                        dialog.dismiss();
+//                        if (response.isSuccessful() && response.body() != null && response.body().getResult() != null && response.body().getResult().getReviews() != null) {
+//                            Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
+//                            Log.e("dddddata", response.body().getResult().getReviews().size() + "");
+//                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//
+//                            reviewsList.addAll(response.body().getResult().getReviews());
+//                            comments_adapter.notifyDataSetChanged();
+//                            tvcount.setText(response.body().getResult().getReviews().size() + "");
+//                        } else {
+//                            Log.e("dddddatassss", response.code() + "" + response.body());
+//                            tvcount.setText("0" + "");
+//                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
+//                        try {
+//                            dialog.dismiss();
+//                            Log.e("Error", t.getMessage());
+//                        } catch (Exception e) {
+//
+//                        }
+//                    }
+//                });
+    }
 }

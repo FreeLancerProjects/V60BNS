@@ -555,6 +555,41 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
     }
+    public void Addcomment(String comment, int postid) {
+
+                            Api.getService(Tags.base_url)
+                                    .AddComment("Bearer " + userModel.getToken(), postid+"", comment)
+                                    .enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                            if (response.isSuccessful()) {
+                                                try {
+                                                    Log.e("Success", "token updated");
+                                                } catch (Exception e) {
+                                                    //  e.printStackTrace();
+                                                }
+                                            } else {
+                                                try {
+                                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            try {
+                                                Log.e("Error", t.getMessage());
+                                            } catch (Exception e) {
+                                            }
+                                        }
+                                    });
+
+    }
 
     @Override
     protected void onDestroy() {

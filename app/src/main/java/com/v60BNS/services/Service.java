@@ -309,4 +309,11 @@ public interface Service {
             @Field("user_id") int user_id,
             @Field("page") int page
     );
+    @FormUrlEncoded
+    @POST("api/MakeComment")
+    Call<ResponseBody> AddComment(
+            @Header("Authorization") String Authorization,
+            @Field("post_id") String post_id,
+            @Field("comment") String comment
+    );
 }

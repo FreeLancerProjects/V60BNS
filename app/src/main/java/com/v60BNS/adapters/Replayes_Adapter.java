@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.v60BNS.R;
 import com.v60BNS.databinding.ReplayRowBinding;
+import com.v60BNS.models.Comments_Model;
 import com.v60BNS.models.StoryModel;
 
 import java.util.List;
@@ -21,23 +22,21 @@ import io.paperdb.Paper;
 
 public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<StoryModel.Data> orderlist;
+    private List<Comments_Model.Data> orderlist;
     private Context context;
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
     private Comments_Adapter comments_adapter;
-    private int itemcount;
-    public static int  hight;
+    public static int hight;
 
-    public Replayes_Adapter(List<StoryModel.Data> orderlist, Context context, Comments_Adapter comments_adapter, int itemcount) {
+    public Replayes_Adapter(List<Comments_Model.Data> orderlist, Context context, Comments_Adapter comments_adapter) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         this.comments_adapter = comments_adapter;
-        this.itemcount = itemcount;
     }
 
     @NonNull
@@ -56,20 +55,8 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
-        msgRightHolder.binding.ll.post(new Runnable() {
-            @Override
-            public void run() {
-                hight = msgRightHolder.binding.ll.getBottom();
-                Log.e("lll",hight+"");
-            }
-        });
+        msgRightHolder.binding.setModel(orderlist.get(position));
 
-        msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                comments_adapter.setcursor(itemcount);
-            }
-        });
 
     }
 

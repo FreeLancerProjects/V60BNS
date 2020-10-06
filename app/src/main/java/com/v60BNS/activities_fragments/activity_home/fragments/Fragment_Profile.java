@@ -526,4 +526,7 @@ public class Fragment_Profile extends Fragment {
             getprofile();
         }
     }
+
+    public void getcomment(int id, int position) {
+    }
 }

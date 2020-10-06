@@ -2,10 +2,14 @@ package com.v60BNS.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.v60BNS.R;
+import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.v60BNS.activities_fragments.activity_home.fragments.Fragment_Profile;
 import com.v60BNS.databinding.PostRowBinding;
@@ -86,6 +91,18 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             }
         });
+        msgRightHolder.binding.tvreplay2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fragment instanceof Fragment_Main) {
+                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+                    fragment_main.getcomment(orderlist.get(position).getId(),position);
+                } else if (fragment instanceof Fragment_Profile) {
+                    Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
+                    fragment_profile.getcomment(orderlist.get(position).getId(),position);
+                }
+            }
+        });
         msgRightHolder.binding.imagelike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +133,24 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
 
             }
+        });
+        msgRightHolder.binding.edtcomment.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                String query = msgRightHolder.binding.edtcomment.getText().toString();
+                if (!TextUtils.isEmpty(query)) {
+                    Common.CloseKeyBoard(context,msgRightHolder.binding.edtcomment);
+                    if(context instanceof HomeActivity){
+                        HomeActivity homeActivity=(HomeActivity)context;
+                        homeActivity.Addcomment(query,orderlist.get(position).getId());
+                    }
+
+                    return false;
+                }
+                else {
+                    msgRightHolder.binding.edtcomment.setError(context.getResources().getString(R.string.field_req));
+                }
+            }
+            return false;
         });
         if (i == position && userModel == null) {
             msgRightHolder.binding.imagelike.setChecked(false);

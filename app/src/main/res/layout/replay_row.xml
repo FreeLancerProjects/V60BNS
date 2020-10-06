@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+        <variable
+            name="model"
+            type="com.v60BNS.models.Comments_Model.Data" />
+    </data>
 
     <LinearLayout
         android:id="@+id/ll"
@@ -61,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:text="مبروووك "
+                    android:text="@{model.comment}"
                     android:textColor="@color/gray3"
                     android:textSize="10sp" />
 
@@ -72,6 +76,7 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/replay"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
