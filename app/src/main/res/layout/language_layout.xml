@@ -66,13 +66,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvLang"
+                android:weightSum="2"
 
                 >
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardAr"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white"
@@ -82,12 +83,13 @@
                     <TextView
                         android:id="@+id/tvAr"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="عربي"
+                        android:paddingBottom="8dp"
                         android:textColor="@color/color2"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
 
                         />
                 </androidx.cardview.widget.CardView>
@@ -95,7 +97,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardEn"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white"
@@ -105,13 +107,14 @@
                     <TextView
                         android:id="@+id/tvEn"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
 
                         android:gravity="center"
                         android:text="English"
+                        android:paddingBottom="8dp"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>

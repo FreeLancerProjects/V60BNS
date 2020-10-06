@@ -137,7 +137,12 @@ public class HomeActivity extends AppCompatActivity {
                         displayFragmentAddPost();
                         break;
                     case R.id.comments:
-                        displayFragmentComments();
+                        if (userModel != null) {
+
+                            displayFragmentComments();
+                        } else {
+                            Common.CreateDialogAlert2(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                        }
                         break;
                     case R.id.profile:
                         if (userModel != null) {

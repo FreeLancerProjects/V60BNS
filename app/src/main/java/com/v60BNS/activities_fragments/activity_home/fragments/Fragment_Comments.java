@@ -80,12 +80,12 @@ public class Fragment_Comments extends Fragment {
         room_adapter = new Room_Adapter(activity, userRoomModelList, this);
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity));
         binding.progBarexpert.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        if (userModel.getUser_type().equals("client")) {
+        if (userModel!=null&&userModel.getUser_type().equals("client")) {
             binding.recViewFavoriteOffers.setAdapter(starComments_adapter);
             binding.tv.setVisibility(View.GONE);
 
             getExpertusers();
-        } else if (userModel.getIs_accepted().equals("accepted")) {
+        } else if (userModel!=null&&userModel.getIs_accepted().equals("accepted")) {
             binding.recViewFavoriteOffers.setAdapter(room_adapter);
             binding.tv.setVisibility(View.GONE);
             getRooms();
