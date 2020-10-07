@@ -76,9 +76,8 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
         msgRightHolder.binding.setModel(orderlist.get(position));
-        msgRightHolder.binding.edtcomment.setImeOptions(EditorInfo.IME_ACTION_SEND);
+        msgRightHolder.binding.setLang(lang);
 
-        msgRightHolder.binding.edtcomment.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
 //        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
@@ -96,7 +95,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             }
         });
-        msgRightHolder.binding.tvreplay2.setOnClickListener(new View.OnClickListener() {
+        msgRightHolder.binding.imagecomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e("dlldldldls", msgRightHolder.getLayoutPosition() + "");
@@ -141,12 +140,11 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             }
         });
-        msgRightHolder.binding.edtcomment.setOnEditorActionListener((v, actionId, event) -> {
-            Log.e("dlldldldl", msgRightHolder.getLayoutPosition() + "");
-
+    msgRightHolder.binding.imageSend.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
             String query = msgRightHolder.binding.edtcomment.getText().toString();
 
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
                 if (!TextUtils.isEmpty(query)) {
                     Common.CloseKeyBoard(context, msgRightHolder.binding.edtcomment);
                     msgRightHolder.binding.edtcomment.setText("");
@@ -155,16 +153,13 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         homeActivity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId());
                     }
 
-                    return false;
 
                 } else {
                     msgRightHolder.binding.edtcomment.setError(context.getResources().getString(R.string.field_req));
                 }
-            } else {
-                // msgRightHolder.binding.edtcomment.setText(query+"\n");
-            }
-            return false;
-        });
+
+        }
+    });
         if (i == position && userModel == null) {
             msgRightHolder.binding.imagelike.setChecked(false);
             Common.CreateDialogAlert(context, context.getResources().

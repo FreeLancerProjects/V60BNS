@@ -23,8 +23,8 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/r_im_search"
                 image2="@{model.user.logo}"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/user"
                 android:tint="@color/colorAccent"
@@ -67,8 +67,8 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@{model.comment}"
-                    android:textColor="@color/gray3"
-                    android:textSize="10sp" />
+                    android:textColor="@color/gray12"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tvreplay"
@@ -82,6 +82,11 @@
                     android:visibility="gone" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height=".5px"
+    android:background="@color/gray3"
+    android:layout_margin="3dp"
+    />
     </LinearLayout>
 </layout>
