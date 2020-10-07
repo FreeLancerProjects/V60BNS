@@ -106,7 +106,6 @@ public class Fragment_Profile extends Fragment {
         replayes_adapter = new Replayes_Adapter(dataList, activity);
 
         userModel = preferences.getUserData(activity);
-        Log.e("kdkfjjfj",Tags.IMAGE_URL+userModel.getBanner());
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
