@@ -584,7 +584,8 @@ public class HomeActivity extends AppCompatActivity {
                             try {
                                 if (fragment_profile != null && fragment_profile.isVisible()) {
                                     fragment_profile.getcomment(postid, layoutPosition);
-                                } else if (fragment_main != null && fragment_main.isVisible()) {
+                                }
+                                else if (fragment_main != null && fragment_main.isVisible()) {
                                     fragment_main.getcomment(postid, layoutPosition);
 
                                 }
