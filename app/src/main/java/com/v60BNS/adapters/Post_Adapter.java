@@ -2,6 +2,7 @@ package com.v60BNS.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -75,6 +76,9 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         EventsHolder msgRightHolder = (EventsHolder) holder;
         msgRightHolder.binding.setModel(orderlist.get(position));
+        msgRightHolder.binding.edtcomment.setImeOptions(EditorInfo.IME_ACTION_SEND);
+
+        msgRightHolder.binding.edtcomment.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
 //        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
