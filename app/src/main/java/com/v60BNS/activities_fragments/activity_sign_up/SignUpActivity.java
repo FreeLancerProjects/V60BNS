@@ -72,6 +72,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up);
+        signUpModel = new SignUpModel();
+
         getDataFromIntent();
 
         initView();
@@ -80,7 +82,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
     private void initView() {
         preferences = Preferences.getInstance();
-        signUpModel = new SignUpModel();
         binding.setModel(signUpModel);
         binding.setListener(this);
         userModel = preferences.getUserData(this);
