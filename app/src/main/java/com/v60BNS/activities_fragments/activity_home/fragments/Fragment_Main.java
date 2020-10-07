@@ -550,7 +550,7 @@ public class Fragment_Main extends Fragment {
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        this.pos = pos;
+        this.pos = position;
         dialog.show();
 
         Api.getService(Tags.base_url)
