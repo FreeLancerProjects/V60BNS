@@ -1,5 +1,6 @@
 package com.v60BNS.activities_fragments.activity_home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -127,33 +128,37 @@ public class HomeActivity extends AppCompatActivity {
         binding.bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.home:
-                        displayFragmentMain();
-                        break;
-                    case R.id.store:
-                        displayFragmentStore();
-                        break;
-                    case R.id.add:
-                        displayFragmentAddPost();
-                        break;
-                    case R.id.comments:
-                        if (userModel != null) {
+                try {
+                    switch (menuItem.getItemId()) {
+                        case R.id.home:
+                            displayFragmentMain();
+                            break;
+                        case R.id.store:
+                            displayFragmentStore();
+                            break;
+                        case R.id.add:
+                            displayFragmentAddPost();
+                            break;
+                        case R.id.comments:
+                            if (userModel != null) {
 
-                            displayFragmentComments();
-                        } else {
-                            Common.CreateDialogAlert2(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
-                        }
-                        break;
-                    case R.id.profile:
-                        if (userModel != null) {
-                            displayFragmentProfile();
-                        } else {
-                            Common.CreateDialogAlert2(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
-                        }
-                        break;
+                                displayFragmentComments();
+                            } else {
+                                Common.CreateDialogAlert2(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                            }
+                            break;
+                        case R.id.profile:
+                            if (userModel != null) {
+                                displayFragmentProfile();
+                            } else {
+                                Common.CreateDialogAlert2(HomeActivity.this, getResources().getString(R.string.please_sign_in_or_sign_up));
+                            }
+                            break;
+                    }
+
+                } catch (Exception e) {
+
                 }
-
                 return true;
             }
         });
@@ -336,7 +341,10 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().hide(fragment_profile).commit();
             }
             if (fragment_main.isAdded()) {
+                fragment_main.getStories();
+                fragment_main.getPosts();
                 fragmentManager.beginTransaction().show(fragment_main).commit();
+
 
             } else {
                 fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_main, "fragment_main").addToBackStack("fragment_main").commit();
@@ -404,6 +412,11 @@ public class HomeActivity extends AppCompatActivity {
             }
             if (fragment_comments.isAdded()) {
                 fragmentManager.beginTransaction().show(fragment_comments).commit();
+                if (userModel != null && userModel.getUser_type().equals("expert")) {
+                    fragment_comments.getRooms();
+                } else {
+                    fragment_comments.getExpertusers();
+                }
 
             } else {
                 fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_comments, "fragment_comments").addToBackStack("fragment_comments").commit();
@@ -556,39 +569,49 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
     }
-    public void Addcomment(String comment, int postid) {
 
-                            Api.getService(Tags.base_url)
-                                    .AddComment("Bearer " + userModel.getToken(), postid+"", comment)
-                                    .enqueue(new Callback<ResponseBody>() {
-                                        @Override
-                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+    public void Addcomment(String comment, int postid, int layoutPosition) {
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .AddComment("Bearer " + userModel.getToken(), postid + "", comment)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            try {
+                                if (fragment_profile != null && fragment_profile.isVisible()) {
+                                    fragment_profile.getcomment(postid, layoutPosition);
+                                } else if (fragment_main != null && fragment_main.isVisible()) {
+                                    fragment_main.getcomment(postid, layoutPosition);
 
-                                            if (response.isSuccessful()) {
-                                                try {
-                                                    Toast.makeText(HomeActivity.this,getResources().getString(R.string.suc),Toast.LENGTH_LONG).show();
-                                                } catch (Exception e) {
-                                                    //  e.printStackTrace();
-                                                }
-                                            } else {
-                                                try {
-                                                    Log.e("error", response.code() + "_" + response.errorBody().string());
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
+                                }
+                                // Toast.makeText(HomeActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                //  e.printStackTrace();
+                            }
+                        } else {
+                            try {
+                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
 
-                                        }
+                    }
 
-                                        @Override
-                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                            try {
-                                                Log.e("Error", t.getMessage());
-                                            } catch (Exception e) {
-                                            }
-                                        }
-                                    });
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Log.e("Error", t.getMessage());
+                        } catch (Exception e) {
+                        }
+                    }
+                });
 
     }
 

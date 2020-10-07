@@ -56,7 +56,7 @@ public interface Service {
                                               @Query(value = "key") String key,
                                               @Query(value = "language") String language
 
-                                              );
+    );
 
     @GET("place/nearbysearch/json")
     Call<NearbyStoreDataModel> getNearbyStores(@Query(value = "location") String location,
@@ -65,6 +65,7 @@ public interface Service {
                                                @Query(value = "language") String language,
                                                @Query(value = "key") String key
     );
+
     @GET("place/nearbysearch/json")
     Call<NearbyStoreDataModel> getNearbySearchStores(@Query(value = "location") String location,
                                                      @Query(value = "radius") int radius,
@@ -72,6 +73,7 @@ public interface Service {
                                                      @Query(value = "language") String language,
                                                      @Query(value = "key") String key
     );
+
     @GET("geocode/json")
     Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
                                       @Query(value = "language") String language,
@@ -310,6 +312,7 @@ public interface Service {
             @Field("user_id") int user_id,
             @Field("page") int page
     );
+
     @FormUrlEncoded
     @POST("api/MakeComment")
     Call<ResponseBody> AddComment(
@@ -317,6 +320,7 @@ public interface Service {
             @Field("post_id") String post_id,
             @Field("comment") String comment
     );
+
     @FormUrlEncoded
     @POST("api/AllComments")
     Call<Comments_Model> getComment(

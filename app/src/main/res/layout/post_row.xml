@@ -8,6 +8,7 @@
         <variable
             name="model"
             type="com.v60BNS.models.PostModel.Data" />
+
         <variable
             name="lang"
             type="String" />
@@ -158,6 +159,21 @@
 
                 />
 
+            <ImageView
+                android:id="@+id/imagegoogle"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="3dp"
+                android:src="@drawable/googleg_disabled_color_18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageshare"
+                app:layout_constraintTop_toTopOf="parent"
+
+
+                />
+
             <TextView
                 android:id="@+id/tvreviews"
                 android:layout_width="wrap_content"
@@ -251,6 +267,7 @@
                 android:text="@string/google_comments"
                 android:textColor="@color/gray15"
                 android:textSize="14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -264,22 +281,20 @@
                 android:paddingEnd="5dp"
                 android:text="@string/other_commments"
                 android:textColor="@color/gray15"
-                android:visibility="gone"
                 android:textSize="14sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:minHeight="40dp"
-            android:orientation="horizontal"
-            >
-
-
+            android:orientation="horizontal">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -321,14 +336,15 @@
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <ImageView
                 android:id="@+id/image_send"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:padding="10dp"
+                android:rotation='@{lang.equals("ar")?180:0}'
                 android:src="@drawable/ic_send"
                 android:tint="@color/colorAccent"
-                android:rotation='@{lang.equals("ar")?180:0}'
                 tools:ignore="VectorDrawableCompat" />
         </LinearLayout>
 

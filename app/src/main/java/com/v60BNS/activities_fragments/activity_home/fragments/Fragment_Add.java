@@ -74,7 +74,7 @@ public class Fragment_Add extends Fragment {
     private String selectedImagePath;
     private NearbyModel nearbyModel;
     private String address;
-    private double lng,lat;
+    private double lng, lat;
 
 
     public static Fragment_Add newInstance() {
@@ -99,9 +99,10 @@ public class Fragment_Add extends Fragment {
     private void initView() {
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
-        userModel=preferences.getUserData(activity);
-        if(userModel!=null){
-        binding.setModel(userModel);}
+        userModel = preferences.getUserData(activity);
+        if (userModel != null) {
+            binding.setModel(userModel);
+        }
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
@@ -140,22 +141,22 @@ public class Fragment_Add extends Fragment {
 
     private void checkdata() {
         String content = binding.edtcontent.getText().toString();
-        if(userModel!=null){
-        if (nearbyModel != null && uri != null && !content.isEmpty()) {
-            newpost(content);
+        if (userModel != null) {
+            if (nearbyModel != null && uri != null && !content.isEmpty()) {
+                newpost(content);
+            } else {
+                if (content.isEmpty()) {
+                    binding.edtcontent.setError(activity.getResources().getString(R.string.field_req));
+                }
+                if (nearbyModel == null) {
+                    binding.tvplaces.setError(activity.getResources().getString(R.string.field_req));
+                }
+                if (uri == null) {
+                    Toast.makeText(activity, getResources().getString(R.string.ch_image), Toast.LENGTH_LONG).show();
+                }
+            }
         } else {
-            if (content.isEmpty()) {
-                binding.edtcontent.setError(activity.getResources().getString(R.string.field_req));
-            }
-            if (nearbyModel == null) {
-                binding.tvplaces.setError(activity.getResources().getString(R.string.field_req));
-            }
-            if (uri == null) {
-                Toast.makeText(activity, getResources().getString(R.string.ch_image), Toast.LENGTH_LONG).show();
-            }
-        }}
-        else {
-            Common.CreateDialogAlert2(activity,activity.getResources().getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(activity, activity.getResources().getString(R.string.please_sign_in_or_sign_up));
         }
     }
 
@@ -169,12 +170,12 @@ public class Fragment_Add extends Fragment {
         MultipartBody.Part image = Common.getMultiPart(activity, uri, "image");
         RequestBody titlepart = Common.getRequestBodyText(content);
         RequestBody placepart = Common.getRequestBodyText(nearbyModel.getPlace_id());
-        if(address==null||address.isEmpty()){
-            address="السعودية الرياض";
+        if (address == null || address.isEmpty()) {
+            address = "السعودية الرياض";
         }
         RequestBody addresspart = Common.getRequestBodyText(nearbyModel.getName());
-        RequestBody latpart = Common.getRequestBodyText(lat+"");
-        RequestBody lngpart = Common.getRequestBodyText(lng+"");
+        RequestBody latpart = Common.getRequestBodyText(lat + "");
+        RequestBody lngpart = Common.getRequestBodyText(lng + "");
 
         Api.getService(Tags.base_url)
                 .addpost("Bearer " + userModel.getToken(), titlepart, placepart, addresspart, latpart, lngpart, image)
@@ -183,6 +184,7 @@ public class Fragment_Add extends Fragment {
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
+                            binding.tvplaces.setText(activity.getResources().getString(R.string.add_place));
                             activity.displayFragmentProfile();
                         } else {
                             if (response.code() == 500) {
@@ -276,12 +278,13 @@ public class Fragment_Add extends Fragment {
                 }
 
 
-            } else if (requestCode == 3 ) {
+            } else if (requestCode == 3) {
                 nearbyModel = (NearbyModel) data.getSerializableExtra("data");
-                address=data.getStringExtra("address");
-                lng=data.getDoubleExtra("lng",0);
-                lat=data.getDoubleExtra("lat",0);
-            //    getGeoData(nearbyModel.getGeometry().getLocation().getLat(), nearbyModel.getGeometry().getLocation().getLng());
+                address = data.getStringExtra("address");
+                lng = data.getDoubleExtra("lng", 0);
+                lat = data.getDoubleExtra("lat", 0);
+                binding.tvplaces.setText(nearbyModel.getName());
+                //    getGeoData(nearbyModel.getGeometry().getLocation().getLat(), nearbyModel.getGeometry().getLocation().getLng());
             }
         }
 

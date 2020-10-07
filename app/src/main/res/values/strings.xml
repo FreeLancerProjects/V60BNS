@@ -125,5 +125,7 @@
     <string name="manager_must_accept_your_request_first">Manager Must accept Your Request First</string>
     <string name="google_comments">Google Comments</string>
     <string name="other_commments">Other Commments</string>
+    <string name="search">Search</string>
+    <string name="experts">Experts</string>
 
 </resources>

@@ -75,6 +75,7 @@ public class Fragment_Profile extends Fragment {
     private boolean isLoading = false;
     private List<Comments_Model.Data> dataList;
     private Replayes_Adapter replayes_adapter;
+
     public static Fragment_Profile newInstance() {
 
         return new Fragment_Profile();
@@ -344,12 +345,13 @@ public class Fragment_Profile extends Fragment {
                 .enqueue(new Callback<NearbyStoreDataModel>() {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                         dialog.dismiss();
 
                         if (response.isSuccessful() && response.body() != null && response.body().getResult().getReviews() != null) {
                             //  Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
                             //    Log.e("dddddata", response.body().getResult().getReviews().size() + "");
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             reviewsList.addAll(response.body().getResult().getReviews());
                             comments_adapter.notifyDataSetChanged();
@@ -367,6 +369,8 @@ public class Fragment_Profile extends Fragment {
                     public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
                         try {
                             dialog.dismiss();
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                             Log.e("Error", t.getMessage());
                         } catch (Exception e) {
 
@@ -555,9 +559,10 @@ public class Fragment_Profile extends Fragment {
                     @Override
                     public void onResponse(Call<Comments_Model> call, Response<Comments_Model> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null && response.body().getData().size() > 0) {
+
 
                             dataList.addAll(response.body().getData());
                             replayes_adapter.notifyDataSetChanged();
@@ -565,7 +570,7 @@ public class Fragment_Profile extends Fragment {
                         } else {
                             Log.e("dddddatassss", response.code() + "" + response.body());
                             tvcount.setText("0" + "");
-                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
+                            // Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
                         }
 
 
@@ -574,6 +579,8 @@ public class Fragment_Profile extends Fragment {
                     @Override
                     public void onFailure(Call<Comments_Model> call, Throwable t) {
                         try {
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                             dialog.dismiss();
                             Log.e("Error", t.getMessage());
                         } catch (Exception e) {

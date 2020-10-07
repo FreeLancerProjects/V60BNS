@@ -150,9 +150,21 @@ public class SplashActivity extends AppCompatActivity {
         DefaultSettings defaultSettings = new DefaultSettings();
         defaultSettings.setLanguageSelected(true);
         preferences.createUpdateAppSetting(this, defaultSettings);
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+
+        if (preferences.getSession(this).equals(Tags.session_login)) {
+
+                Intent intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+
+        } else {
+
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+
+
+        }
 
     }
 

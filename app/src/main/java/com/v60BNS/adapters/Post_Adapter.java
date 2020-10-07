@@ -83,7 +83,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 //        msgRightHolder.binding.recliked.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
 //        msgRightHolder.binding.recliked.setAdapter(comments_adapter);
 
-        msgRightHolder.binding.tvreplay.setOnClickListener(new View.OnClickListener() {
+        msgRightHolder.binding.imagegoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (fragment instanceof Fragment_Main) {
@@ -150,7 +150,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     msgRightHolder.binding.edtcomment.setText("");
                     if (context instanceof HomeActivity) {
                         HomeActivity homeActivity = (HomeActivity) context;
-                        homeActivity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId());
+                        homeActivity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId(),msgRightHolder.getLayoutPosition());
                     }
 
 

@@ -26,6 +26,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -155,6 +156,14 @@ public class Fragment_Main extends Fragment {
                 }
             }
         });
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getStories();
+                getPosts();
+
+            }
+        });
     }
 
     private void setUpBottomSheet() {
@@ -200,10 +209,11 @@ public class Fragment_Main extends Fragment {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
                         dialog.dismiss();
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                         if (response.isSuccessful() && response.body() != null && response.body().getResult() != null && response.body().getResult().getReviews() != null) {
                             Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
                             Log.e("dddddata", response.body().getResult().getReviews().size() + "");
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                             reviewsList.addAll(response.body().getResult().getReviews());
                             comments_adapter.notifyDataSetChanged();
@@ -211,7 +221,7 @@ public class Fragment_Main extends Fragment {
                         } else {
                             Log.e("dddddatassss", response.code() + "" + response.body());
                             tvcount.setText("0" + "");
-                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
+                            //    Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
                         }
 
 
@@ -220,7 +230,10 @@ public class Fragment_Main extends Fragment {
                     @Override
                     public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
                         try {
+
                             dialog.dismiss();
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                             Log.e("Error", t.getMessage());
                         } catch (Exception e) {
 
@@ -318,7 +331,7 @@ public class Fragment_Main extends Fragment {
                         @Override
                         public void onResponse(Call<PostModel> call, Response<PostModel> response) {
                             binding.progpost.setVisibility(View.GONE);
-
+                            binding.swipeRefresh.setRefreshing(false);
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
 
                                 postlist.clear();
@@ -352,7 +365,10 @@ public class Fragment_Main extends Fragment {
                         @Override
                         public void onFailure(Call<PostModel> call, Throwable t) {
                             binding.progpost.setVisibility(View.GONE);
+
                             try {
+                                binding.swipeRefresh.setRefreshing(false);
+
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());
                                     if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
@@ -369,6 +385,7 @@ public class Fragment_Main extends Fragment {
                         }
                     });
         } catch (Exception e) {
+            binding.swipeRefresh.setRefreshing(false);
 
         }
 
@@ -558,16 +575,17 @@ public class Fragment_Main extends Fragment {
                 .enqueue(new Callback<Comments_Model>() {
                     @Override
                     public void onResponse(Call<Comments_Model> call, Response<Comments_Model> response) {
-                        dialog.dismiss();
-                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null&&response.body().getData().size()>0) {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null && response.body().getData().size() > 0) {
+
                             Log.e("dddddatassss", response.code() + "" + response.body().getData().size());
 
                             dataList.addAll(response.body().getData());
                             replayes_adapter.notifyDataSetChanged();
 
-                            tvcount.setText(dataList.size()+"");
+                            tvcount.setText(dataList.size() + "");
                         } else {
                             Log.e("dddddatassss", response.code() + "" + response.body());
                             tvcount.setText("0" + "");
@@ -580,6 +598,8 @@ public class Fragment_Main extends Fragment {
                     @Override
                     public void onFailure(Call<Comments_Model> call, Throwable t) {
                         try {
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
                             dialog.dismiss();
                             Log.e("Error", t.getMessage());
                         } catch (Exception e) {

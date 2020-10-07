@@ -390,7 +390,6 @@ public class PlacesActivity extends AppCompatActivity implements Listeners.BackL
 
         binding.progBar.setVisibility(View.VISIBLE);
         //AIzaSyArjmbYWTWZhDFFtPOLRLKYwjtBDkOEGrY
-        Common.CloseKeyBoard(this, binding.edtSearch);
         dataList.clear();
         if (food_adapter != null) {
             food_adapter.notifyDataSetChanged();

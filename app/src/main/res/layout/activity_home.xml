@@ -177,6 +177,7 @@
                 android:background="@color/white"
                 app:labelVisibilityMode="labeled"
                 app:layout_constraintBottom_toBottomOf="parent"
+
                 app:menu="@menu/my_navigation_item">
 
             </com.google.android.material.bottomnavigation.BottomNavigationView>

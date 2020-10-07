@@ -25,6 +25,10 @@
         android:focusable="true"
         android:clickable="true"
         >
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -92,6 +96,7 @@
             </androidx.core.widget.NestedScrollView>
 
         </FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include layout="@layout/comments_content" />
 

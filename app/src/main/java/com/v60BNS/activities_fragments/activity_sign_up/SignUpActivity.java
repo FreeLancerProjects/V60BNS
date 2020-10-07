@@ -391,10 +391,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                             } else if (response.code() == 422) {
-                                Toast.makeText(SignUpActivity.this, R.string.user_found, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, R.string.failed, Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, R.string.user_found, Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -456,10 +456,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                             } else if (response.code() == 422) {
-                                Toast.makeText(SignUpActivity.this, R.string.user_found, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, getString(R.string.user_found), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

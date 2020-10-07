@@ -124,4 +124,6 @@
     <string name="manager_must_accept_your_request_first">Manager Must accept Your Request First</string>
     <string name="google_comments">تعليقات جوجل</string>
     <string name="other_commments">التعليقات الاخرى</string>
+    <string name="search">بحث</string>
+    <string name="experts">الخبراء</string>
 </resources>
