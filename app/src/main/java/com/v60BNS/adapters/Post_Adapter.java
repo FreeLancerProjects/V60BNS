@@ -89,24 +89,24 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View view) {
                 if (fragment instanceof Fragment_Main) {
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(),msgRightHolder.getLayoutPosition());
+                    fragment_main.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(), msgRightHolder.getLayoutPosition());
                 } else if (fragment instanceof Fragment_Profile) {
                     Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                    fragment_profile.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(),msgRightHolder.getLayoutPosition());
+                    fragment_profile.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(), msgRightHolder.getLayoutPosition());
                 }
             }
         });
         msgRightHolder.binding.tvreplay2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("dlldldldls",msgRightHolder.getLayoutPosition()+"");
+                Log.e("dlldldldls", msgRightHolder.getLayoutPosition() + "");
 
                 if (fragment instanceof Fragment_Main) {
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(),msgRightHolder.getLayoutPosition());
+                    fragment_main.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(), msgRightHolder.getLayoutPosition());
                 } else if (fragment instanceof Fragment_Profile) {
                     Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                    fragment_profile.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(),msgRightHolder.getLayoutPosition());
+                    fragment_profile.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(), msgRightHolder.getLayoutPosition());
                 }
             }
         });
@@ -131,39 +131,37 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         msgRightHolder.binding.imageshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    if (fragment instanceof Fragment_Main) {
-                        Fragment_Main fragment_main = (Fragment_Main) fragment;
-                        fragment_main.share(msgRightHolder.getLayoutPosition());
-                    } else if (fragment instanceof Fragment_Profile) {
-                        Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                        fragment_profile.share(msgRightHolder.getLayoutPosition());
-                    }
+                if (fragment instanceof Fragment_Main) {
+                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+                    fragment_main.share(msgRightHolder.getLayoutPosition());
+                } else if (fragment instanceof Fragment_Profile) {
+                    Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
+                    fragment_profile.share(msgRightHolder.getLayoutPosition());
+                }
 
             }
         });
         msgRightHolder.binding.edtcomment.setOnEditorActionListener((v, actionId, event) -> {
-            Log.e("dlldldldl",msgRightHolder.getLayoutPosition()+"");
+            Log.e("dlldldldl", msgRightHolder.getLayoutPosition() + "");
 
             String query = msgRightHolder.binding.edtcomment.getText().toString();
 
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(context,msgRightHolder.binding.edtcomment);
+                    Common.CloseKeyBoard(context, msgRightHolder.binding.edtcomment);
                     msgRightHolder.binding.edtcomment.setText("");
-                    if(context instanceof HomeActivity){
-                        HomeActivity homeActivity=(HomeActivity)context;
-                        homeActivity.Addcomment(query,orderlist.get(msgRightHolder.getLayoutPosition()).getId());
+                    if (context instanceof HomeActivity) {
+                        HomeActivity homeActivity = (HomeActivity) context;
+                        homeActivity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId());
                     }
 
                     return false;
 
-                }
-                else {
+                } else {
                     msgRightHolder.binding.edtcomment.setError(context.getResources().getString(R.string.field_req));
                 }
-            }
-            else {
-               // msgRightHolder.binding.edtcomment.setText(query+"\n");
+            } else {
+                // msgRightHolder.binding.edtcomment.setText(query+"\n");
             }
             return false;
         });
