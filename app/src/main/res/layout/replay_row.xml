@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="model"
             type="com.v60BNS.models.Comments_Model.Data" />
@@ -21,12 +22,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/r_im_search"
+                image2="@{model.user.logo}"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/user"
                 android:tint="@color/colorAccent"
-
                 app:civ_circle_background_color="@color/gray3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +55,7 @@
                         android:layout_marginTop="5dp"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
-                        android:text="احمد"
+                        android:text="@{model.user.name}"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -76,9 +77,9 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/replay"
-                    android:visibility="gone"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -565,7 +566,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                             if (response.isSuccessful()) {
                                                 try {
-                                                    Log.e("Success", "token updated");
+                                                    Toast.makeText(HomeActivity.this,getResources().getString(R.string.suc),Toast.LENGTH_LONG).show();
                                                 } catch (Exception e) {
                                                     //  e.printStackTrace();
                                                 }

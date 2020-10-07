@@ -15,6 +15,7 @@ public class Comments_Model implements Serializable {
         private int user_id;
         private int post_id;
         private String comment;
+        private UserModel user;
 
         public int getId() {
             return id;
@@ -30,6 +31,10 @@ public class Comments_Model implements Serializable {
 
         public String getComment() {
             return comment;
+        }
+
+        public UserModel getUser() {
+            return user;
         }
     }
 }

@@ -33,8 +33,10 @@ import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
 import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
+import com.v60BNS.adapters.Replayes_Adapter;
 import com.v60BNS.adapters.Story_Adapter;
 import com.v60BNS.databinding.FragmentMainBinding;
+import com.v60BNS.models.Comments_Model;
 import com.v60BNS.models.PostModel;
 import com.v60BNS.models.StoryModel;
 import com.v60BNS.models.NearbyModel;
@@ -84,6 +86,8 @@ public class Fragment_Main extends Fragment {
     private Uri uri;
     private UserModel userModel;
     private int pos;
+    private List<Comments_Model.Data> dataList;
+    private Replayes_Adapter replayes_adapter;
 
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
@@ -104,6 +108,7 @@ public class Fragment_Main extends Fragment {
         storylist = new ArrayList<>();
         reviewsList = new ArrayList<>();
         postlist = new ArrayList<>();
+        dataList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
@@ -121,7 +126,7 @@ public class Fragment_Main extends Fragment {
 
         post_adapter = new Post_Adapter(postlist, activity, this);
         story_adapter = new Story_Adapter(storylist, activity, this);
-
+        replayes_adapter = new Replayes_Adapter(dataList, activity);
         binding.recViewpost.setLayoutManager(new LinearLayoutManager(activity));
         binding.recViewpost.setAdapter(post_adapter);
         binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
@@ -179,6 +184,7 @@ public class Fragment_Main extends Fragment {
         if (postlist.get(pos).isLove_check()) {
             ch_like.setChecked(true);
         }
+        recViewcomments.setAdapter(comments_adapter);
         reviewsList.clear();
         comments_adapter.notifyDataSetChanged();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
@@ -189,7 +195,7 @@ public class Fragment_Main extends Fragment {
         Log.e("sskksdkkd", placeid);
 
         Api.getService("https://maps.googleapis.com/maps/api/")
-                .getPlaceReview(placeid, getString(R.string.map_api_key),"ar")
+                .getPlaceReview(placeid, getString(R.string.map_api_key), "ar")
                 .enqueue(new Callback<NearbyStoreDataModel>() {
                     @Override
                     public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
@@ -532,52 +538,54 @@ public class Fragment_Main extends Fragment {
     }
 
     public void getcomment(int id, int position) {
+
+        recViewcomments.setAdapter(replayes_adapter);
         ch_like.setChecked(false);
 
         if (postlist.get(pos).isLove_check()) {
             ch_like.setChecked(true);
         }
-        reviewsList.clear();
-        comments_adapter.notifyDataSetChanged();
+        dataList.clear();
+        replayes_adapter.notifyDataSetChanged();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         this.pos = pos;
-        // dialog.show();
-    //    Log.e("sskksdkkd", placeid);
+        dialog.show();
 
-//        Api.getService("https://maps.googleapis.com/maps/api/")
-//                .getPlaceReview(placeid, getString(R.string.map_api_key),"ar")
-//                .enqueue(new Callback<NearbyStoreDataModel>() {
-//                    @Override
-//                    public void onResponse(Call<NearbyStoreDataModel> call, Response<NearbyStoreDataModel> response) {
-//                        dialog.dismiss();
-//                        if (response.isSuccessful() && response.body() != null && response.body().getResult() != null && response.body().getResult().getReviews() != null) {
-//                            Log.e(";;;", response.body().getResult().getReviews().get(0).getAuthor_name());
-//                            Log.e("dddddata", response.body().getResult().getReviews().size() + "");
-//                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-//
-//                            reviewsList.addAll(response.body().getResult().getReviews());
-//                            comments_adapter.notifyDataSetChanged();
-//                            tvcount.setText(response.body().getResult().getReviews().size() + "");
-//                        } else {
-//                            Log.e("dddddatassss", response.code() + "" + response.body());
-//                            tvcount.setText("0" + "");
-//                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
-//                        }
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<NearbyStoreDataModel> call, Throwable t) {
-//                        try {
-//                            dialog.dismiss();
-//                            Log.e("Error", t.getMessage());
-//                        } catch (Exception e) {
-//
-//                        }
-//                    }
-//                });
+        Api.getService(Tags.base_url)
+                .getComment("Bearer " + userModel.getToken(), id + "")
+                .enqueue(new Callback<Comments_Model>() {
+                    @Override
+                    public void onResponse(Call<Comments_Model> call, Response<Comments_Model> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null&&response.body().getData().size()>0) {
+
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            Log.e("dddddatassss", response.code() + "" + response.body().getData().size());
+
+                            dataList.addAll(response.body().getData());
+                            replayes_adapter.notifyDataSetChanged();
+
+                            tvcount.setText(dataList.size()+"");
+                        } else {
+                            Log.e("dddddatassss", response.code() + "" + response.body());
+                            tvcount.setText("0" + "");
+                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Comments_Model> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Log.e("Error", t.getMessage());
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
     }
 }

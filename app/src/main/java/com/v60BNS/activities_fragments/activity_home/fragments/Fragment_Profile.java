@@ -28,7 +28,9 @@ import com.v60BNS.activities_fragments.activity_orders.OrdersActivity;
 import com.v60BNS.activities_fragments.activity_setting.SettingsActivity;
 import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
+import com.v60BNS.adapters.Replayes_Adapter;
 import com.v60BNS.databinding.FragmentProfileBinding;
+import com.v60BNS.models.Comments_Model;
 import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
 import com.v60BNS.models.PostModel;
@@ -71,7 +73,8 @@ public class Fragment_Profile extends Fragment {
     private LinearLayoutManager manager;
     private int current_page = 1;
     private boolean isLoading = false;
-
+    private List<Comments_Model.Data> dataList;
+    private Replayes_Adapter replayes_adapter;
     public static Fragment_Profile newInstance() {
 
         return new Fragment_Profile();
@@ -97,8 +100,11 @@ public class Fragment_Profile extends Fragment {
 
         postlist = new ArrayList<>();
         reviewsList = new ArrayList<>();
+        dataList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
+        replayes_adapter = new Replayes_Adapter(dataList, activity);
+
         userModel = preferences.getUserData(activity);
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -324,6 +330,7 @@ public class Fragment_Profile extends Fragment {
         if (postlist.get(position).isLove_check()) {
             ch_like.setChecked(true);
         }
+        recViewcomments.setAdapter(comments_adapter);
         reviewsList.clear();
         comments_adapter.notifyDataSetChanged();
         ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
@@ -528,5 +535,52 @@ public class Fragment_Profile extends Fragment {
     }
 
     public void getcomment(int id, int position) {
+        recViewcomments.setAdapter(replayes_adapter);
+        ch_like.setChecked(false);
+
+        if (postlist.get(position).isLove_check()) {
+            ch_like.setChecked(true);
+        }
+        dataList.clear();
+        replayes_adapter.notifyDataSetChanged();
+        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        this.position = position;
+        dialog.show();
+
+        Api.getService(Tags.base_url)
+                .getComment("Bearer " + userModel.getToken(), id + "")
+                .enqueue(new Callback<Comments_Model>() {
+                    @Override
+                    public void onResponse(Call<Comments_Model> call, Response<Comments_Model> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+
+                            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                            dataList.addAll(response.body().getData());
+                            replayes_adapter.notifyDataSetChanged();
+                            tvcount.setText(response.body().getData().size());
+                        } else {
+                            Log.e("dddddatassss", response.code() + "" + response.body());
+                            tvcount.setText("0" + "");
+                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Comments_Model> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Log.e("Error", t.getMessage());
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
     }
+
 }

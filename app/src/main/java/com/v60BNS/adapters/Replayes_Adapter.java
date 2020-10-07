@@ -27,16 +27,14 @@ public class Replayes_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private LayoutInflater inflater;
     private String lang;
     private int i = -1;
-    private Comments_Adapter comments_adapter;
     public static int hight;
 
-    public Replayes_Adapter(List<Comments_Model.Data> orderlist, Context context, Comments_Adapter comments_adapter) {
+    public Replayes_Adapter(List<Comments_Model.Data> orderlist, Context context) {
         this.orderlist = orderlist;
         this.context = context;
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-        this.comments_adapter = comments_adapter;
     }
 
     @NonNull

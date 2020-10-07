@@ -72,7 +72,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
 
-        EventsHolder msgRightHolder = (EventsHolder) holder;
+        EventsHolder msgRightHold     er = (EventsHolder) holder;
         msgRightHolder.binding.setModel(orderlist.get(position));
 
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
@@ -84,10 +84,10 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View view) {
                 if (fragment instanceof Fragment_Main) {
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.getPlaceDetails(orderlist.get(position).getPlace_id(),position);
+                    fragment_main.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(),msgRightHolder.getLayoutPosition());
                 } else if (fragment instanceof Fragment_Profile) {
                     Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                    fragment_profile.getPlaceDetails(orderlist.get(position).getPlace_id(),position);
+                    fragment_profile.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(),msgRightHolder.getLayoutPosition());
                 }
             }
         });
@@ -96,10 +96,10 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View view) {
                 if (fragment instanceof Fragment_Main) {
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.getcomment(orderlist.get(position).getId(),position);
+                    fragment_main.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(),msgRightHolder.getLayoutPosition());
                 } else if (fragment instanceof Fragment_Profile) {
                     Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                    fragment_profile.getcomment(orderlist.get(position).getId(),position);
+                    fragment_profile.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(),msgRightHolder.getLayoutPosition());
                 }
             }
         });
@@ -109,10 +109,10 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (userModel != null) {
                     if (fragment instanceof Fragment_Main) {
                         Fragment_Main fragment_main = (Fragment_Main) fragment;
-                        fragment_main.like_dislike(position);
+                        fragment_main.like_dislike(msgRightHolder.getLayoutPosition());
                     } else if (fragment instanceof Fragment_Profile) {
                         Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                        fragment_profile.like_dislike(position);
+                        fragment_profile.like_dislike(msgRightHolder.getLayoutPosition());
                     }
                 } else {
                     i = position;
@@ -126,22 +126,23 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(View view) {
                     if (fragment instanceof Fragment_Main) {
                         Fragment_Main fragment_main = (Fragment_Main) fragment;
-                        fragment_main.share(position);
+                        fragment_main.share(msgRightHolder.getLayoutPosition());
                     } else if (fragment instanceof Fragment_Profile) {
                         Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
-                        fragment_profile.share(position);
+                        fragment_profile.share(msgRightHolder.getLayoutPosition());
                     }
 
             }
         });
         msgRightHolder.binding.edtcomment.setOnEditorActionListener((v, actionId, event) -> {
+            String query = msgRightHolder.binding.edtcomment.getText().toString();
+
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                String query = msgRightHolder.binding.edtcomment.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
                     Common.CloseKeyBoard(context,msgRightHolder.binding.edtcomment);
                     if(context instanceof HomeActivity){
                         HomeActivity homeActivity=(HomeActivity)context;
-                        homeActivity.Addcomment(query,orderlist.get(position).getId());
+                        homeActivity.Addcomment(query,orderlist.get(msgRightHolder.getLayoutPosition()).getId());
                     }
 
                     return false;
@@ -149,6 +150,9 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 else {
                     msgRightHolder.binding.edtcomment.setError(context.getResources().getString(R.string.field_req));
                 }
+            }
+            else {
+                msgRightHolder.binding.edtcomment.setText(query+"\n");
             }
             return false;
         });

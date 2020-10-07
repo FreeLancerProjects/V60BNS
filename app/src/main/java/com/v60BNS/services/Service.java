@@ -2,6 +2,7 @@ package com.v60BNS.services;
 
 
 import com.v60BNS.models.Add_Order_Model;
+import com.v60BNS.models.Comments_Model;
 import com.v60BNS.models.ExpertModel;
 import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.MessageModel;
@@ -316,4 +317,9 @@ public interface Service {
             @Field("post_id") String post_id,
             @Field("comment") String comment
     );
+    @FormUrlEncoded
+    @POST("api/AllComments")
+    Call<Comments_Model> getComment(
+            @Header("Authorization") String Authorization,
+            @Field("post_id") String post_id);
 }
