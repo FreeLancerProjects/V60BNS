@@ -25,7 +25,11 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:focusable="true"
+        android:clickable="true"
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -49,17 +53,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <FrameLayout
+                        <ImageView
                             android:id="@+id/fl"
-                            image2="@{model.banner}"
                             android:layout_width="match_parent"
                             android:layout_height="170dp"
-                            android:background="@drawable/gift"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintTop_toTopOf="parent"
 
-                        </FrameLayout>
+                        />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
