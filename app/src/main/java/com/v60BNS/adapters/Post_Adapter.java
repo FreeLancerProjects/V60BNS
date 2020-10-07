@@ -3,6 +3,7 @@ package com.v60BNS.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
 
-        EventsHolder msgRightHold     er = (EventsHolder) holder;
+        EventsHolder msgRightHolder = (EventsHolder) holder;
         msgRightHolder.binding.setModel(orderlist.get(position));
 
 //        Liked_Adapter comments_adapter = new Liked_Adapter(orderlist, context);
@@ -94,6 +95,8 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         msgRightHolder.binding.tvreplay2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("dlldldldls",msgRightHolder.getLayoutPosition()+"");
+
                 if (fragment instanceof Fragment_Main) {
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
                     fragment_main.getcomment(orderlist.get(msgRightHolder.getLayoutPosition()).getId(),msgRightHolder.getLayoutPosition());
@@ -135,24 +138,28 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
         msgRightHolder.binding.edtcomment.setOnEditorActionListener((v, actionId, event) -> {
+            Log.e("dlldldldl",msgRightHolder.getLayoutPosition()+"");
+
             String query = msgRightHolder.binding.edtcomment.getText().toString();
 
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 if (!TextUtils.isEmpty(query)) {
                     Common.CloseKeyBoard(context,msgRightHolder.binding.edtcomment);
+                    msgRightHolder.binding.edtcomment.setText("");
                     if(context instanceof HomeActivity){
                         HomeActivity homeActivity=(HomeActivity)context;
                         homeActivity.Addcomment(query,orderlist.get(msgRightHolder.getLayoutPosition()).getId());
                     }
 
                     return false;
+
                 }
                 else {
                     msgRightHolder.binding.edtcomment.setError(context.getResources().getString(R.string.field_req));
                 }
             }
             else {
-                msgRightHolder.binding.edtcomment.setText(query+"\n");
+               // msgRightHolder.binding.edtcomment.setText(query+"\n");
             }
             return false;
         });
