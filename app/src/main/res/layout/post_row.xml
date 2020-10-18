@@ -40,6 +40,7 @@
                 tools:ignore="RtlCompat" />
 
             <LinearLayout
+                android:id="@+id/lin4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -56,6 +57,7 @@
                     >
 
                     <TextView
+                        android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -81,6 +83,7 @@
                         tools:ignore="RtlCompat" />
 
                     <TextView
+                        android:id="@+id/tvAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -88,6 +91,7 @@
                         android:text="@{model.address}"
                         android:textColor="@color/color5"
                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <TextView
@@ -101,6 +105,18 @@
 
 
             </LinearLayout>
+            <ImageView
+                android:id="@+id/imgDelete"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lin4"
+                android:padding="5dp"
+                android:src="@drawable/ic_delete"
+                tools:ignore="RtlCompat" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.github.siyamed.shapeimageview.RoundedImageView

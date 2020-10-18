@@ -326,4 +326,23 @@ public interface Service {
     Call<Comments_Model> getComment(
             @Header("Authorization") String Authorization,
             @Field("post_id") String post_id);
+
+    @FormUrlEncoded
+    @POST("api/apiPosts/delete")
+    Call<ResponseBody> deletePost(
+            @Header("Authorization") String Authorization,
+            @Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("api/otherUserPosts")
+    Call<PostModel> getOtherUserposts(
+            @Header("Authorization") String Authorization,
+            @Field("user_id") String user_id
+    );
+    @FormUrlEncoded
+    @POST("api/getUserByPhone")
+    Call<UserModel> getUserprofile(
+            @Field("phone") String phone
+
+    );
 }

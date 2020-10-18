@@ -26,7 +26,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private String lang;
-private CartActivity cartActivity;
+    private CartActivity cartActivity;
+
     public CartAdapter(List<Add_Order_Model.ProductDetails> orderlist, Context context) {
         this.orderlist = orderlist;
         this.context = context;
@@ -53,35 +54,35 @@ private CartActivity cartActivity;
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         EventHolder eventHolder = (EventHolder) holder;
-       eventHolder.binding.setLang(lang);
+        eventHolder.binding.setLang(lang);
         eventHolder.binding.setModel(orderlist.get(position));
-eventHolder.binding.icon.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(context instanceof  CartActivity){
-            cartActivity=(CartActivity)context;
-            cartActivity.removeitem(eventHolder.getLayoutPosition());
-        }
-    }
-});
-eventHolder.binding.imgIncrease.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(context instanceof  CartActivity){
-            cartActivity=(CartActivity)context;
-            cartActivity.additem(eventHolder.getLayoutPosition());
-        }
-    }
-});
-eventHolder.binding.imgDecrease.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(context instanceof  CartActivity){
-            cartActivity=(CartActivity)context;
-            cartActivity.minusitem(eventHolder.getLayoutPosition());
-        }
-    }
-});
+        eventHolder.binding.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof CartActivity) {
+                    cartActivity = (CartActivity) context;
+                    cartActivity.removeitem(eventHolder.getLayoutPosition());
+                }
+            }
+        });
+        eventHolder.binding.imgIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof CartActivity) {
+                    cartActivity = (CartActivity) context;
+                    cartActivity.additem(eventHolder.getLayoutPosition());
+                }
+            }
+        });
+        eventHolder.binding.imgDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof CartActivity) {
+                    cartActivity = (CartActivity) context;
+                    cartActivity.minusitem(eventHolder.getLayoutPosition());
+                }
+            }
+        });
     }
 
     @Override

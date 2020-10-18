@@ -1,7 +1,8 @@
-package com.v60BNS.activities_fragments.activity_home.fragments;
+package com.v60BNS.activities_fragments.activity_profile;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.squareup.picasso.Picasso;
 import com.v60BNS.R;
 import com.v60BNS.activities_fragments.activity_chat.ChatActivity;
 import com.v60BNS.activities_fragments.activity_home.HomeActivity;
@@ -29,7 +32,9 @@ import com.v60BNS.activities_fragments.activity_setting.SettingsActivity;
 import com.v60BNS.adapters.Comments_Adapter;
 import com.v60BNS.adapters.Post_Adapter;
 import com.v60BNS.adapters.Replayes_Adapter;
+import com.v60BNS.databinding.ActivityProfileBinding;
 import com.v60BNS.databinding.FragmentProfileBinding;
+import com.v60BNS.language.Language_Helper;
 import com.v60BNS.models.Comments_Model;
 import com.v60BNS.models.MessageDataModel;
 import com.v60BNS.models.NearbyStoreDataModel;
@@ -53,10 +58,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Profile extends Fragment {
+import static com.v60BNS.adapters.Post_Adapter.user_id;
+import static com.v60BNS.adapters.Post_Adapter.phone;
+import static com.v60BNS.tags.Tags.IMAGE_URL;
 
-    private HomeActivity activity;
-    private FragmentProfileBinding binding;
+public class ProfileActivity extends AppCompatActivity {
+
+    private ActivityProfileBinding binding;
     private Preferences preferences;
     private String lang;
     private UserModel userModel;
@@ -76,38 +84,35 @@ public class Fragment_Profile extends Fragment {
     private List<Comments_Model.Data> dataList;
     private Replayes_Adapter replayes_adapter;
 
-    public static Fragment_Profile newInstance() {
+    public static ProfileActivity newInstance() {
 
-        return new Fragment_Profile();
+        return new ProfileActivity();
     }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
-        return binding.getRoot();
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(Language_Helper.updateResources(base, Language_Helper.getLanguage(base)));
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
         initView();
         getprofile();
         getPosts();
-
     }
+
 
     private void initView() {
 
         postlist = new ArrayList<>();
         reviewsList = new ArrayList<>();
         dataList = new ArrayList<>();
-        activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
-        replayes_adapter = new Replayes_Adapter(dataList, activity);
+        replayes_adapter = new Replayes_Adapter(dataList, this);
 
-        userModel = preferences.getUserData(activity);
-        Paper.init(activity);
+        userModel = preferences.getUserData(this);
+        Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
         recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
@@ -116,20 +121,14 @@ public class Fragment_Profile extends Fragment {
         ch_like = binding.getRoot().findViewById(R.id.chelike);
         imageshare = binding.getRoot().findViewById(R.id.imageshare);
 
-        post_adapter = new Post_Adapter(postlist, activity, this);
-        manager = new LinearLayoutManager(activity);
+        post_adapter = new Post_Adapter(postlist, this);
+        manager = new LinearLayoutManager(this);
         binding.recViewFavoriteOffers.setLayoutManager(manager);
         binding.recViewFavoriteOffers.setAdapter(post_adapter);
-        comments_adapter = new Comments_Adapter(reviewsList, activity);
-        recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
+        comments_adapter = new Comments_Adapter(reviewsList, this);
+        recViewcomments.setLayoutManager(new LinearLayoutManager(this));
         recViewcomments.setAdapter(comments_adapter);
-        binding.imgSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, SettingsActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
+
         imageshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,7 +149,7 @@ public class Fragment_Profile extends Fragment {
             imclose.setRotation(180);
         }
         setUpBottomSheet();
-        binding.recViewFavoriteOffers.addOnScrollListener(new RecyclerView.OnScrollListener() {
+     /*   binding.recViewFavoriteOffers.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -163,17 +162,17 @@ public class Fragment_Profile extends Fragment {
                         postlist.add(postlist.size(), null);
                         post_adapter.notifyItemInserted(postlist.size() - 1);
                         int next_page = current_page + 1;
-                        loadMore(next_page);
+                        //loadMore(next_page);
 
 
                     }
                 }
             }
-        });
+        });*/
         binding.llorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, OrdersActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, OrdersActivity.class);
                 startActivity(intent);
             }
         });
@@ -188,15 +187,11 @@ public class Fragment_Profile extends Fragment {
     public void getPosts() {
         binding.progBarOffer.setVisibility(View.VISIBLE);
         try {
-            int uid;
-            if (userModel != null) {
-                uid = userModel.getId();
-            } else {
-                uid = 0;
-            }
+            int uid=user_id;
+
 
             Api.getService(Tags.base_url).
-                    getmyposts("Bearer " + userModel.getToken(), "on", uid + "", 1).
+                    getOtherUserposts("Bearer " + userModel.getToken(), uid + "").
                     enqueue(new Callback<PostModel>() {
                         @Override
                         public void onResponse(Call<PostModel> call, Response<PostModel> response) {
@@ -205,7 +200,6 @@ public class Fragment_Profile extends Fragment {
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
 
                                 postlist.clear();
-                                post_adapter.notifyDataSetChanged();
                                 postlist.addAll(response.body().getData());
                                 if (postlist.size() > 0) {
                                     post_adapter.notifyDataSetChanged();
@@ -222,11 +216,11 @@ public class Fragment_Profile extends Fragment {
                                 }
 
                                 if (response.code() == 500) {
-                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ProfileActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
 
                                 } else {
-                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ProfileActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
 
                                 }
@@ -240,9 +234,9 @@ public class Fragment_Profile extends Fragment {
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());
                                     if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -258,17 +252,52 @@ public class Fragment_Profile extends Fragment {
 
 
     }
+    public void Addcomment(String comment, int postid, int layoutPosition) {
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .AddComment("Bearer " + userModel.getToken(), postid + "", comment)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            try {
+                                getcomment(postid, layoutPosition);
 
-    private void loadMore(int next_page) {
+                                // Toast.makeText(HomeActivity.this, getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                //  e.printStackTrace();
+                            }
+                        } else {
+                            try {
+                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Log.e("Error", t.getMessage());
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+
+    }
+
+  /*  private void loadMore(int next_page) {
         try {
-            int uid;
-            if (userModel != null) {
-                uid = userModel.getId();
-            } else {
-                uid = 0;
-            }
+           int uid=user_id;
             Api.getService(Tags.base_url).
-                    getmyposts("Bearer " + userModel.getToken(), "on", uid + "", next_page).
+                    getOtherUserposts("Bearer " + userModel.getToken(), "on", uid + "", next_page).
                     enqueue(new Callback<PostModel>() {
                         @Override
                         public void onResponse(Call<PostModel> call, Response<PostModel> response) {
@@ -284,10 +313,10 @@ public class Fragment_Profile extends Fragment {
                             } else {
 
                                 if (response.code() == 500) {
-                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ProfileActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
                                 } else {
-                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ProfileActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
                                     try {
 
@@ -311,9 +340,9 @@ public class Fragment_Profile extends Fragment {
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());
                                     if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -325,7 +354,7 @@ public class Fragment_Profile extends Fragment {
 
         }
     }
-
+*/
     public void getPlaceDetails(String placeid, int position) {
         ch_like.setChecked(false);
 
@@ -335,7 +364,7 @@ public class Fragment_Profile extends Fragment {
         recViewcomments.setAdapter(comments_adapter);
         reviewsList.clear();
         comments_adapter.notifyDataSetChanged();
-        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(ProfileActivity.this, getString(R.string.wait));
         dialog.setCancelable(false);
         this.position = position;
         // dialog.show();
@@ -359,7 +388,7 @@ public class Fragment_Profile extends Fragment {
                             tvcount.setText(response.body().getResult().getReviews().size() + "");
                         } else {
                             Log.e("dddddata", response.code() + "");
-                            Toast.makeText(activity, activity.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ProfileActivity.this, ProfileActivity.this.getResources().getString(R.string.no_data_found), Toast.LENGTH_LONG).show();
 
                         }
 
@@ -381,6 +410,8 @@ public class Fragment_Profile extends Fragment {
     }
 
     public int like_dislike(int pos) {
+
+        Log.e("ggggggg",userModel.getId()+"----");
         if (userModel != null) {
             try {
                 Api.getService(Tags.base_url)
@@ -395,11 +426,11 @@ public class Fragment_Profile extends Fragment {
 
 
                                     if (response.code() == 500) {
-                                        Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
 
                                     } else {
-                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
                                         try {
 
@@ -418,9 +449,9 @@ public class Fragment_Profile extends Fragment {
                                     if (t.getMessage() != null) {
                                         Log.e("error", t.getMessage());
                                         if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                            Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProfileActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
@@ -435,68 +466,12 @@ public class Fragment_Profile extends Fragment {
 
         } else {
 
-            Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(ProfileActivity.this, getString(R.string.please_sign_in_or_sign_up));
             return 0;
 
         }
     }
 
-    public int deletePost(int pos) {
-        if (userModel != null) {
-
-            try {
-                Api.getService(Tags.base_url)
-                        .deletePost("Bearer " + userModel.getToken(), postlist.get(pos).getId() + "")
-                        .enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.isSuccessful()) {
-                                    getprofile();
-                                    getPosts();
-                                } else {
-
-
-                                    if (response.code() == 500) {
-                                        Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
-
-
-                                    } else {
-                                        Log.e("mmmmm",response.body().toString());
-                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                try {
-
-                                    if (t.getMessage() != null) {
-                                        Log.e("error", t.getMessage());
-                                        if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                            Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                } catch (Exception e) {
-                                }
-                            }
-                        });
-            } catch (Exception e) {
-
-            }
-            return 1;
-
-        } else {
-
-            Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
-            return 0;
-
-        }
-    }
 
 
     public void share(int position) {
@@ -507,30 +482,38 @@ public class Fragment_Profile extends Fragment {
     }
 
     public void getprofile() {
-        ProgressDialog dialog = Common.createProgressDialog(activity, activity.getResources().getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(ProfileActivity.this, ProfileActivity.this.getResources().getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
 //        Log.e("llkkkk", "Bearer " + userModel.getToken());
         if (userModel != null) {
+
+            Log.e("nnnn",phone+"______");
             try {
                 Api.getService(Tags.base_url)
-                        .getprofile("Bearer " + userModel.getToken())
+                        .getUserprofile(phone)
                         .enqueue(new Callback<UserModel>() {
                             @Override
                             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                                 dialog.dismiss();
                                 if (response.isSuccessful()) {
+                                    Log.e("ccccc",response.body().getOrders_count()+"----");
+                                    binding.tvPosts.setText(response.body().getOrders_count()+"");
+                                    binding.tvPosts.setText(response.body().getPosts_count()+"");
+                                    binding.tvName.setText(response.body().getName()+"");
 
-                                    updateprofile(response.body());
+                                    Picasso.get().load(IMAGE_URL + response.body().getLogo()).into(binding.image);
+                                    Picasso.get().load(IMAGE_URL + response.body().getBanner()).placeholder(R.drawable.ic_avatar).into(binding.fl);
+
                                 } else {
 
 
                                     if (response.code() == 500) {
-                                        Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
 
                                     } else {
-                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ProfileActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
                                         try {
 
@@ -549,9 +532,9 @@ public class Fragment_Profile extends Fragment {
                                     if (t.getMessage() != null) {
                                         Log.e("error", t.getMessage());
                                         if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                            Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProfileActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
@@ -566,18 +549,12 @@ public class Fragment_Profile extends Fragment {
 
         } else {
 
-            Common.CreateDialogAlert2(activity, getString(R.string.please_sign_in_or_sign_up));
+            Common.CreateDialogAlert2(ProfileActivity.this, getString(R.string.please_sign_in_or_sign_up));
 
         }
     }
 
-    private void updateprofile(UserModel body) {
-        Log.e("a;lallalal", body.getBanner());
-        body.setToken(userModel.getToken());
-        userModel = body;
-        preferences.create_update_userdata(activity, userModel);
-        binding.setModel(userModel);
-    }
+
 
     @Override
     public void onResume() {
@@ -606,7 +583,7 @@ public class Fragment_Profile extends Fragment {
         }
         dataList.clear();
         replayes_adapter.notifyDataSetChanged();
-        ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(ProfileActivity.this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         this.position = position;

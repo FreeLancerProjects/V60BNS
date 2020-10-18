@@ -336,6 +336,7 @@ public class Fragment_Main extends Fragment {
 
                                 postlist.clear();
                                 postlist.addAll(response.body().getData());
+
                                 if (postlist.size() > 0) {
                                     post_adapter.notifyDataSetChanged();
                                 } else {
