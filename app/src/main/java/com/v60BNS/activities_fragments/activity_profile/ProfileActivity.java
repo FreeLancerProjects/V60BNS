@@ -602,7 +602,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                             dataList.addAll(response.body().getData());
                             replayes_adapter.notifyDataSetChanged();
-                            tvcount.setText(response.body().getData().size());
+                            Log.e("mmmmmmmmmm",response.body().getData().size()+"--");
+                            tvcount.setText(response.body().getData().size()+"");
                         } else {
                             Log.e("dddddatassss", response.code() + "" + response.body());
                             tvcount.setText("0" + "");

@@ -60,7 +60,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         inflater = LayoutInflater.from(context);
         Paper.init(context);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
-        this.activity = ProfileActivity.newInstance();
+        this.activity = (ProfileActivity)context;
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(context);
     }
@@ -117,6 +117,9 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 } else if (fragment instanceof Fragment_Profile) {
                     Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
                     fragment_profile.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(), msgRightHolder.getLayoutPosition());
+                }else if  (context instanceof ProfileActivity){
+                    activity.getPlaceDetails(orderlist.get(msgRightHolder.getLayoutPosition()).getPlace_id(), msgRightHolder.getLayoutPosition());
+
                 }
             }
         });
@@ -183,7 +186,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 } else if (fragment instanceof Fragment_Profile) {
                     Fragment_Profile fragment_profile = (Fragment_Profile) fragment;
                     fragment_profile.share(msgRightHolder.getLayoutPosition());
-                }else {
+                }else if (context instanceof ProfileActivity){
                     activity.share(msgRightHolder.getLayoutPosition());
 
                 }
@@ -202,8 +205,7 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         HomeActivity homeActivity = (HomeActivity) context;
                         homeActivity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId(), msgRightHolder.getLayoutPosition());
                     } else if (context instanceof ProfileActivity) {
-                        ProfileActivity profileActivity = (ProfileActivity) context;
-                        profileActivity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId(), msgRightHolder.getLayoutPosition());
+                        activity.Addcomment(query, orderlist.get(msgRightHolder.getLayoutPosition()).getId(), msgRightHolder.getLayoutPosition());
 
                     }
                 }else {
