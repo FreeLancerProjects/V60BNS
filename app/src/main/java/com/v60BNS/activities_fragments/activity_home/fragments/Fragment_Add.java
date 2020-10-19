@@ -173,9 +173,11 @@ public class Fragment_Add extends Fragment {
         if (address == null || address.isEmpty()) {
             address = "السعودية الرياض";
         }
+
         RequestBody addresspart = Common.getRequestBodyText(nearbyModel.getName());
-        RequestBody latpart = Common.getRequestBodyText(lat + "");
-        RequestBody lngpart = Common.getRequestBodyText(lng + "");
+        Log.e("ccccc",nearbyModel.getGeometry().getLocation().getLat()+"   "+nearbyModel.getGeometry().getLocation().getLng());
+        RequestBody latpart = Common.getRequestBodyText(nearbyModel.getGeometry().getLocation().getLat() + "");
+        RequestBody lngpart = Common.getRequestBodyText(nearbyModel.getGeometry().getLocation().getLng() + "");
 
         Api.getService(Tags.base_url)
                 .addpost("Bearer " + userModel.getToken(), titlepart, placepart, addresspart, latpart, lngpart, image)

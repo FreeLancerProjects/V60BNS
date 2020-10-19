@@ -93,9 +93,11 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         msgRightHolder.binding.tvAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude(), orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                context.startActivity(intent);
+                Log.e("xxxxxxxx",orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude()+" "+ orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
+                Uri navigationIntentUri = Uri.parse("google.navigation:q=" + orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude() + "," + orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, navigationIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                context.startActivity(mapIntent);
             }
         });
         msgRightHolder.binding.image.setOnClickListener(new View.OnClickListener() {
