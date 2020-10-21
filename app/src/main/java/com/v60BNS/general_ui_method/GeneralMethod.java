@@ -78,6 +78,49 @@ public class GeneralMethod {
 
     }
 
+    @BindingAdapter("image3")
+    public static void image3(View view, String endPoint) {
+        if (view instanceof CircleImageView) {
+            CircleImageView imageView = (CircleImageView) view;
+            if (endPoint != null && endPoint.equals("0")) {
+                Picasso.get().load(IMAGE_URL + Preferences.getInstance().getUserData(view.getContext()).getLogo()).into(imageView);
+
+            } else if (endPoint != null) {
+
+                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).into(imageView);
+            } else {
+
+                Log.e("mmmm","اوعى الصورة جاية ب نل يا سعدون يا كوارى");
+            }
+        } else if (view instanceof RoundedImageView) {
+            RoundedImageView imageView = (RoundedImageView) view;
+            if (endPoint != null && endPoint.equals("0")) {
+                Picasso.get().load(IMAGE_URL + Preferences.getInstance().getUserData(view.getContext()).getLogo()).into(imageView);
+
+            } else if (endPoint != null) {
+
+                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).fit().into(imageView);
+            } else {
+                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+
+            }
+        } else if (view instanceof ImageView) {
+            ImageView imageView = (ImageView) view;
+
+            if (endPoint != null && endPoint.equals("0")) {
+                Picasso.get().load(IMAGE_URL + Preferences.getInstance().getUserData(view.getContext()).getLogo()).into(imageView);
+
+            } else if (endPoint != null) {
+
+                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).fit().into(imageView);
+            } else {
+                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+
+            }
+        }
+
+    }
+
     @BindingAdapter("image2")
     public static void image2(View view, String endPoint) {
         if (view instanceof CircleImageView) {
