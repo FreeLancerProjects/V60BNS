@@ -94,10 +94,13 @@ public class Post_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             @Override
             public void onClick(View view) {
                 Log.e("xxxxxxxx",orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude()+" "+ orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
+            //    Uri navigationIntentUri = Uri.parse("google.navigation:q=" + orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude() + "," + orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
+            //    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude(),orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
+              //  String uri = "http://maps.google.com/maps?saddr=" + orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude() + "," + orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude() + "&daddr=" + orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude() + "," + orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude();
                 Uri navigationIntentUri = Uri.parse("google.navigation:q=" + orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude() + "," + orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude());
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, navigationIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                context.startActivity(mapIntent);
+                String geoUri = "http://maps.google.com/maps?q=loc:" + orderlist.get(msgRightHolder.getLayoutPosition()).getLatitude() + "," + orderlist.get(msgRightHolder.getLayoutPosition()).getLongitude() + " (" + orderlist.get(msgRightHolder.getLayoutPosition()).getAr_title() + ")";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
+                context.startActivity(intent);
             }
         });
         msgRightHolder.binding.image.setOnClickListener(new View.OnClickListener() {

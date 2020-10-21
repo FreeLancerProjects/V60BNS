@@ -99,6 +99,59 @@ public class Fragment_Current_Order extends Fragment {
     }
 
 
+    public void cancelOrder(int id)
+    {
+
+
+        Api.getService(Tags.base_url)
+                .cancelOrder("Bearer " + userModel.getToken(),id)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(activity, getString(R.string.order_cancel_successfuly), Toast.LENGTH_SHORT).show();
+
+                            getOrder();
+                            if (orderModelList.size() > 0) {
+                                binding.tvNoOrder.setVisibility(View.GONE);
+                            } else {
+                                binding.tvNoOrder.setVisibility(View.VISIBLE);
+
+                            }
+                        } else {
+
+                            try {
+
+                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code() == 500) {
+                                Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            if (t.getMessage() != null) {
+                                Log.e("error", t.getMessage());
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+    }
     public void getOrder()
     {
         orderModelList.clear();

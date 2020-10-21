@@ -345,4 +345,11 @@ public interface Service {
             @Field("phone") String phone
 
     );
+
+
+    @FormUrlEncoded
+    @POST("api/order/cancel")
+    Call<ResponseBody> cancelOrder(
+            @Header("Authorization") String Authorization,
+            @Field("order_id") int order_id);
 }

@@ -128,5 +128,6 @@
     <string name="search">Search</string>
     <string name="experts">Experts</string>
     <string name="posts">posts</string>
+    <string name="order_cancel_successfuly">تم الغاء الطلب بنجاح</string>
 
 </resources>

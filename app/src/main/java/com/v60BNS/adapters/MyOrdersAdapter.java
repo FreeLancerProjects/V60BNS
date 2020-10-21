@@ -33,8 +33,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context context;
     private Fragment fragment;
     private String lang;
-private Fragment_Finshied_Order fragment_finshied_order;
-private Fragment_Current_Order fragment_current_order;
+    private Fragment_Finshied_Order fragment_finshied_order;
+    private Fragment_Current_Order fragment_current_order;
+
     public MyOrdersAdapter(List<OrderModel> list, Context context, Fragment fragment) {
 
         this.list = list;
@@ -49,10 +50,10 @@ private Fragment_Current_Order fragment_current_order;
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         if (viewType == ITEM_DATA) {
-            OrderRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.order_row,parent,false);
+            OrderRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.order_row, parent, false);
             return new MyHolder(binding);
         } else {
-            LoadMoreBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.load_more,parent,false);
+            LoadMoreBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.load_more, parent, false);
             return new LoadMoreHolder(binding);
         }
 
@@ -66,21 +67,34 @@ private Fragment_Current_Order fragment_current_order;
 
             final MyHolder myHolder = (MyHolder) holder;
             OrderModel model = list.get(myHolder.getAdapterPosition());
-holder.itemView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(fragment instanceof  Fragment_Current_Order){
-            fragment_current_order=(Fragment_Current_Order)fragment;
-            fragment_current_order.DisplayOrderDetials(list.get(holder.getLayoutPosition()).getId());
-        }
-        else if(fragment instanceof Fragment_Finshied_Order){
-            fragment_finshied_order=(Fragment_Finshied_Order)fragment;
-            fragment_finshied_order.DisplayOrderDetials(list.get(holder.getLayoutPosition()).getId());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (fragment instanceof Fragment_Current_Order) {
+                        fragment_current_order = (Fragment_Current_Order) fragment;
+                        fragment_current_order.DisplayOrderDetials(list.get(holder.getLayoutPosition()).getId());
+                    } else if (fragment instanceof Fragment_Finshied_Order) {
+                        fragment_finshied_order = (Fragment_Finshied_Order) fragment;
+                        fragment_finshied_order.DisplayOrderDetials(list.get(holder.getLayoutPosition()).getId());
 
-        }
-    }
-});
+                    }
+                }
+            });
+            if (fragment instanceof Fragment_Current_Order) {
+                myHolder.binding.btnCancel.setVisibility(View.VISIBLE);
+            } else if (fragment instanceof Fragment_Finshied_Order) {
+                myHolder.binding.btnCancel.setVisibility(View.GONE);
 
+            }
+
+            myHolder.binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        fragment_current_order = (Fragment_Current_Order) fragment;
+                        fragment_current_order.cancelOrder(list.get(holder.getLayoutPosition()).getId());
+
+                }
+            });
             myHolder.binding.setLang(lang);
             myHolder.binding.setModel(model);
 
@@ -97,7 +111,8 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-       private OrderRowBinding binding;
+        private OrderRowBinding binding;
+
         public MyHolder(OrderRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -109,6 +124,7 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
     public class LoadMoreHolder extends RecyclerView.ViewHolder {
 
         private LoadMoreBinding binding;
+
         public LoadMoreHolder(LoadMoreBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
@@ -125,7 +141,6 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
             return ITEM_DATA;
 
         }
-
 
 
     }
