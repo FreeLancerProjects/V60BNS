@@ -315,8 +315,9 @@ public class SettingsActivity extends AppCompatActivity implements Listeners.Set
 
     private void navigateToSignInActivity() {
         Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
-        finish();
         startActivity(intent);
+        finishAffinity();
+
     }
 
 
