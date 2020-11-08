@@ -49,9 +49,9 @@ public class GeneralMethod {
             CircleImageView imageView = (CircleImageView) view;
             if (endPoint != null) {
 
-                Picasso.get().load(Uri.parse(Tags.IMAGE_Places_URL + endPoint)).placeholder(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(Uri.parse(Tags.IMAGE_Places_URL + endPoint)).into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         } else if (view instanceof RoundedImageView) {
@@ -59,9 +59,9 @@ public class GeneralMethod {
 
             if (endPoint != null) {
 
-                Picasso.get().load(Uri.parse(Tags.IMAGE_Places_URL + endPoint)).placeholder(R.drawable.ic_avatar).fit().into(imageView);
+                Picasso.get().load(Uri.parse(Tags.IMAGE_Places_URL + endPoint)).fit().into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         } else if (view instanceof ImageView) {
@@ -69,9 +69,9 @@ public class GeneralMethod {
 
             if (endPoint != null) {
 
-                Picasso.get().load(Uri.parse(Tags.IMAGE_Places_URL + endPoint)).placeholder(R.drawable.ic_avatar).fit().into(imageView);
+                Picasso.get().load(Uri.parse(Tags.IMAGE_Places_URL + endPoint)).fit().into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         }
@@ -101,7 +101,7 @@ public class GeneralMethod {
 
                 Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).fit().into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         } else if (view instanceof ImageView) {
@@ -114,7 +114,7 @@ public class GeneralMethod {
 
                 Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).fit().into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         }
@@ -130,9 +130,9 @@ public class GeneralMethod {
 
             } else if (endPoint != null) {
 
-                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).placeholder(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         } else if (view instanceof RoundedImageView) {
@@ -142,9 +142,9 @@ public class GeneralMethod {
 
             } else if (endPoint != null) {
 
-                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).placeholder(R.drawable.ic_avatar).fit().into(imageView);
+                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).fit().into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         } else if (view instanceof ImageView) {
@@ -155,9 +155,9 @@ public class GeneralMethod {
 
             } else if (endPoint != null) {
 
-                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).placeholder(R.drawable.ic_avatar).fit().into(imageView);
+                Picasso.get().load(Uri.parse(Tags.IMAGE_URL + endPoint)).fit().into(imageView);
             } else {
-                Picasso.get().load(R.drawable.ic_avatar).into(imageView);
+                Picasso.get().load(R.drawable.logo).into(imageView);
 
             }
         }

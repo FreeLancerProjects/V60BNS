@@ -341,8 +341,8 @@ public class HomeActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().hide(fragment_profile).commit();
             }
             if (fragment_main.isAdded()) {
-                fragment_main.getStories();
-                fragment_main.getPosts();
+               // fragment_main.getStories();
+                //fragment_main.getPosts();
                 fragmentManager.beginTransaction().show(fragment_main).commit();
 
 

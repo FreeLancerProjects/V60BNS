@@ -129,9 +129,16 @@ public class Fragment_Main extends Fragment {
         story_adapter = new Story_Adapter(storylist, activity, this);
         replayes_adapter = new Replayes_Adapter(dataList, activity);
         binding.recViewpost.setLayoutManager(new LinearLayoutManager(activity));
+        binding.recViewpost.setDrawingCacheEnabled(true);
+        binding.recViewpost.setItemViewCacheSize(20);
+        binding.recViewpost.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recViewpost.setAdapter(post_adapter);
         binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+        binding.recViewStatus.setDrawingCacheEnabled(true);
+        binding.recViewStatus.setItemViewCacheSize(20);
+        binding.recViewStatus.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recViewStatus.setAdapter(story_adapter);
+
         comments_adapter = new Comments_Adapter(reviewsList, activity);
         recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
         recViewcomments.setAdapter(comments_adapter);
