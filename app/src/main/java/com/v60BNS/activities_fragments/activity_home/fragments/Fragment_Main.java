@@ -563,7 +563,7 @@ public class Fragment_Main extends Fragment {
     }
 
     public void getcomment(int id, int position) {
-
+        if(userModel!=null){
         recViewcomments.setAdapter(replayes_adapter);
         ch_like.setChecked(false);
 
@@ -614,6 +614,9 @@ public class Fragment_Main extends Fragment {
 
                         }
                     }
-                });
+                });}
+        else {
+            Common.CreateDialogAlert2(activity,activity.getResources().getString(R.string.please_sign_in_or_sign_up));
+        }
     }
 }
