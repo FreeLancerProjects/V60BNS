@@ -20,7 +20,7 @@ public class SingleProductModel implements Serializable {
     private String stock;
     private String amount;
     //private List<Category> category;
-    private List<ProductImage> product_images;
+    private List<ProductImages> product_images;
 
 
 
@@ -72,7 +72,7 @@ public class SingleProductModel implements Serializable {
         return amount;
     }
 
-    public List<ProductImage> getProduct_images() {
+    public List<ProductImages> getProduct_images() {
         return product_images;
     }
     /*
@@ -101,7 +101,7 @@ public class SingleProductModel implements Serializable {
     }
 */
 
-    public class ProductImage implements Serializable {
+    public class ProductImages implements Serializable {
         private int id;
         private String image;
 

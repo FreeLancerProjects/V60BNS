@@ -3,6 +3,7 @@ package com.v60BNS.activities_fragments.activity_coffee_detials;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -49,7 +51,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     private ActivityCoffeeDetialsBinding binding;
     private String lang;
     private Preferences preferences;
-    private List<SingleProductModel.ProductImage> sliderModels;
+    private List<SingleProductModel.ProductImages> sliderModels;
     private SlidingImage_Adapter sliderAdapter;
     private List<StoryModel.Data> dataList;
     private Ingredients_Adapter food_adapter;
@@ -219,17 +221,23 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
     }
 
     private void update(SingleProductModel body) {
+        Log.e("555555555", body.getAr_desc());
+
         try {
             binding.tvContent.setText(Jsoup.parse(body.getAr_components()).text());
             binding.tvdesc.setText(Jsoup.parse(body.getAr_desc()).text());
+            Log.e("555555555", body.getAr_desc());
+
         } catch (Exception e) {
             binding.tvContent.setText(body.getAr_components());
             binding.tvdesc.setText(body.getAr_desc());
             Log.e("kskskks", e.toString());
+
         }
         singleProductModel = body;
         binding.setModel(body);
         sliderModels = new ArrayList<>();
+        Log.e("mmmmm",body.getProduct_images()+"");
         sliderModels.addAll(body.getProduct_images());
         Log.e("dkdkdk", sliderModels.size() + "");
         sliderAdapter = new SlidingImage_Adapter(this, sliderModels);
@@ -255,6 +263,7 @@ public class CoffeeDetialsActivity extends AppCompatActivity implements Listener
                         //  binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
                             //binding.coord1.scrollTo(0,0);
+                            Log.e("44444", response.body().getAr_desc());
 
                             update(response.body());
                         } else {

@@ -4,6 +4,7 @@ package com.v60BNS.adapters;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +27,11 @@ import java.util.List;
 
 
 public class SlidingImage_Adapter extends PagerAdapter {
-    List<SingleProductModel.ProductImage> IMAGES;
+    List<SingleProductModel.ProductImages> IMAGES;
     private LayoutInflater inflater;
     Context context;
 
-    public SlidingImage_Adapter(Context context, List<SingleProductModel.ProductImage> IMAGES) {
+    public SlidingImage_Adapter(Context context, List<SingleProductModel.ProductImages> IMAGES) {
         this.context = context;
         this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
@@ -49,13 +50,23 @@ public class SlidingImage_Adapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         View imageLayout = inflater.inflate(R.layout.slider_row, view, false);
-        ImageView image = imageLayout.findViewById(R.id.image);
-        ProgressBar progressBar = imageLayout.findViewById(R.id.progBar);
-        SingleProductModel.ProductImage sliderModel = IMAGES.get(position);
-//        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        String path = Tags.IMAGE_URL + sliderModel.getImage();
-        Picasso.get().load(Uri.parse(path)).fit().into(image);
-        view.addView(imageLayout.getRootView());
+
+        assert imageLayout != null;
+        final RoundedImageView imageView = imageLayout
+                .findViewById(R.id.image);
+        SingleProductModel.ProductImages slider = IMAGES.get(position);
+        Picasso.get().load(Uri.parse(Tags.IMAGE_URL + slider.getImage())).fit().into(imageView);
+        /*imageLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("l;lll", ";llll");
+                if (context instanceof ProductDetailsActivity) {
+                    ProductDetailsActivity productDetailsActivity = (ProductDetailsActivity) context;
+                    productDetailsActivity.show();
+                }
+            }
+        });*/
+        view.addView(imageLayout, 0);
 
         return imageLayout;
     }

@@ -66,13 +66,10 @@ public class Fragment_Main extends Fragment {
     private FragmentMainBinding binding;
     private LinearLayoutManager manager, manager2;
     private Preferences preferences;
-
-
     private String lang;
     private Post_Adapter post_adapter;
     private List<StoryModel.Data> storylist;
-    private List<PostModel.Data> postlist;
-
+    private List<PostModel.Data> postlist
     private Story_Adapter story_adapter;
     public BottomSheetBehavior behavior;
     private RecyclerView recViewcomments;
@@ -116,7 +113,7 @@ public class Fragment_Main extends Fragment {
         Paper.init(activity);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.progpost.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        binding.progBarStory.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        //binding.progBarStory.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
         recViewcomments = binding.getRoot().findViewById(R.id.recViewcomments);
         ch_like = binding.getRoot().findViewById(R.id.chelike);
@@ -133,11 +130,11 @@ public class Fragment_Main extends Fragment {
         binding.recViewpost.setItemViewCacheSize(20);
         binding.recViewpost.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recViewpost.setAdapter(post_adapter);
-        binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
+    /*    binding.recViewStatus.setLayoutManager(new LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false));
         binding.recViewStatus.setDrawingCacheEnabled(true);
         binding.recViewStatus.setItemViewCacheSize(20);
         binding.recViewStatus.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        binding.recViewStatus.setAdapter(story_adapter);
+        binding.recViewStatus.setAdapter(story_adapter);*/
 
         comments_adapter = new Comments_Adapter(reviewsList, activity);
         recViewcomments.setLayoutManager(new LinearLayoutManager(activity));
@@ -251,7 +248,7 @@ public class Fragment_Main extends Fragment {
 
     public void getStories() {
 
-        try {
+      /*  try {
             int uid;
             binding.progBarStory.setVisibility(View.VISIBLE);
 
@@ -317,7 +314,7 @@ public class Fragment_Main extends Fragment {
                     });
         } catch (Exception e) {
 
-        }
+        }*/
 
 
     }

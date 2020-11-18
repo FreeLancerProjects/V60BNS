@@ -22,81 +22,76 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:focusable="true"
         android:clickable="true"
-        >
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipeRefresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:focusable="true">
 
-        <FrameLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/nested"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:layout_height="match_parent">
 
-                <LinearLayout
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/nested"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:id="@+id/flSlider"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recViewStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
 
 
-                        <ProgressBar
-                            android:id="@+id/progBarStory"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center"
-                            android:visibility="gone" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/flMostSeller"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="200dp"
-
-
-                        >
-
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recViewpost"
+                     <!--   <FrameLayout
+                            android:id="@+id/flSlider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="3dp"
+                            android:visibility="gone">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recViewStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
 
-                        <ProgressBar
-                            android:id="@+id/progpost"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="center"
-                            android:visibility="gone" />
+                            <ProgressBar
+                                android:id="@+id/progBarStory"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center"
+                                android:visibility="gone" />
+                        </FrameLayout>-->
 
-                    </FrameLayout>
+                        <FrameLayout
+                            android:id="@+id/flMostSeller"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
 
 
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
+                            >
 
-        </FrameLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recViewpost"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp" />
+
+
+                            <ProgressBar
+                                android:id="@+id/progpost"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center"
+                                android:visibility="gone" />
+
+                        </FrameLayout>
+
+
+                </androidx.core.widget.NestedScrollView>
+
+            </FrameLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include layout="@layout/comments_content" />
 
