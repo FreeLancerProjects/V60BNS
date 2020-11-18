@@ -18,6 +18,8 @@
     <string name="rate_app">Rate this App</string>
     <string name="logout">Logout</string>
     <string name="about_app">About App</string>
+    <string name="like">Like</string>
+
     <string name="notifications">Notifications</string>
     <string name="wait">Wait</string>
     <string name="home">Home</string>
@@ -129,5 +131,6 @@
     <string name="experts">Experts</string>
     <string name="posts">posts</string>
     <string name="order_cancel_successfuly">تم الغاء الطلب بنجاح</string>
+    <string name="send_message">  Send Mesaage to You</string>
 
 </resources>

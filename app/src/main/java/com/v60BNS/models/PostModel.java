@@ -30,6 +30,8 @@ public class PostModel implements Serializable {
         private double longitude;
         private String is_shown;
         private int loves_count;
+        private int comments_count;
+
         private int shares_count;
         private boolean love_check;
         private UserModel user;
@@ -88,6 +90,10 @@ public class PostModel implements Serializable {
 
         public int getLoves_count() {
             return loves_count;
+        }
+
+        public int getComments_count() {
+            return comments_count;
         }
 
         public int getShares_count() {

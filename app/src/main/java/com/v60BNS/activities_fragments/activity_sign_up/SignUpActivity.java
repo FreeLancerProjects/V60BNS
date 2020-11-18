@@ -351,10 +351,14 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             if (uribanner != null) {
                 signUpWithoutImage();
             } else {
-                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.banner_image), Toast.LENGTH_LONG).show();
+                signUpWithoutImagebanner();
             }
         } else {
-            signUpWithImage();
+            if (uribanner != null) {
+                signUpWithImage();
+            } else {
+                signUpWithImagenobanner();
+            }
         }
         //navigateToHomeActivity();
     }
@@ -419,6 +423,65 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                 });
 
     }
+    private void signUpWithoutImagebanner() {
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
+        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code().replace("+", "00"));
+        RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
+        RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
+
+        RequestBody type_part = Common.getRequestBodyText(signUpModel.getUser_type());
+        RequestBody soft_part = Common.getRequestBodyText("android");
+
+
+
+        Api.getService(Tags.base_url)
+                .signUpWithImagewithoutlogobanner(signUpModel.getName(), signUpModel.getEmail(), signUpModel.getPhone_code().replace("+","00"), signUpModel.getPhone(), signUpModel.getUser_type(), "android")
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
+                            navigateToHomeActivity();
+                        } else {
+                            try {
+                                Log.e("lflflfl", response.errorBody().string());
+                            } catch (Exception e) {
+                            }
+                            if (response.code() == 500) {
+                                Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 422) {
+                                Toast.makeText(SignUpActivity.this, R.string.failed, Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(SignUpActivity.this, R.string.user_found, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            if (t.getMessage() != null) {
+                                Log.e("msg_category_error", t.getMessage() + "__");
+
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(SignUpActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
+                        }
+                    }
+                });
+
+    }
 
     private void signUpWithImage() {
 
@@ -433,7 +496,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         RequestBody type_part = Common.getRequestBodyText(signUpModel.getUser_type());
         RequestBody soft_part = Common.getRequestBodyText("android");
 
-        MultipartBody.Part image = Common.getMultiPart(this, uri, "banner");
+        MultipartBody.Part image = Common.getMultiPart(this, uribanner, "banner");
 
 
         MultipartBody.Part imagelogo = Common.getMultiPart(this, uri, "logo");
@@ -441,6 +504,69 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
         Api.getService(Tags.base_url)
                 .signUpWithImagewithout(name_part, email_part, phone_code_part, phone_part, type_part, soft_part, image, imagelogo)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
+                            navigateToHomeActivity();
+                        } else {
+                            try {
+                                Log.e("lflflfl", response.errorBody().string());
+                            } catch (Exception e) {
+                            }
+                            if (response.code() == 500) {
+                                Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            } else if (response.code() == 422) {
+                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(SignUpActivity.this, getString(R.string.user_found), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            if (t.getMessage() != null) {
+                                Log.e("msg_category_error", t.getMessage() + "__");
+
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(SignUpActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
+                        }
+                    }
+                });
+
+    }
+    private void signUpWithImagenobanner() {
+
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
+        RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code().replace("+", "00"));
+        RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
+        RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
+
+        RequestBody type_part = Common.getRequestBodyText(signUpModel.getUser_type());
+        RequestBody soft_part = Common.getRequestBodyText("android");
+
+
+
+        MultipartBody.Part imagelogo = Common.getMultiPart(this, uri, "logo");
+
+
+        Api.getService(Tags.base_url)
+                .signUpWithImagewithoutbanner(name_part, email_part, phone_code_part, phone_part, type_part, soft_part, imagelogo)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {

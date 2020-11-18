@@ -572,7 +572,7 @@ public class Fragment_Profile extends Fragment {
     }
 
     private void updateprofile(UserModel body) {
-        Log.e("a;lallalal", body.getBanner());
+//        Log.e("a;lallalal", body.getBanner());
         body.setToken(userModel.getToken());
         userModel = body;
         preferences.create_update_userdata(activity, userModel);

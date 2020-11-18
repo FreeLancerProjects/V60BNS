@@ -128,4 +128,7 @@
     <string name="experts">الخبراء</string>
     <string name="posts">منشورات</string>
     <string name="order_cancel_successfuly">تم الغاء الطلب بنجاح</string>
+    <string name="like">اعجاب</string>
+    <string name="send_message"> ارسل رساله اليك </string>
+
 </resources>

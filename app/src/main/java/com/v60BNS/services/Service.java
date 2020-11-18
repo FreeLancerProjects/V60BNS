@@ -106,7 +106,18 @@ public interface Service {
 
 
     );
+    @FormUrlEncoded
+    @POST("api/register")
+    Call<UserModel> signUpWithImagewithoutlogobanner(@Field("name") String name,
+                                               @Field("email") String email,
+                                               @Field("phone_code") String phone_code,
+                                               @Field("phone") String phone,
+                                               @Field("user_type") String user_type,
+                                               @Field("software_type") String software_type
 
+
+
+    );
     @Multipart
     @POST("api/register")
     Call<UserModel> signUpWithImagewithout(@Part("name") RequestBody name,
@@ -120,7 +131,18 @@ public interface Service {
 
 
     );
+    @Multipart
+    @POST("api/register")
+    Call<UserModel> signUpWithImagewithoutbanner(@Part("name") RequestBody name,
+                                           @Part("email") RequestBody email,
+                                           @Part("phone_code") RequestBody phone_code,
+                                           @Part("phone") RequestBody phone,
+                                           @Part("user_type") RequestBody user_type,
+                                           @Part("software_type") RequestBody software_type,
+                                           @Part MultipartBody.Part logo
 
+
+    );
     @FormUrlEncoded
     @POST("api/logout")
     Call<ResponseBody> logout(@Header("Authorization") String user_token,

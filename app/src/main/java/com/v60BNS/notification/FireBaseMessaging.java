@@ -568,7 +568,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         builder.setChannelId(CHANNEL_ID);
         builder.setSound(Uri.parse(sound_path), AudioManager.STREAM_NOTIFICATION);
         builder.setSmallIcon(R.drawable.ic_nav_notification);
-        builder.setContentTitle(fromusername);
+        builder.setContentTitle(fromusername+getResources().getString(R.string.send_message));
         builder.setLargeIcon(bitmap);
         Intent intent = new Intent(this, ChatActivity.class);
         ChatUserModel chatUserModel = new ChatUserModel(fromusername, null, messageModel.getId(),messageModel.getChat_room_id());
@@ -601,7 +601,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSound(Uri.parse(sound_path), AudioManager.STREAM_NOTIFICATION);
         builder.setSmallIcon(R.drawable.ic_nav_notification);
-        builder.setContentTitle(fromusername);
+        builder.setContentTitle(fromusername+getResources().getString(R.string.send_message));
 
         Intent intent = new Intent(this, ChatActivity.class);
         ChatUserModel chatUserModel = new ChatUserModel(fromusername, null, messageModel.getId(),messageModel.getChat_room_id());

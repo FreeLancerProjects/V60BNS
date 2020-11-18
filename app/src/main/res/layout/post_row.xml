@@ -105,6 +105,7 @@
 
 
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/imgDelete"
                 android:layout_width="35dp"
@@ -112,25 +113,26 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lin4"
                 android:padding="5dp"
                 android:src="@drawable/ic_delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lin4"
                 tools:ignore="RtlCompat" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/image"
+                image3="@{model.image}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                image3="@{model.image}"
                 android:src="@drawable/post"
                 app:layout_constraintDimensionRatio="H,1:1"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -203,9 +205,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-
+                android:text='@{model.loves_count+@string/like}'
                 android:textColor="@color/gray12"
                 android:textSize="14sp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tv"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -216,10 +220,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="review"
-                android:textColor="@color/gray5"
+                android:layout_marginStart="10dp"
+                android:text='@{model.comments_count+@string/comments}'
+                android:textColor="@color/gray12"
                 android:textSize="14sp"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

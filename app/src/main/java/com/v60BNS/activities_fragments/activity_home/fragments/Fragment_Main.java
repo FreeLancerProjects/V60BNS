@@ -69,7 +69,7 @@ public class Fragment_Main extends Fragment {
     private String lang;
     private Post_Adapter post_adapter;
     private List<StoryModel.Data> storylist;
-    private List<PostModel.Data> postlist
+    private List<PostModel.Data> postlist;
     private Story_Adapter story_adapter;
     public BottomSheetBehavior behavior;
     private RecyclerView recViewcomments;
