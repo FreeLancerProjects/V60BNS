@@ -2,7 +2,7 @@ package com.v60BNS.tags;
 
 public class Tags {
 
-    public static String base_url = "http://www.v60bns.com/";
+    public static String base_url = "https://www.v60bns.com/";
     public static final String IMAGE_URL= base_url+"storage/uploads/";
     public static final String IMAGE_Places_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
     public static final String session_login = "login";
